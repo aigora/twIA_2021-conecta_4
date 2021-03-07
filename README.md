@@ -16,8 +16,8 @@ Lucía Pardo Hermosa (usuario GitHub)---
 -Menú de juego-
 -Tablero de luces LED-
 -"IA"-
--Mando original-->guante con sensores de flexión 
-               -->joystick y pequeña estructura-
+-Mando original 1)guante con sensores de flexión 
+                2)joystick y pequeña estructura-
 -Opción de guardar partidas para poder continuar una partida en otro momento-
 -Puntuaciones más altas y nombre de los jugadores-
 -Sonido?
