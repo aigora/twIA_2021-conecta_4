@@ -4,7 +4,7 @@ Se programará el conocido juego Conecta4 en forma de videojuego siendo el table
 
 ## Integrantes del equipo 
 
-Eduardo Luque López (usuario GitHub) --- 
+Eduardo Luque López (eduardo-luque) --- 
 Gabriel Rüscher Pascual (Gabriel-Rpascual) --- 
 Iris Martínez Pérez (Iris821) --- 
 Ismael Torrijano Pedroche (usuario GitHub) --- 
