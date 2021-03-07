@@ -7,7 +7,7 @@ Se programará el conocido juego Conecta4 en forma de videojuego siendo el table
 Eduardo Luque López (eduardo-luque) --- 
 Gabriel Rüscher Pascual (Gabriel-Rpascual) --- 
 Iris Martínez Pérez (Iris821) --- 
-Ismael Torrijano Pedroche (usuario GitHub) --- 
+Ismael Torrijano Pedroche (usuario ismael45) --- 
 Javier Nicolao Gómez (JaviNico) --- 
 Lucía Pardo Hermosa (lucia-phermosa)
 
