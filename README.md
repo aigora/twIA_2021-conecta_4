@@ -1,11 +1,23 @@
-# [Título del trabajo]
+# Conecta_4
 
-[Descripción breve del proyecto a realizar (2-3 frases).]
+Se programará el conocido juego Conecta4 en forma de videojuego siendo el tablero un conjunto de luces LED y utilizando un mando original para controlar las acciones. Se dispondrá de un menú de juego con la posibilidad de guardar la partida para continuarla más tarde y disponer del nombre del jugador y las puntuaciones más altas.
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+Eduardo Luque López (usuario GitHub)
+Gabriel Rüscher Pascual (Gabriel-Rpascual)
+Iris Martínez Pérez (usuario GitHub)
+Ismael Torrijano Pedroche (usuario GitHub)
+Javier Nicolao Gómez (usuario GitHub)
+Lucía Pardo Hermosa (usuario GitHub)
 
 ## Objetivos del trabajo
 
-[Lista de los objetivos que se persiguen con el trabajo propuesto.]
+-Menú de juego
+-Tablero de luces LED
+-"IA"
+-Mando original-->guante con sensores de flexión 
+               -->joystick y pequeña estructura
+-Opción de guardar partidas para poder continuar una partida en otro momento
+-Puntuaciones más altas y nombre de los jugadores
+-Sonido?
