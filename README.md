@@ -21,4 +21,4 @@ Lucía Pardo Hermosa (usuario GitHub)---
 -Opción de guardar partidas para poder continuar una partida en otro momento-
 -Puntuaciones más altas y nombre de los jugadores-
 -Sonido?
--Juego secundario: Buscaminas(si da tiempo)
+-Juego secundario: Buscaminas (si da tiempo)
