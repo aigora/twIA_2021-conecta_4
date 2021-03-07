@@ -9,7 +9,7 @@ Gabriel Rüscher Pascual (Gabriel-Rpascual) ---
 Iris Martínez Pérez (usuario GitHub) --- 
 Ismael Torrijano Pedroche (usuario GitHub) --- 
 Javier Nicolao Gómez (JaviNico) --- 
-Lucía Pardo Hermosa (usuario GitHub)
+Lucía Pardo Hermosa (lucia-phermosa)
 
 ## Objetivos del trabajo
 
