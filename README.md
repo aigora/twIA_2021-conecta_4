@@ -4,20 +4,20 @@ Se programará el conocido juego Conecta4 en forma de videojuego siendo el table
 
 ## Integrantes del equipo 
 
-Eduardo Luque López (usuario GitHub)
-Gabriel Rüscher Pascual (Gabriel-Rpascual)
-Iris Martínez Pérez (usuario GitHub)
-Ismael Torrijano Pedroche (usuario GitHub)
-Javier Nicolao Gómez (usuario GitHub)
-Lucía Pardo Hermosa (usuario GitHub)
+Eduardo Luque López (usuario GitHub)---
+Gabriel Rüscher Pascual (Gabriel-Rpascual)---
+Iris Martínez Pérez (usuario GitHub)---
+Ismael Torrijano Pedroche (usuario GitHub)---
+Javier Nicolao Gómez (usuario GitHub)---
+Lucía Pardo Hermosa (usuario GitHub)---
 
 ## Objetivos del trabajo
 
--Menú de juego
--Tablero de luces LED
--"IA"
+-Menú de juego-
+-Tablero de luces LED-
+-"IA"-
 -Mando original-->guante con sensores de flexión 
-               -->joystick y pequeña estructura
--Opción de guardar partidas para poder continuar una partida en otro momento
--Puntuaciones más altas y nombre de los jugadores
+               -->joystick y pequeña estructura-
+-Opción de guardar partidas para poder continuar una partida en otro momento-
+-Puntuaciones más altas y nombre de los jugadores-
 -Sonido?
