@@ -1,1 +1,110 @@
+Cuatro en raya
 
+Objetivo
+
+Diseñar y desarrollar una aplicación en lenguaje C que permita jugar al cuatro en raya en su 
+versión tablero vertical, conocido comercialmente como Conecta 4.
+
+Especificaciones del juego (Fuente Wikipedia: https://es.wikipedia.org/wiki/Conecta_4)
+
+“Conecta 4 (también conocido como 4 en Raya en algunas versiones) es un juego de mesa
+para dos jugadores distribuido por Hasbro, en el que se introducen fichas en un tablero vertical
+con el objetivo de alinear cuatro consecutivas de un mismo color. Fue creado en 1974 por Ned
+Strongin y Howard Wexler para Milton Bradley Company. El objetivo de Conecta 4 es alinear
+cuatro fichas sobre un tablero formado por seis filas y siete columnas. Cada jugador dispone de
+21 fichas de un color (por lo general, rojas o amarillas). Por turnos, los jugadores deben
+introducir una ficha en la columna que prefieran (siempre que no esté completa) y ésta caerá a
+la posición más baja. Gana la partida el primero que consiga alinear cuatro fichas consecutivas
+de un mismo color en horizontal, vertical o diagonal. Si todas las columnas están llenas pero
+nadie ha hecho una fila válida, hay empate.”
+
+Dinámica de la aplicación
+
+La aplicación, al iniciarse, debe mostrar en pantalla el menú de opciones siguiente:
+1 – Iniciar una partida.
+2 – Reanudar una partida.
+3 – Mostrar la clasificación.
+4 – Salir.
+
+Opción 1 – Iniciar una partida
+
+El programa dará la opción al usuario de jugar con otro usuario o con la IA.
+El programa solicitará el nombre y la password de cada uno de los jugadores. Para cada uno
+de ellos, si el nombre introducido no existe previamente, creará un usuario nuevo con los
+datos facilitados. Si el usuario ya existe y la password no coincide con la almacenada, mostrará
+un mensaje de error, señalando que la identificación ha sido incorrecta y volverá de nuevo a
+solicitar el nombre de usuario y la password. Una vez identificados o dados de alta ambos
+usuarios, el sistema preguntará quién tendrá asignado el turno de partida y comenzará el
+juego. No se admitirán partidas en las que ambos jugadores sean el mismo usuario.
+Durante el juego, la aplicación mostrará el estado del tablero actual e invitará al jugador cuyo
+turno corresponda a que indique en qué columna desea deslizar su ficha, comprobando que la
+columna no esté completa y registrando el resultado de dicho movimiento en el juego.
+Si el jugador, en vez de identificar una columna para deslizar su ficha, escribe Guardar, la
+aplicación almacenará el estado de la partida en un fichero de texto, de manera que la misma
+se podrá reanudar posteriormente desde la opción 2 del menú principal. Tras guardar la
+información en el mencionado fichero, detendrá la partida y regresará al menú principal.
+
+Opción 2 – Reanudar una partida interrumpida
+
+El programa cargará los datos almacenados en el fichero de texto y la partida continuará en
+el punto en el que fue interrumpida.
+
+Opción 3 – Mostrar la clasificación
+
+Mostrará en pantalla el ranking de jugadores en función de los puntos que recibirá cada jugador,
+además de indicar el win rate para cada uno de ellos con el número de partidas jugadas, 
+el número de victorias, empates y derrotas. 
+
+Opción 4 – Salir
+
+Finalización del programa. Se actualizarán los datos de la clasificación.
+
+Especificación de requisitos obligatorios
+
+Seguimiento de los jugadores, de los cuales se almacenará el nombre de usuario, su
+contraseña, el número de partidas jugadas, el número de victorias, empates y derrotas. 
+Esta información se almacenará en un fichero.
+Mostrar, durante la dinámica del juego, el estado del tablero, indicando a quién le
+corresponde el turno y procesando los movimientos, aspecto que implicará comprobar las
+condiciones de empate y victoria.
+El programa cargará los datos de los usuarios desde el fichero al iniciarse la aplicación
+y almacenará la información en el fichero al salir de la misma.
+
+Especificaciones de requisitos opcionales
+
+Se podrán guardar varias partidas de manera que el usuario escribirá Guardar seguido del
+nombre del fichero en el que desea almacenar la partida guardada.
+Existirá por defecto un jugador denominado IA cuya password será IA. Los movimientos de
+este jugador serán elegidos por el programa. Se pueden aplicar desde estrategias
+exclusivamente aleatorias (la máquina desliza la ficha en su turno por una columna elegida al
+azar) hasta estrategias más elaboradas que implique algún tipo de conocimiento o táctica.
+
+Elementos de entrada
+
+Teclado
+Mando (joystick): a través del cual se efectuará cada movimiento con las opciones de arriba,
+                  abajo, derecha, izquierda y ok. La información de entrada del mando se 
+                  podría transferir al juego de dos formas:
+                        Por cable
+                        Por sensor infrarrojos: Un detector de obstáculos infrarrojo es un dispositivo 
+                                                que detecta la presencia de un objeto mediante la reflexión 
+                                                que produce en la luz. El uso de luz infrarroja (IR) es simplemente 
+                                                para que esta no sea visible para los humanos. Se dispone de un LED 
+                                                emisor de luz infrarroja y de un fotodiodo (tipo BPV10NF o similar) que 
+                                                recibe la luz reflejada por un posible obstáculo. Los detectores de obstáculo 
+                                                suelen proporcionarse con una placa de medición estándar con el comparador LM393, 
+                                                que permite obtener la lectura como un valor digital cuando se supera un cierto umbral, 
+                                                que se regula a través de un potenciómetro ubicado en la placa. Este tipo de sensores 
+                                                actúan a distancias cortas, típicamente de 5 a 20mm. Además la cantidad de luz infrarroja 
+                                                recibida depende del color, material, forma y posición del obstáculo, por lo que no disponen 
+                                                de una precisión suficiente para proporcionar una estimación de la distancia al obstáculo.
+
+Elementos de salida
+
+Tablero de luces led (WS2812b): Los WS2812b son LED que disponen de lógica integrada, por lo que es 
+                                posible variar el color de cada LED de forma individual (a diferencia de las tiras RGB 
+                                convencionales en las que todos los LED cambian de color de forma simultánea).Están basados
+                                en el LED 5050, llamado así porque tiene un tamaño de 5.0 x 5.0 mm. Es un LED de bajo consumo 
+                                y alto brillo, que incorpora en un único encapsulado los 3 colores RGB.
+Sonido
+Pantalla
