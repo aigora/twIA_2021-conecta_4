@@ -18,8 +18,10 @@ int main(void)
 		switch (opc)
 		{
 		case 1:
+		        // las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 			printf("ha seleccionado modo 1 jugadores");
 			int tablero[6][7];
+			// en este bucle ponermos el tablero a 0 (casillas vacías)
 			for (i = 0; i < 6; i++)
 			{
 				for (j = 0; j < 7; j++)
@@ -30,8 +32,10 @@ int main(void)
 			int tablero[6][7];
 			break;
 		case 2:
+		        // las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 			printf("ha seleccionado modo 2 jugadores");
 			int tablero[6][7];
+		        // en este bucle ponermos el tablero a 0 (casillas vacías)
 			for (i = 0;i<6; i++)
 			{
 				for (j = 0; j < 7; j++)
