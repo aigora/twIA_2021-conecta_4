@@ -70,7 +70,7 @@ int menu_principal(void)
  
  do
  {
- printf("Seleccione opción:");
+ printf("Seleccione opcion:\n");
  printf("1 - 1 jugador\n");
  printf("2 - 2 Jugadores\n");
  printf("3 - Reaunudar partida\n");
@@ -78,7 +78,7 @@ int menu_principal(void)
  printf("5 - Salir\n");
  scanf_s("%d", &opcion);
  if (opcion < 1 || opcion>5)
- printf("\nOpción inexistente.\n\n");
+ printf("\nOpcion inexistente.\n\n");
  } while (opcion < 1 || opcion>5);
  
  return opcion;
