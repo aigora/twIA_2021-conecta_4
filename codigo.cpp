@@ -19,9 +19,26 @@ int main(void)
 		{
 		case 1:
 			printf("ha seleccionado modo 1 jugadores");
+			int tablero[6][7];
+			for (i = 0; i < 6; i++)
+			{
+				for (j = 0; j < 7; j++)
+				{
+					tablero[i][j] = 0
+				}
+			}
+			int tablero[6][7];
 			break;
 		case 2:
 			printf("ha seleccionado modo 2 jugadores");
+			int tablero[6][7];
+			for (i = 0;i<6; i++)
+			{
+				for (j = 0; j < 7; j++)
+				{
+					tablero[i][j] = 0
+				}
+			}
 			break;
 		case 3:
 			break;
