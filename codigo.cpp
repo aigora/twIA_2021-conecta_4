@@ -13,46 +13,44 @@ int main(void)
  
  do
  {
- opc = menu_principal();
-  
-		switch (opc)
+	opc = menu_principal();
+	int tablero[6][7];
+	int i, j, c, orden, columna;
+	switch (opc)
+	{
+	case 1:
+	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
+	printf("ha seleccionado modo 1 jugadores");
+	// en este bucle ponermos el tablero a 0 (casillas vacías)
+	for (i = 0; i < 6; i++)
 		{
-		case 1:
-		        // las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-			printf("ha seleccionado modo 1 jugadores");
-			int tablero[6][7];
-			// en este bucle ponermos el tablero a 0 (casillas vacías)
-			for (i = 0; i < 6; i++)
+		for (j = 0; j < 7; j++)
+		{
+				tablero[i][j] = 0;
+		}
+		}
+		break;
+	case 2:
+		// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
+		printf("ha seleccionado modo 2 jugadores");
+		for (i = 0; i < 6; i++) // en este bucle ponermos el tablero a 0 (casillas vacías)
+		{
+			for (j = 0; j < 7; j++)
 			{
-				for (j = 0; j < 7; j++)
-				{
-					tablero[i][j] = 0
-				}
+				tablero[i][j] = 0;
 			}
-			break;
-		case 2:
-			// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-			printf("ha seleccionado modo 2 jugadores");
-			int tablero[6][7];
-			int i,j,c,orden,columna;
-			for (i = 0;i<6; i++) // en este bucle ponermos el tablero a 0 (casillas vacías)
-			{
-				for (j = 0; j < 7; j++)
-				{
-					tablero[i][j] = 0;
-				}
-			}
-			printf("turno del jugador 1:\n");
-			scanf_s("%d", &orden);
-			c = 0;
-			do
-			{
-				tablero[c][orden] = columna;
-				c++;
-			} while (columna != 0);
-			tablero[columna][orden] = 1;
-			c = 0;
-			break;
+		}
+		printf("turno del jugador 1:\n");
+		scanf_s("%d", &orden);
+		c = 0;
+		do
+		{
+			tablero[c][orden] = columna;
+			c++;
+		} while (columna != 0);
+		tablero[columna][orden] = 1;
+		c = 0;
+		break;
 		case 3:
 			break;
 		case 4:
