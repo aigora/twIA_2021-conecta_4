@@ -10,9 +10,11 @@ int main(void)
  // Tareas de configuración y carga
  configura();
  // Bucle principal de la aplicación
+ 
  do
  {
  opc = menu_principal();
+  
  switch (opc)
  {
  case 1:break;
@@ -23,11 +25,13 @@ int main(void)
  case 6:break;
  }
  } while (opc != 6);
- // Tareas de deconexión y cierre
+ // Tareas de desconexión y cierre
 }
+
 int menu_principal(void)
 {
  int opcion;
+ 
  do
  {
  printf("1 - Titulo opción\n");
@@ -41,8 +45,10 @@ int menu_principal(void)
  if (opcion < 1 || opcion>6)
  printf("\nOpción inexistente.\n\n");
  } while (opcion < 1 || opcion>6);
+ 
  return opcion;
 }
+
 void configura(void)
 {
  // Establece juego de caracteres castellano
