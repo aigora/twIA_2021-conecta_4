@@ -29,7 +29,6 @@ int main(void)
 					tablero[i][j] = 0
 				}
 			}
-			int tablero[6][7];
 			break;
 		case 2:
 		        // las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
