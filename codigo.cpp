@@ -34,13 +34,12 @@ int menu_principal(void)
  
  do
  {
- printf("1 - Titulo opción\n");
- printf("2 - Titulo opción\n");
- printf("3 - Titulo opción\n");
- printf("4 - Titulo opción\n");
- printf("5 - Titulo opción\n");
- printf("6 - Cerrar Aplicación\n");
  printf("Seleccione opción:");
+ printf("1 - 1 jugador\n");
+ printf("2 - 2 Jugadores\n");
+ printf("3 - Reaunudar partida\n");
+ printf("4 - Ver puntuaciones\n");
+ printf("6 - Salir\n");
  scanf_s("%d", &opcion);
  if (opcion < 1 || opcion>6)
  printf("\nOpción inexistente.\n\n");
