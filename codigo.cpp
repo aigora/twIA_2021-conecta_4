@@ -4,6 +4,7 @@
 // Funciones prototipo
 int menu_principal(void);
 void configura(void);
+void un_jugador(void);
 int main(void)
 {
  int opc;
@@ -19,16 +20,7 @@ int main(void)
 	switch (opc)
 	{
 	case 1:
-	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-	printf("ha seleccionado modo 1 jugadores");
-	// en este bucle ponermos el tablero a 0 (casillas vacías)
-	for (i = 0; i < 6; i++)
-		{
-		for (j = 0; j < 7; j++)
-		{
-				tablero[i][j] = 0;
-		}
-		}
+		un_jugador();	
 		break;
 	case 2:
 		// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
@@ -80,6 +72,26 @@ int menu_principal(void)
  } while (opcion < 1 || opcion>5);
  
  return opcion;
+}
+void un_jugador(void) {
+	int i, j;
+	int tablero[6][7];
+	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
+	printf("Ha seleccionado modo 1 jugadores\n");
+	printf("Inicio de la partida:\n");
+	// en este bucle ponermos el tablero a 0 (casillas vacías)
+	for (i = 0; i < 6; i++)
+	{
+		for (j = 0; j < 7; j++)
+		{
+			tablero[i][j] = 0;
+			printf("|%d ", tablero[i][j]);
+		}
+		printf("|\n");
+	}
+	printf("\n");
+	printf("Inicio del turno del jugador\n");
+
 }
 
 void configura(void)
