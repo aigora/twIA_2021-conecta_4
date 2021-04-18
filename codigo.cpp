@@ -41,9 +41,9 @@ int menu_principal(void)
  printf("4 - Ver puntuaciones\n");
  printf("5 - Salir\n");
  scanf_s("%d", &opcion);
- if (opcion < 1 || opcion>6)
+ if (opcion < 1 || opcion>5)
  printf("\nOpción inexistente.\n\n");
- } while (opcion < 1 || opcion>6);
+ } while (opcion < 1 || opcion>5);
  
  return opcion;
 }
