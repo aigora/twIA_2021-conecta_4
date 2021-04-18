@@ -16,11 +16,13 @@ Lucía Pardo Hermosa (lucia-phermosa)
 -Menú de juego-
 -Tablero de luces LED-
 -"IA"-
--Mando original 1) guante con sensores de flexión 
-                2) joystick y pequeña estructura-
+-Mando sensor IR/Arduino
 -Opción de guardar partidas para poder continuar una partida en otro momento-
--Puntuaciones más altas y nombre de los jugadores-
 -Sonido?
 -Juego secundario: Buscaminas (si da tiempo)
+
+-División trabajo(no significa que uno de un departamento no ayude al otro, división a grandes rasgos):
 [Software_Hardware_división.pdf](https://github.com/aigora/twIA_2021-conecta_4/files/6331153/Software_Hardware_division.pdf)
+
+-Puntuaciones más altas y nombre de los jugadores:
 [PuntuaciónyClasificación.pdf](https://github.com/aigora/twIA_2021-conecta_4/files/6331154/PuntuacionyClasificacion.pdf)
