@@ -15,16 +15,22 @@ int main(void)
  {
  opc = menu_principal();
   
- switch (opc)
- {
- case 1:break;
- case 2:break;
- case 3:break;
- case 4:break;
- case 5:break;
- case 6:break;
- }
- } while (opc != 6);
+		switch (opc)
+		{
+		case 1:
+			printf("ha seleccionado modo 1 jugadores");
+			break;
+		case 2:
+			printf("ha seleccionado modo 2 jugadores");
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		}
+	} while (opc != 5);
  // Tareas de desconexión y cierre
 }
 
