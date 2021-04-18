@@ -39,7 +39,7 @@ int menu_principal(void)
  printf("2 - 2 Jugadores\n");
  printf("3 - Reaunudar partida\n");
  printf("4 - Ver puntuaciones\n");
- printf("6 - Salir\n");
+ printf("5 - Salir\n");
  scanf_s("%d", &opcion);
  if (opcion < 1 || opcion>6)
  printf("\nOpción inexistente.\n\n");
