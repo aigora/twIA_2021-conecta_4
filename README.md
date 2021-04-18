@@ -22,3 +22,5 @@ Lucía Pardo Hermosa (lucia-phermosa)
 -Puntuaciones más altas y nombre de los jugadores-
 -Sonido?
 -Juego secundario: Buscaminas (si da tiempo)
+[Software_Hardware_división.pdf](https://github.com/aigora/twIA_2021-conecta_4/files/6331153/Software_Hardware_division.pdf)
+[PuntuaciónyClasificación.pdf](https://github.com/aigora/twIA_2021-conecta_4/files/6331154/PuntuacionyClasificacion.pdf)
