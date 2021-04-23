@@ -5,12 +5,17 @@
 int menu_principal(void);
 void configura(void);
 void un_jugador(void);
+FILE* crear_fichero(void);
+
 int main(void)
 {
+ FILE* fichero; // Declaración de la variable de tipo fichero
  int opc;
  // Tareas de configuración y carga
  configura();
  // Bucle principal de la aplicación
+	
+ fichero = crear_fichero(); //Llamada a la función crear_fichero
  
  do
  {
@@ -100,4 +105,25 @@ void configura(void)
  // Para que funcione hay que partir de un proyecto vacío
  // No utilice la plantilla Aplicación de consola C++
  setlocale(LC_ALL, "spanish");
+}
+
+FILE* crear_fichero(void) //Función para crear un fichero
+{
+    FILE* fichero;
+    int cierre;
+
+    fopen_s (&fichero, "Users.txt", "a+"); // Crea un fichero para escribir 
+    if (fichero == NULL)
+        printf("Error no se ha podido abrir el fichero\n");
+    else
+    {
+        cierre = fclose(fichero); // Cierra el fichero
+
+        if (cierre == EOF)
+            printf("Problemas al cerrar\n");// Acciones asociadas a la imposibilidad de cerrar el fichero.
+        else
+            printf("Todo ok\n");
+        // Acciones asociadas una vez cerrado el fichero
+    }
+    return fichero;
 }
