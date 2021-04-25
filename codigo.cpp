@@ -74,7 +74,7 @@ int menu_principal(void)
  return opcion;
 }
 void un_jugador(void) {
-	int i, j;
+	int i, j, jugador = 1;
 	int tablero[6][7];
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	printf("Ha seleccionado modo 1 jugadores\n");
@@ -91,7 +91,15 @@ void un_jugador(void) {
 	}
 	printf("\n");
 	printf("Inicio del turno del jugador\n");
-
+	meter_ficha(tablero, jugador);
+	for (i = 0; i < 6; i++)
+	{
+		for (j = 0; j < 7; j++)
+		{
+			printf("|%d ", tablero[i][j]);
+		}
+		printf("|\n");
+	}
 }
 
 void configura(void)
