@@ -112,7 +112,7 @@ void configura(void)
 
 void meter_ficha(int tablero[][7],int jugador)
 {
-	int fila=1, columna, c = 0; // declaramos las variables
+	int fila=1, columna, c = 6; // declaramos las variables
 	do //repetimos la funcion hasta que el usuario introduzca una columna válida
 	{
 		printf("introduzca columna:\n");
@@ -124,12 +124,12 @@ void meter_ficha(int tablero[][7],int jugador)
 			do // barremos la columna hasta encontrar un hueco disponible
 			{
 				fila = tablero[c][columna];
-				c++;
+				c--;
 			} while (fila != 0);
 			if (jugador == 1)  // si la ficha es del jugador 1 la colocamos
-				tablero[fila][columna] = 1;
+				tablero[c+1][columna] = 1;
 			else  // si la ficha es del jugador 2 la colocamos
-				tablero[fila][columna] = 2;
+				tablero[c+1][columna] = 2;
 		}
 	} while (columna < 0 || columna >6);
 }
