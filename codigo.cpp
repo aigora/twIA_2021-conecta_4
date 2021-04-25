@@ -77,7 +77,7 @@ void un_jugador(void) {
 	int i, j, jugador = 1;
 	int tablero[6][7];
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-	printf("Ha seleccionado modo 1 jugadores\n");
+	printf("Ha seleccionado modo 1 jugador\n");
 	printf("Inicio de la partida:\n");
 	// en este bucle ponermos el tablero a 0 (casillas vacías)
 	for (i = 0; i < 6; i++)
@@ -115,10 +115,10 @@ void meter_ficha(int tablero[][7],int jugador)
 	int fila=1, columna, c = 6; // declaramos las variables
 	do //repetimos la funcion hasta que el usuario introduzca una columna válida
 	{
-		printf("introduzca columna:\n");
+		printf("Introduzca columna:\n");
 		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
 		if (columna < 1 || columna >7)
-			printf("columna no válida\n");
+			printf("Columna no valida\n");
 		else
 		{
 			do // barremos la columna hasta encontrar un hueco disponible
