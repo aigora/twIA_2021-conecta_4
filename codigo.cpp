@@ -5,6 +5,7 @@
 int menu_principal(void);
 void configura(void);
 void un_jugador(void);
+void meter_ficha(int[][],int jugador);
 FILE* crear_fichero(void);
 
 int main(void)
@@ -38,15 +39,7 @@ int main(void)
 			}
 		}
 		printf("turno del jugador 1:\n");
-		scanf_s("%d", &orden);
-		c = 0;
-		do
-		{
-			tablero[c][orden] = columna;
-			c++;
-		} while (columna != 0);
-		tablero[columna][orden] = 1;
-		c = 0;
+
 		break;
 		case 3:
 			break;
@@ -105,6 +98,24 @@ void configura(void)
  // Para que funcione hay que partir de un proyecto vacío
  // No utilice la plantilla Aplicación de consola C++
  setlocale(LC_ALL, "spanish");
+}
+
+void meter_ficha(int tablero[][],int jugador)
+{
+	int fila, columna, orden, c = 0;
+	scanf_s("%d", &orden);
+	c = 0;
+	do
+	{
+		columna = tablero[c][orden];
+		c++;
+	} while (columna != 0);
+	if (jugador == 1)
+		tablero[columna][orden] = 1;
+	else 
+	tablero[columna][orden] = 2;
+	c = 0;
+	return 0;
 }
 
 FILE* crear_fichero(void) //Función para crear un fichero
