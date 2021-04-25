@@ -30,15 +30,14 @@ Usuario* add_usuario (Usuario*,int*);
 
 int main(void)
 {
- FILE* fichero; // Declaración de la variable de tipo fichero
- escribir_fichero(fichero);
- int opc;
- // Tareas de configuración y carga
- configura();
- // Bucle principal de la aplicación
+ int opc; // Opción del menú principal
+ int num_usuarios; // Cantidad de usuarios actual
+ Usuario* usuarios; // Lista de usuarios actual
 	
- fichero = crear_fichero(); //Llamada a la función crear_fichero
+ // Leer fichero con los usuarios
+ usuarios = leer_fichero_usuarios(&num_usuarios); // Traslada los usuarios desde un fichero a memoria
  
+ // Bucle principal de la aplicación
  do
  {
 	opc = menu_principal();
@@ -47,6 +46,7 @@ int main(void)
 	switch (opc)
 	{
 	case 1:
+		usuarios = gestion_usuarios(usuarios,&num_usuarios);
 		un_jugador();	
 		break;
 	case 2:
