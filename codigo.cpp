@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <Windows.h>
+#include <locale.h>
 #include <malloc.h>
 
 // Funciones prototipo
