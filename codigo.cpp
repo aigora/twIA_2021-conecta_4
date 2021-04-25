@@ -104,7 +104,6 @@ void meter_ficha(int tablero[][7],int jugador)
 {
 	int fila=1, columna, c = 0;
 	scanf_s("%d", &columna);
-	c = 0;
 	do
 	{
 		fila = tablero[c][columna];
@@ -114,7 +113,6 @@ void meter_ficha(int tablero[][7],int jugador)
 		tablero[fila][columna] = 1;
 	else 
 	tablero[fila][columna] = 2;
-	c = 0;
 }
 
 FILE* crear_fichero(void) //Función para crear un fichero
