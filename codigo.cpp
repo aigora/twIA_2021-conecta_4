@@ -6,11 +6,13 @@ int menu_principal(void);
 void configura(void);
 void un_jugador(void);
 void meter_ficha(int[][7],int jugador);
+void escribir_fichero(FILE*);
 FILE* crear_fichero(void);
 
 int main(void)
 {
  FILE* fichero; // Declaración de la variable de tipo fichero
+ escribir_fichero(fichero);
  int opc;
  // Tareas de configuración y carga
  configura();
@@ -122,6 +124,42 @@ void meter_ficha(int tablero[][7],int jugador)
 				tablero[fila][columna] = 2;
 		}
 	} while (columna < 0 || columna >6);
+}
+
+void escribir_fichero(FILE* fichero)
+{
+    char* username, * password;
+    int n = 20, cierre, i;
+
+    fopen_s(&fichero, "Users.txt", "a+");
+
+    username = (char*)malloc(n * sizeof(char));
+    password = (char*)malloc(n * sizeof(char));
+
+    if (username == NULL || password == NULL)
+        printf("Error: Memoria insuficiente");
+    else
+    {
+        for (i = 0; i < n; i++)
+        {
+            fscanf_s(fichero, "%c", &username[i], sizeof(username));
+            fscanf_s(fichero, "%c", &password[i], sizeof(password));
+
+            while (!feof(fichero))
+            {
+                fscanf_s(fichero, "%c", &username, sizeof(username));
+                fscanf_s(fichero, "%c", &password, sizeof(password));
+            }
+        }
+
+        cierre = fclose(fichero);
+
+        if (cierre == EOF)
+            printf("Problemas al cerrar\n");
+        else
+            exit(0);
+    }
+
 }
 
 FILE* crear_fichero(void) //Función para crear un fichero
