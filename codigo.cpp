@@ -3,7 +3,6 @@
 
 // Funciones prototipo
 int menu_principal(void);
-void configura(void);
 void un_jugador(void);
 void meter_ficha(int[][7],int jugador);
 void escribir_fichero(FILE*);
@@ -102,13 +101,6 @@ void un_jugador(void) {
 	}
 }
 
-void configura(void)
-{
- // Establece juego de caracteres castellano
- // Para que funcione hay que partir de un proyecto vacío
- // No utilice la plantilla Aplicación de consola C++
- setlocale(LC_ALL, "spanish");
-}
 
 void meter_ficha(int tablero[][7],int jugador)
 {
