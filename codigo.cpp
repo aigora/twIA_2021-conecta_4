@@ -131,7 +131,7 @@ void meter_ficha(int tablero[][7],int jugador)
 			else  // si la ficha es del jugador 2 la colocamos
 				tablero[c+1][columna-1] = 2;
 		}
-	} while (columna < 0 || columna >6);
+	} while (columna < 1 || columna >7);
 }
 
 void escribir_fichero(FILE* fichero)
