@@ -102,20 +102,19 @@ void configura(void)
 
 void meter_ficha(int tablero[][7],int jugador)
 {
-	int fila, columna, orden, c = 0;
-	scanf_s("%d", &orden);
+	int fila=1, columna, c = 0;
+	scanf_s("%d", &columna);
 	c = 0;
 	do
 	{
-		columna = tablero[c][orden];
+		fila = tablero[c][columna];
 		c++;
-	} while (columna != 0);
+	} while (fila != 0);
 	if (jugador == 1)
-		tablero[columna][orden] = 1;
+		tablero[fila][columna] = 1;
 	else 
-	tablero[columna][orden] = 2;
+	tablero[fila][columna] = 2;
 	c = 0;
-	return 0;
 }
 
 FILE* crear_fichero(void) //Función para crear un fichero
