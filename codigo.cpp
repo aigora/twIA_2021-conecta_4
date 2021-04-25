@@ -70,7 +70,8 @@ int main(void)
 			break;
 		}
 	} while (opc != 5);
- // Tareas de desconexión y cierre
+  // Tareas de desconexión y cierre
+  escribir_fichero_usuarios(usuarios,num_usuarios); // Traslada los usuarios desde memoria a un fichero
 }
 
 int menu_principal(void)
@@ -79,19 +80,24 @@ int menu_principal(void)
  
  do
  {
- printf("Seleccione opcion:\n");
- printf("1 - 1 jugador\n");
- printf("2 - 2 Jugadores\n");
- printf("3 - Reaunudar partida\n");
- printf("4 - Ver puntuaciones\n");
- printf("5 - Salir\n");
- scanf_s("%d", &opcion);
- if (opcion < 1 || opcion>5)
- printf("\nOpcion inexistente.\n\n");
+    printf("Menu principal Conecta-4\n");
+    printf ("========================\n");
+    printf("1 - Gestion de usuarios\n");
+    printf("2 - 1 Jugador\n");
+    printf("3 - 2 Jugadores\n"); 
+    printf("4 - Reaunudar partida\n");
+    printf("5 - Ver puntuaciones\n");
+    printf("6 - Salir\n");
+    printf ("Seleccione una opcion: ");
+    scanf_s("%d", &opcion);
+   
+    if (opcion < 1 || opcion>5)
+        printf("\nOpcion inexistente.\n\n");
  } while (opcion < 1 || opcion>5);
  
  return opcion;
 }
+
 void un_jugador(void) {
 	int i, j, jugador = 1;
 	int tablero[6][7];
