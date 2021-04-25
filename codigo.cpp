@@ -5,7 +5,7 @@
 int menu_principal(void);
 void configura(void);
 void un_jugador(void);
-void meter_ficha(int[][],int jugador);
+void meter_ficha(int[][7],int jugador);
 FILE* crear_fichero(void);
 
 int main(void)
@@ -100,7 +100,7 @@ void configura(void)
  setlocale(LC_ALL, "spanish");
 }
 
-void meter_ficha(int tablero[][],int jugador)
+void meter_ficha(int tablero[][7],int jugador)
 {
 	int fila, columna, orden, c = 0;
 	scanf_s("%d", &orden);
