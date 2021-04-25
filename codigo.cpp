@@ -102,17 +102,26 @@ void configura(void)
 
 void meter_ficha(int tablero[][7],int jugador)
 {
-	int fila=1, columna, c = 0;
-	scanf_s("%d", &columna);
-	do
+	int fila=1, columna, c = 0; // declaramos las variables
+	do //repetimos la funcion hasta que el usuario introduzca una columna válida
 	{
-		fila = tablero[c][columna];
-		c++;
-	} while (fila != 0);
-	if (jugador == 1)
-		tablero[fila][columna] = 1;
-	else 
-	tablero[fila][columna] = 2;
+		printf("introduzca columna:\n");
+		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
+		if (columna < 0 || columna >6)
+			printf("columna no válida\n");
+		else
+		{
+			do // barremos la columna hasta encontrar un hueco disponible
+			{
+				fila = tablero[c][columna];
+				c++;
+			} while (fila != 0);
+			if (jugador == 1)  // si la ficha es del jugador 1 la colocamos
+				tablero[fila][columna] = 1;
+			else  // si la ficha es del jugador 2 la colocamos
+				tablero[fila][columna] = 2;
+		}
+	} while (columna < 0 || columna >6);
 }
 
 FILE* crear_fichero(void) //Función para crear un fichero
