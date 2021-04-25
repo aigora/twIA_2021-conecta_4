@@ -1,14 +1,32 @@
 #include <stdio.h>
 #include <Windows.h>
-#include <locale.h>
 #include <malloc.h>
 
-// Funciones prototipo
+#define FILAS 6
+#define COLUMN 7
+#define LONG_CAD 25
+
+typedef struct
+{
+	char username[LONG_CAD];
+	char password[LONG_CAD];
+} Usuario;
+
+// Función prototipo
 int menu_principal(void);
-void un_jugador(void);
+
+// Funciones relacionadas con la partida
+void inicializar_tablero(int[][COLUMN]);
+void imprimir_tablero(int[][COLUMN]);
+void un_jugador(void); 
 void meter_ficha(int[][7],int jugador);
-void escribir_fichero(FILE*);
-FILE* crear_fichero(void);
+
+// Funciones de gestión de usuarios
+Usuario* leer_fichero_usuarios(int*);
+int escribir_fichero_usuarios(Usuario*,int);
+Usuario* gestion_usuarios(Usuario*,int*);
+void listado_usuarios(Usuario*,int);
+Usuario* add_usuario (Usuario*,int*);
 
 int main(void)
 {
