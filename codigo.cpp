@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <Windows.h>
+#include <locale.h>
 #include <malloc.h>
 
 #define FILAS 6
@@ -152,59 +153,153 @@ void meter_ficha(int tablero[][7],int jugador)
 	} while (columna < 1 || columna >7);
 }
 
-void escribir_fichero(FILE* fichero)
+// Menú con las opciones para gestionar usuarios
+Usuario* gestion_usuarios(Usuario* lista, int* num)
 {
-    char* username, * password;
-    int n = 20, cierre, i;
-
-    fopen_s(&fichero, "Users.txt", "a+");
-
-    username = (char*)malloc(n * sizeof(char));
-    password = (char*)malloc(n * sizeof(char));
-
-    if (username == NULL || password == NULL)
-        printf("Error: Memoria insuficiente");
-    else
-    {
-        for (i = 0; i < n; i++)
-        {
-            fscanf_s(fichero, "%c", &username[i], sizeof(username));
-            fscanf_s(fichero, "%c", &password[i], sizeof(password));
-
-            while (!feof(fichero))
-            {
-                fscanf_s(fichero, "%c", &username, sizeof(username));
-                fscanf_s(fichero, "%c", &password, sizeof(password));
-            }
-        }
-
-        cierre = fclose(fichero);
-
-        if (cierre == EOF)
-            printf("Problemas al cerrar\n");
-        else
-            exit(0);
-    }
-
+	int opcion;
+	
+	do
+	{
+		printf("Gestion de Usuarios\n");
+		printf("=====================\n);
+		printf("1 - Add usuario\n);
+		printf("2 - Listado de los usuarios\n");
+		printf("3 - Volver al menu principal\n);
+		printf("Seleccione una opcion: ");
+		scanf_s("%d", &opcion);
+		       
+		switch (opcion)
+		{
+		case 1:
+			lista = add_usuario(lista, num);
+			break;
+		case 2: 
+			listado_usuarios(lista, *num);
+			break;
+		case 3: 
+			break;
+		default: printf("Opcion inexistente");
+		}
+	 } while (opcion != 3);
+		       
+	return lista;
 }
 
-FILE* crear_fichero(void) //Función para crear un fichero
+// Muestra la lista de usuarios
+void listado_usuarios(Usuario *lista,int numero)
 {
-    FILE* fichero;
-    int cierre;
-
-    fopen_s (&fichero, "Users.txt", "a+"); // Crea un fichero para escribir 
-    if (fichero == NULL)
-        printf("Error no se ha podido abrir el fichero\n");
-    else
-    {
-        cierre = fclose(fichero); // Cierra el fichero
-
-        if (cierre == EOF)
-            printf("Problemas al cerrar\n");// Acciones asociadas a la imposibilidad de cerrar el fichero.
-        else
-            printf("Todo ok\n");
-        // Acciones asociadas una vez cerrado el fichero
-    }
-    return fichero;
+	int i;
+	
+	if (numero == 0)
+		printf("No hay usuarios actualmente\n");
+	else
+	{
+		printf("En este momento existen %d usuarios %c\n", numero, (numero>1)?'s':' ');
+		printf("Username\t\tPassword\n");
+		printf("========\t\t========\n");
+		
+		for (i = 0; i < numero; i++)
+			printf("%s\t\t%s\n", (lista + i)->username, (lista + i)->password);
+	}
+	
+	printf("\n\n");
 }
+		       
+// Añade un nuevo usuario
+Usuario *add_usuario(Usuario *lista,int* num)
+{
+	int numero = *num;
+	Usuario* lista_old;
+	char intro;
+	
+	lista_old = lista; // Se guarda la dirección de la lista original por si falla realloc
+	if (*num == 0) // Si no hay usuarios aún
+		lista = (Usuario*)malloc(sizeof(Usuario));
+	else
+		lista = (Usuario*)realloc(lista, sizeof(Usuario) * (numero + 1)); // Pide memoria nueva con copia de datos
+	
+	if (lista == NULL)
+	{
+		lista = lista_old;
+		printf("Memoria insuficiente para añadir un nuevo usuario\n");
+	}
+	else
+	{
+		printf("Nombre nuevo de usuario: ");
+		intro = getchar(); // Eliminamos el intro que estará en el buffer tras la selección del menú
+		gets_s((lista + numero)->username, LONG_CAD);
+		printf("Password nuevo usuario: ");
+		gets_s((lista + numero)->password, LONG_CAD);
+		*num = numero + 1;
+	}
+	
+        return lista;
+}
+		       
+// Traslada los usuarios de un fichero a memoria
+usuario* leer_fichero_usuarios(int* num)
+{
+	Usuario* lista = NULL; // Lista con los usuarois obtenidos del fichero
+	FILE* fichero; // Descriptor del fichero
+	errno_t err; // Código de error del proceso de apertura del fichero
+	int i;
+	char intro[2], *p; // Para procesar
+	
+	err = fopen_s(&fichero, "Usuarios.txt", "r"); // Apertura del fichero
+	if (err == 0) // Si no hay error
+	{
+		fscanf_s(fichero, "%d", num); // Leemos el número de usuarios que hay en el fichero
+		lista = (Usuario*)malloc((*num) * sizeof(Usuario)); // Solicitamos memoria para los datos de los usuarios
+		if (lista == NULL) // Si no hay memoria suficiente
+			printf("Memoria insuficiente durante la lectura del fichero de usuarios\n");
+		else // Si hay memoria suficiente
+		{
+			fgets(intro, 2, fichero); // Saltamos el intro que hay tras el número (Ascii 10 y 13)
+			for (i = 0;i < *num; i++) // Para cada usaurio del fichero
+			{
+				fgets((lista + i)->username, LONG_CAD, fichero); // Leemos el nombre
+				p = strchr((lista + i)->username, '\n'); // Localizamos el \n del nombre
+				*p = '\0'; // Lo cambiamos por un \0
+				fgets((lista + i)->password, LONG_CAD); // Leemos el password
+				p = strchr((lista + i)->password, '\n') // Localizamos el \n del password
+				*P = '\0'; // Lo cambiamos por un \0
+			}
+			
+			fclose(fichero);
+		}
+	}
+	else // Si se ha producido un error en la lectura del fichero de usuarios
+		*num = 0;
+	
+	return lista;
+}
+		       
+// Traslada los usuarios de memoria a fichero
+int escribir_fichero_usuarios(Usuario* lista,int numero)
+{
+	int i;
+	FILE* fichero;
+	errno_t err;
+	
+	err = fopen_s(&fichero, "Usuarios.txt", "w");
+	if (err == 0) // Si el fichero se ha podido crear
+	{
+		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
+		for (i = 0; i < numero; i++)
+		{
+			fprintf(fichero, "%s\n", (lista + i)->username);
+			fprintf(fichero, "%s\n", (lista + i)->password);
+		}
+		
+		fclose(fichero);
+	}
+	else
+		printf("Se ha producido un error a la hora de grabar el fichero de usuarios\n");
+	
+	return err;
+}
+			       
+			       
+			       
+		      
+		       
