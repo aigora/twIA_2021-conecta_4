@@ -117,19 +117,19 @@ void meter_ficha(int tablero[][7],int jugador)
 	{
 		printf("introduzca columna:\n");
 		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
-		if (columna < 0 || columna >6)
+		if (columna < 1 || columna >7)
 			printf("columna no válida\n");
 		else
 		{
 			do // barremos la columna hasta encontrar un hueco disponible
 			{
-				fila = tablero[c][columna];
+				fila = tablero[c][columna-1];
 				c--;
 			} while (fila != 0);
 			if (jugador == 1)  // si la ficha es del jugador 1 la colocamos
-				tablero[c+1][columna] = 1;
+				tablero[c+1][columna-1] = 1;
 			else  // si la ficha es del jugador 2 la colocamos
-				tablero[c+1][columna] = 2;
+				tablero[c+1][columna-1] = 2;
 		}
 	} while (columna < 0 || columna >6);
 }
