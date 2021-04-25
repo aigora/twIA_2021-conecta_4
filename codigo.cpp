@@ -102,7 +102,7 @@ void configura(void)
 
 void meter_ficha(int tablero[][],int jugador)
 {
-	int fila, columna, orden, c = 0;
+	int fila, columna = 0, orden, c = 0;
 	scanf_s("%d", &orden);
 	c = 0;
 	do
