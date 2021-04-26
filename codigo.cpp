@@ -199,7 +199,7 @@ void listado_usuarios(Usuario *lista,int numero)
 		printf("========\t\t========\n");
 		
 		for (i = 0; i < numero; i++)
-			printf("%s\t\t%s\n", (lista + i)->username, (lista + i)->password);
+			printf("%s\t\t\t%s\n", (lista + i)->username, (lista + i)->password);
 	}
 	
 	printf("\n\n");
