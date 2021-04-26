@@ -19,8 +19,8 @@ int menu_principal(void);
 // Funciones relacionadas con la partida
 void inicializar_tablero(int[][COLUMN]);
 void imprimir_tablero(int[][COLUMN]);
-void un_jugador(void); 
-void meter_ficha(int[][7],int jugador);
+void un_jugador(int[][COLUMN]); 
+void meter_ficha(int[][COLUMN], int);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
@@ -34,6 +34,7 @@ int main(void)
  int opc; // Opción del menú principal
  int num_usuarios; // Cantidad de usuarios actual
  Usuario* usuarios; // Lista de usuarios actual
+ int tablero[FILAS][COLUMN];
 	
  // Leer fichero con los usuarios
  usuarios = leer_fichero_usuarios(&num_usuarios); // Traslada los usuarios desde un fichero a memoria
@@ -42,28 +43,17 @@ int main(void)
  do
  {
 	opc = menu_principal();
-	int tablero[6][7];
 	int i, j, c, orden, columna;
 	switch (opc)
 	{
 	case 1:
-		usuarios = gestion_usuarios(usuarios,&num_usuarios);
-		un_jugador();	
-		break;
+			usuarios = gestion_usuarios(usuarios,&num_usuarios);
+			break;	
 	case 2:
-		// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-		printf("ha seleccionado modo 2 jugadores");
-		for (i = 0; i < 6; i++) // en este bucle ponermos el tablero a 0 (casillas vacías)
-		{
-			for (j = 0; j < 7; j++)
-			{
-				tablero[i][j] = 0;
-			}
-		}
-		printf("turno del jugador 1:\n");
-
-		break;
+			un_jugador(tablero);
+			break;
 		case 3:
+			dos_jugadores(tablero);
 			break;
 		case 4:
 			break;
@@ -92,32 +82,26 @@ int menu_principal(void)
     printf ("Seleccione una opcion: ");
     scanf_s("%d", &opcion);
    
-    if (opcion < 1 || opcion>5)
+    if (opcion < 1 || opcion>6)
         printf("\nOpcion inexistente.\n\n");
- } while (opcion < 1 || opcion>5);
+ } while (opcion < 1 || opcion>6);
  
  return opcion;
 }
-
-void un_jugador(void) {
-	int i, j, jugador = 1;
-	int tablero[6][7];
-	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-	printf("Ha seleccionado modo 1 jugador\n");
-	printf("Inicio de la partida:\n");
-	// en este bucle ponermos el tablero a 0 (casillas vacías)
-	for (i = 0; i < 6; i++)
+void inicializar_tablero(int tablero[][COLUMN]) {
+	int i, j;
+	for (i = 0; i < 6; i++) // en este bucle ponermos el tablero a 0 (casillas vacías)
 	{
 		for (j = 0; j < 7; j++)
 		{
 			tablero[i][j] = 0;
-			printf("|%d ", tablero[i][j]);
 		}
-		printf("|\n");
 	}
-	printf("\n");
-	printf("Inicio del turno del jugador\n");
-	meter_ficha(tablero, jugador);
+}
+
+
+void imprimir_tablero(int tablero[][COLUMN]) {
+	int i, j;
 	for (i = 0; i < 6; i++)
 	{
 		for (j = 0; j < 7; j++)
@@ -127,30 +111,41 @@ void un_jugador(void) {
 		printf("|\n");
 	}
 }
+void un_jugador(int tablero[][COLUMN]) {	
+	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
+	printf("Ha seleccionado modo 1 jugador\n");
+	printf("Inicio de la partida:\n");
+	inicializar_tablero(tablero);//Inicializamos tablero
+	imprimir_tablero(tablero);
+	printf("\n");
+	printf("Inicio del turno del jugador\n");
+	meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
+	imprimir_tablero(tablero);
+}
 
 
-void meter_ficha(int tablero[][7],int jugador)
+void meter_ficha(int tablero[][COLUMN],int jugador)//Pone la ficha del jugador "jugador" em el tablero
 {
-	int fila=1, columna, c = 6; // declaramos las variables
+	int fila, columna, exito=0 // declaramos las variables
 	do //repetimos la funcion hasta que el usuario introduzca una columna válida
 	{
 		printf("Introduzca columna:\n");
 		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
-		if (columna < 1 || columna >7)
-			printf("Columna no valida\n");
+		if (columna < 1 || columna >COLUMN)
+			printf("Columna no valida-limites 0 a %d-\n",COLUMN-1);
 		else
 		{
-			do // barremos la columna hasta encontrar un hueco disponible
-			{
-				fila = tablero[c][columna-1];
-				c--;
-			} while (fila != 0);
-			if (jugador == 1)  // si la ficha es del jugador 1 la colocamos
-				tablero[c+1][columna-1] = 1;
-			else  // si la ficha es del jugador 2 la colocamos
-				tablero[c+1][columna-1] = 2;
+			if(tablero[0][columna]!=0){//Si la columna esta completa
+				printf("Columna no valida-esta completa-\n")
+			        columna=-1;//Truco para forzar el nuevo bucle
+			}
+	} while (columna < 0 || columna >COLUMN);
+		for(fila=FILAS-1;i>=0 && exito==0;fila--){//Buscamos fila con un hueco en la columna
+			if(tablero[fila][columna]==0){//Si está vacía
+				tablero[fila][columna]=jugador;//Ponemos ficha del jugador
+				exito=1;
+			}
 		}
-	} while (columna < 1 || columna >7);
 }
 
 // Menú con las opciones para gestionar usuarios
