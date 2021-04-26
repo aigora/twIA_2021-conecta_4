@@ -262,7 +262,7 @@ Usuario* leer_fichero_usuarios(int* num)
 				*p = '\0'; // Lo cambiamos por un \0
 				fgets((lista + i)->password, LONG_CAD); // Leemos el password
 				p = strchr((lista + i)->password, '\n') // Localizamos el \n del password
-				*P = '\0'; // Lo cambiamos por un \0
+				*p = '\0'; // Lo cambiamos por un \0
 			}
 			
 			fclose(fichero);
