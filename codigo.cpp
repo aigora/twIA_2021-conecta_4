@@ -260,7 +260,7 @@ Usuario* leer_fichero_usuarios(int* num)
 				fgets((lista + i)->username, LONG_CAD, fichero); // Leemos el nombre
 				p = strchr((lista + i)->username, '\n'); // Localizamos el \n del nombre
 				*p = '\0'; // Lo cambiamos por un \0
-				fgets((lista + i)->password, LONG_CAD); // Leemos el password
+				fgets((lista + i)->password, LONG_CAD, fichero); // Leemos el password
 				p = strchr((lista + i)->password, '\n') // Localizamos el \n del password
 				*p = '\0'; // Lo cambiamos por un \0
 			}
