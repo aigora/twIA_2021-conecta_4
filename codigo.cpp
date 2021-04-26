@@ -237,7 +237,7 @@ Usuario *add_usuario(Usuario *lista,int* num)
 }
 		       
 // Traslada los usuarios de un fichero a memoria
-usuario* leer_fichero_usuarios(int* num)
+Usuario* leer_fichero_usuarios(int* num)
 {
 	Usuario* lista = NULL; // Lista con los usuarois obtenidos del fichero
 	FILE* fichero; // Descriptor del fichero
