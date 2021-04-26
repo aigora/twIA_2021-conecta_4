@@ -124,28 +124,30 @@ void un_jugador(int tablero[][COLUMN]) {
 }
 
 
-void meter_ficha(int tablero[][COLUMN],int jugador)//Pone la ficha del jugador "jugador" em el tablero
+void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador "jugador" em el tablero
 {
-	int fila, columna, exito=0 // declaramos las variables
+	int fila, columna, exito = 0; // declaramos las variables
 	do //repetimos la funcion hasta que el usuario introduzca una columna válida
 	{
 		printf("Introduzca columna:\n");
 		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
 		if (columna < 1 || columna >COLUMN)
-			printf("Columna no valida-limites 0 a %d-\n",COLUMN-1);
+			printf("Columna no valida-limites 0 a %d-\n", COLUMN - 1);
 		else
 		{
-			if(tablero[0][columna]!=0){//Si la columna esta completa
-				printf("Columna no valida-esta completa-\n")
-			        columna=-1;//Truco para forzar el nuevo bucle
-			}
-	} while (columna < 0 || columna >COLUMN);
-		for(fila=FILAS-1;i>=0 && exito==0;fila--){//Buscamos fila con un hueco en la columna
-			if(tablero[fila][columna]==0){//Si está vacía
-				tablero[fila][columna]=jugador;//Ponemos ficha del jugador
-				exito=1;
+			if (tablero[0][columna] != 0) {//Si la columna esta completa
+				printf("Columna no valida-esta completa-\n");
+				columna = -1;//Truco para forzar el nuevo bucle
 			}
 		}
+	} while (columna < 0 || columna >COLUMN);
+		for (fila = FILAS - 1;fila >= 0 && exito == 0;fila--) {//Buscamos fila con un hueco en la columna
+			if (tablero[fila][columna] == 0) {//Si está vacía
+				tablero[fila][columna] = jugador;//Ponemos ficha del jugador
+				exito = 1;
+			}
+		}
+	
 }
 
 // Menú con las opciones para gestionar usuarios
