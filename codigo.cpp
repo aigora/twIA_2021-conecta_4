@@ -161,10 +161,10 @@ Usuario* gestion_usuarios(Usuario* lista, int* num)
 	do
 	{
 		printf("Gestion de Usuarios\n");
-		printf("=====================\n);
-		printf("1 - Add usuario\n);
+		printf("=====================\n");
+		printf("1 - Add usuario\n");
 		printf("2 - Listado de los usuarios\n");
-		printf("3 - Volver al menu principal\n);
+		printf("3 - Volver al menu principal\n");
 		printf("Seleccione una opcion: ");
 		scanf_s("%d", &opcion);
 		       
