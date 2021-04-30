@@ -192,7 +192,7 @@ void listado_usuarios(Usuario *lista,int numero)
 		printf("No hay usuarios actualmente (excepto la IA)\n");
 	else
 	{
-		printf("En este momento existen %d usuarios %c\n", numero, (numero > 2) ? 's' : ' ');
+		printf("En este momento existen %d usuarios %c\n", numero - 1, (numero > 2) ? 's' : ' ');
 		printf("Username\t\tPassword\n");
 		printf("========\t\t========\n");
 		
@@ -243,7 +243,7 @@ Usuario* leer_fichero_usuarios(int* num)
 	int i;
 	char intro[2], *p; // Para procesar
 	
-	err = fopen_s(&fichero, "Usuarios.txt", "r"); // Apertura del fichero
+	err = fopen_s(&fichero, "Usuarios.txt", "r"); // Apertura del fichero solo para lectura
 	if (err == 0) // Si no hay error
 	{
 		fscanf_s(fichero, "%d", num); // Leemos el número de usuarios que hay en el fichero
@@ -279,7 +279,7 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	FILE* fichero;
 	errno_t err;
 	
-	err = fopen_s(&fichero, "Usuarios.txt", "w");
+	err = fopen_s(&fichero, "Usuarios.txt", "a"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
 		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
