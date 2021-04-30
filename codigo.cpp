@@ -132,7 +132,7 @@ void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador 
 	{
 		printf("Introduzca columna:\n");
 		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
-		if (columna < 0 || columna >COLUMN - 1))
+		if (columna < 0 || columna > COLUMN - 1)
 			printf("Columna no valida-limites 0 a %d-\n", COLUMN - 1);
 		else
 		{
@@ -141,7 +141,7 @@ void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador 
 				columna = -1;//Truco para forzar el nuevo bucle
 			}
 		}
-	} while (columna < 0 || columna >COLUMN - 1));
+	} while (columna < 0 || columna > COLUMN - 1);
 		for (fila = FILAS - 1;fila >= 0 && exito == 0;fila--) {//Buscamos fila con un hueco en la columna
 			if (tablero[fila][columna] == 0) {//Si está vacía
 				tablero[fila][columna] = jugador;//Ponemos ficha del jugador
@@ -259,7 +259,7 @@ Usuario* leer_fichero_usuarios(int* num)
 				p = strchr((lista + i)->username, '\n'); // Localizamos el \n del nombre
 				*p = '\0'; // Lo cambiamos por un \0
 				fgets((lista + i)->password, LONG_CAD, fichero); // Leemos el password
-				p = strchr((lista + i)->password, '\n') // Localizamos el \n del password
+				p = strchr((lista + i)->password, '\n'); // Localizamos el \n del password
 				*p = '\0'; // Lo cambiamos por un \0
 			}
 			
