@@ -24,10 +24,10 @@ void meter_ficha(int[][COLUMN], int);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
-int escribir_fichero_usuarios(Usuario*,int);
-Usuario* gestion_usuarios(Usuario*,int*);
-void listado_usuarios(Usuario*,int);
-Usuario* add_usuario (Usuario*,int*);
+int escribir_fichero_usuarios(Usuario*, int);
+Usuario* gestion_usuarios(Usuario*, int*);
+void listado_usuarios(Usuario*, int);
+Usuario* add_usuario (Usuario*, int*);
 
 int main(void)
 {
@@ -47,7 +47,7 @@ int main(void)
 	switch (opc)
 	{
 	case 1:
-			usuarios = gestion_usuarios(usuarios,&num_usuarios);
+			usuarios = gestion_usuarios(usuarios, &num_usuarios);
 			break;	
 	case 2:
 			un_jugador(tablero);
@@ -61,8 +61,9 @@ int main(void)
 			break;
 		}
 	} while (opc != 5);
+	
   // Tareas de desconexión y cierre
-  escribir_fichero_usuarios(usuarios,num_usuarios); // Traslada los usuarios desde memoria a un fichero
+  escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
 }
 
 int menu_principal(void)
@@ -88,6 +89,7 @@ int menu_principal(void)
  
  return opcion;
 }
+
 void inicializar_tablero(int tablero[][COLUMN]) {
 	int i, j;
 	for (i = 0; i < 6; i++) // en este bucle ponermos el tablero a 0 (casillas vacías)
@@ -98,7 +100,6 @@ void inicializar_tablero(int tablero[][COLUMN]) {
 		}
 	}
 }
-
 
 void imprimir_tablero(int tablero[][COLUMN]) {
 	int i, j;
@@ -111,6 +112,7 @@ void imprimir_tablero(int tablero[][COLUMN]) {
 		printf("|\n");
 	}
 }
+
 void un_jugador(int tablero[][COLUMN]) {	
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	printf("Ha seleccionado modo 1 jugador\n");
@@ -122,7 +124,6 @@ void un_jugador(int tablero[][COLUMN]) {
 	meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
 	imprimir_tablero(tablero);
 }
-
 
 void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador "jugador" em el tablero
 {
@@ -158,7 +159,7 @@ Usuario* gestion_usuarios(Usuario* lista, int* num)
 	do
 	{
 		printf("Gestion de Usuarios\n");
-		printf("=====================\n");
+		printf("===================\n");
 		printf("1 - Add usuario\n");
 		printf("2 - Listado de los usuarios\n");
 		printf("3 - Volver al menu principal\n");
@@ -187,15 +188,15 @@ void listado_usuarios(Usuario *lista,int numero)
 {
 	int i;
 	
-	if (numero == 0)
-		printf("No hay usuarios actualmente\n");
+	if (numero == 1)
+		printf("No hay usuarios actualmente (excepto la IA)\n");
 	else
 	{
-		printf("En este momento existen %d usuarios %c\n", numero, (numero>1)?'s':' ');
+		printf("En este momento existen %d usuarios %c\n", numero, (numero > 2) ? 's' : ' ');
 		printf("Username\t\tPassword\n");
 		printf("========\t\t========\n");
 		
-		for (i = 0; i < numero; i++)
+		for (i = 1; i < numero; i++)
 			printf("%s\t\t\t%s\n", (lista + i)->username, (lista + i)->password);
 	}
 	
@@ -203,14 +204,14 @@ void listado_usuarios(Usuario *lista,int numero)
 }
 		       
 // Añade un nuevo usuario
-Usuario *add_usuario(Usuario *lista,int* num)
+Usuario* add_usuario(Usuario* lista, int* num)
 {
 	int numero = *num;
 	Usuario* lista_old;
 	char intro;
 	
 	lista_old = lista; // Se guarda la dirección de la lista original por si falla realloc
-	if (*num == 0) // Si no hay usuarios aún
+	if (*num == 1) // Si no hay usuarios aún (excepto la IA)
 		lista = (Usuario*)malloc(sizeof(Usuario));
 	else
 		lista = (Usuario*)realloc(lista, sizeof(Usuario) * (numero + 1)); // Pide memoria nueva con copia de datos
@@ -236,7 +237,7 @@ Usuario *add_usuario(Usuario *lista,int* num)
 // Traslada los usuarios de un fichero a memoria
 Usuario* leer_fichero_usuarios(int* num)
 {
-	Usuario* lista = NULL; // Lista con los usuarois obtenidos del fichero
+	Usuario* lista = NULL; // Lista con los usuarios obtenidos del fichero
 	FILE* fichero; // Descriptor del fichero
 	errno_t err; // Código de error del proceso de apertura del fichero
 	int i;
@@ -252,7 +253,7 @@ Usuario* leer_fichero_usuarios(int* num)
 		else // Si hay memoria suficiente
 		{
 			fgets(intro, 2, fichero); // Saltamos el intro que hay tras el número (Ascii 10 y 13)
-			for (i = 0;i < *num; i++) // Para cada usaurio del fichero
+			for (i = 1; i < *num; i++) // Para cada usaurio del fichero
 			{
 				fgets((lista + i)->username, LONG_CAD, fichero); // Leemos el nombre
 				p = strchr((lista + i)->username, '\n'); // Localizamos el \n del nombre
@@ -266,13 +267,13 @@ Usuario* leer_fichero_usuarios(int* num)
 		}
 	}
 	else // Si se ha producido un error en la lectura del fichero de usuarios
-		*num = 0;
+		*num = 1;
 	
 	return lista;
 }
 		       
 // Traslada los usuarios de memoria a fichero
-int escribir_fichero_usuarios(Usuario* lista,int numero)
+int escribir_fichero_usuarios(Usuario* lista, int numero)
 {
 	int i;
 	FILE* fichero;
@@ -282,8 +283,11 @@ int escribir_fichero_usuarios(Usuario* lista,int numero)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
 		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
+		fprintf(fichero, "IA\n"); // Se guarda por defecto un usuario llamado IA
+		fprintf(fichero, "IA\n"); // El password por defecto será IA
 		for (i = 0; i < numero; i++)
 		{
+			fprintf(fichero, "%d\n", i); // Se numeran los usuarios
 			fprintf(fichero, "%s\n", (lista + i)->username);
 			fprintf(fichero, "%s\n", (lista + i)->password);
 		}
