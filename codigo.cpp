@@ -116,14 +116,15 @@ void imprimir_tablero(int tablero[][COLUMN]) {
 	}
 }
 
-void un_jugador(int tablero[][COLUMN]) {	
+void un_jugador(int tablero[][COLUMN]) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-	printf("Ha seleccionado modo 1 jugador\n");
+	int fin = 0;
+	printf("Ha seleccionado modo 2 jugadores\n");
 	printf("Inicio de la partida:\n");
 	inicializar_tablero(tablero);//Inicializamos tablero
 	imprimir_tablero(tablero);
 	printf("\n");
-	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
+	do // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
 	{
 		printf("Inicio del turno del jugador 1\n");
 		meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
@@ -131,14 +132,13 @@ void un_jugador(int tablero[][COLUMN]) {
 		fin = conecta(tablero, fin);
 		if (fin != 1 && fin != 2) // la ficha del seundo jugador solo se puede introducir si no ha ganado el jugador 1
 		{
-		        printf("Inicio del turno de la CPU\n");
-		        IA(tablero, 2);
-		        imprimir_tablero(tablero);
+			printf("Inicio del turno del jugador 2\n");
+			IA(tablero, 2);//La máquina coloca su ficha
+			imprimir_tablero(tablero);
 			fin = conecta(tablero, fin);
 		}
 	} while (fin != 1 && fin != 2);
-	printf("ha ganado el jugador %d\n", fin);  // la variable fin recoge que jugador ha conseguido la victoria y se imprime por pantalla
-}
+	printf("ha ganado el jugador %d\n", fin); // la variable fin recoge que jugador ha conseguido la victoria y se imprime por pantalla
 }
 
 void dos_jugadores(int tablero[][COLUMN]) {
