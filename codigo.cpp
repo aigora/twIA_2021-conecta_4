@@ -192,15 +192,33 @@ void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador 
 		}
 	
 }
-void IA(int tablero[][COLUMN],int jugador) {
+void IA(int tablero[][COLUMN], int jugador)
+{
 	int fila, columna, exito = 0;
-	columna = rand() % COLUMN; //Hacemos que la IA elija una columna aleatoria
-	for (fila = FILAS - 1;fila >= 0 && exito == 0;fila--) {//Buscamos fila con un hueco en la columna
-		if (tablero[fila][columna] == 0) {//Si está vacía
-			tablero[fila][columna] = jugador;//Ponemos ficha del jugador
-			exito = 1;
+	do
+	{
+		for (columna = 0; columna < COLUMN; columna++)
+		{
+			if (tablero[FILAS-1][columna] == 0)// buscamos si hay una casilla libre en la base para poner ficha
+			{
+				tablero[FILAS-1][columna] = jugador;//Ponemos ficha del jugador
+				exito = 1;
+				columna = COLUMN;
+			}
 		}
-	}
+			if(exito == 0) // en caso de no haber encontrado ficha en esas posiciones, la IA pondra la ficha aleatoriamente en un hueco disponible
+			{
+				columna = rand() % COLUMN; //Hacemos que la IA elija una columna aleatoria
+				for (fila = FILAS - 1; fila >= 0 && exito == 0; fila--)//Buscamos fila con un hueco en la columna
+				{
+					if (tablero[fila][columna] == 0) 
+					{//Si está vacía
+						tablero[fila][columna] = jugador;//Ponemos ficha del jugador
+						exito = 1;
+					}
+				}
+			}
+	} while (exito == 0);
 }
 
 // Menú con las opciones para gestionar usuarios
