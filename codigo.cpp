@@ -20,6 +20,7 @@ int menu_principal(void);
 void inicializar_tablero(int[][COLUMN]);
 void imprimir_tablero(int[][COLUMN]);
 void un_jugador(int[][COLUMN]); 
+void dos_jugadores(int tablero[][COLUMN]);
 void meter_ficha(int[][COLUMN], int);
 
 // Funciones de gestión de usuarios
@@ -125,6 +126,18 @@ void un_jugador(int tablero[][COLUMN]) {
 	imprimir_tablero(tablero);
 }
 
+void dos_jugadores(int tablero[][COLUMN]) {
+	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
+	printf("Ha seleccionado modo 2 jugadores\n");
+	printf("Inicio de la partida:\n");
+	inicializar_tablero(tablero);//Inicializamos tablero
+	imprimir_tablero(tablero);
+	printf("\n");
+	printf("Inicio del turno del jugador\n");
+	meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
+	imprimir_tablero(tablero);
+}
+
 void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador "jugador" em el tablero
 {
 	int fila, columna, exito = 0; // declaramos las variables
@@ -132,6 +145,7 @@ void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador 
 	{
 		printf("Introduzca columna:\n");
 		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
+		columna--; // ajustamos columna a un valor inferior para que las columnas sean del 1 al 7, más intuitivo para el usuario
 		if (columna < 0 || columna > (COLUMN - 1))
 			printf("Columna no valida-limites 0 a %d-\n", COLUMN - 1);
 		else
