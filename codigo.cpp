@@ -327,6 +327,11 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	
 	return err;
 }
+
+int conecta(int tablero[][COLUMN], int fin)
+{
+	return 0;
+}
 			       
 			       
 			       
