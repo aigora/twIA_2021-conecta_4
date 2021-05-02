@@ -201,7 +201,7 @@ void IA(int tablero[][COLUMN], int jugador)
 		{
 			for (columna = 0; columna < COLUMN; columna++)
 			{
-				if (tablero[FILAS - 4][columna] == 0 && tablero[FILAS - 3][columna] == jugador)// en caso de que hayamos ocupado la primera fila, colocar una ficha encima de esta
+				if (tablero[FILAS - 4][columna] == 0 && tablero[FILAS - 3][columna] == jugador && tablero[FILAS - 2][columna] == jugador && tablero[FILAS - 1][columna] == jugador)// en caso de que hayamos ocupado las tres primeras filas, colocar una ficha encima de esta
 				{
 					tablero[FILAS - 4][columna] = jugador;//Ponemos ficha del jugador
 					exito = 1; // salimos del bucle while
@@ -213,7 +213,7 @@ void IA(int tablero[][COLUMN], int jugador)
 		{
 			for (columna = 0; columna < COLUMN; columna++)
 			{
-				if (tablero[FILAS - 3][columna] == 0 && tablero[FILAS - 2][columna] == jugador)// en caso de que hayamos ocupado la primera fila, colocar una ficha encima de esta
+				if (tablero[FILAS - 3][columna] == 0 && tablero[FILAS - 2][columna] == jugador && tablero[FILAS - 1][columna] == jugador)// en caso de que hayamos ocupado las dos primeras filas, colocar una ficha encima de esta
 				{
 					tablero[FILAS - 3][columna] = jugador;//Ponemos ficha del jugador
 					exito = 1; // salimos del bucle while
@@ -248,14 +248,16 @@ void IA(int tablero[][COLUMN], int jugador)
 		if(exito == 0)
 		{
 			columna = rand() % COLUMN; //Hacemos que la IA elija una columna aleatoria
-			for (fila = FILAS - 1; fila >= 0 && exito == 0; fila--) {//Buscamos fila con un hueco en la columna
+			for (fila = FILAS - 1; fila >= 0 && exito == 0; fila--)//Buscamos fila con un hueco en la columna
+			{
 				if (tablero[fila][columna] == 0) {//Si está vacía
 						tablero[fila][columna] = jugador;//Ponemos ficha del jugador
 						exito = 1;// salimos del bucle while
 				}
 			}
 		}
-	} while (exito == 0);}
+	} while (exito == 0);
+}
 
 // Menú con las opciones para gestionar usuarios
 Usuario* gestion_usuarios(Usuario* lista, int* num)
