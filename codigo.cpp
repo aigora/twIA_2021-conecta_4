@@ -22,6 +22,7 @@ void imprimir_tablero(int[][COLUMN]);
 void un_jugador(int[][COLUMN]); 
 void dos_jugadores(int tablero[][COLUMN]);
 void meter_ficha(int[][COLUMN], int);
+int conecta(int[][COLUMN], int);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
@@ -128,14 +129,27 @@ void un_jugador(int tablero[][COLUMN]) {
 
 void dos_jugadores(int tablero[][COLUMN]) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
+	int fin = 0;
 	printf("Ha seleccionado modo 2 jugadores\n");
 	printf("Inicio de la partida:\n");
 	inicializar_tablero(tablero);//Inicializamos tablero
 	imprimir_tablero(tablero);
 	printf("\n");
-	printf("Inicio del turno del jugador\n");
-	meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
-	imprimir_tablero(tablero);
+	do
+	{
+		printf("Inicio del turno del jugador 1\n");
+		meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
+		imprimir_tablero(tablero);
+		fin = conecta(tablero, fin);
+		if (fin != 1 && fin != 2)
+		{
+			printf("Inicio del turno del jugador 2\n");
+			meter_ficha(tablero, 2);//El jugador elige dónde poner la ficha
+			imprimir_tablero(tablero);
+			fin = conecta(tablero, fin);
+		}
+	} while (fin != 1 && fin != 2);
+	printf("ha ganado el jugador %d\n", fin);
 }
 
 void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador "jugador" em el tablero
