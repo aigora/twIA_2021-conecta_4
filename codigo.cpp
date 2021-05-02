@@ -135,13 +135,13 @@ void dos_jugadores(int tablero[][COLUMN]) {
 	inicializar_tablero(tablero);//Inicializamos tablero
 	imprimir_tablero(tablero);
 	printf("\n");
-	do
+	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
 	{
 		printf("Inicio del turno del jugador 1\n");
 		meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
 		imprimir_tablero(tablero);
 		fin = conecta(tablero, fin);
-		if (fin != 1 && fin != 2)
+		if (fin != 1 && fin != 2) // la ficha del seundo jugador solo se puede introducir si no ha ganado el jugador 1
 		{
 			printf("Inicio del turno del jugador 2\n");
 			meter_ficha(tablero, 2);//El jugador elige dónde poner la ficha
@@ -149,7 +149,7 @@ void dos_jugadores(int tablero[][COLUMN]) {
 			fin = conecta(tablero, fin);
 		}
 	} while (fin != 1 && fin != 2);
-	printf("ha ganado el jugador %d\n", fin);
+	printf("ha ganado el jugador %d\n", fin);  // la variable fin recoge que jugador ha conseguido la victoria y se imprime por pantalla
 }
 
 void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador "jugador" em el tablero
