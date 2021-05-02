@@ -23,6 +23,7 @@ void un_jugador(int[][COLUMN]);
 void dos_jugadores(int tablero[][COLUMN]);
 void meter_ficha(int[][COLUMN], int);
 int conecta(int[][COLUMN], int);
+void IA(int[][COLUMN], int);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
@@ -122,9 +123,22 @@ void un_jugador(int tablero[][COLUMN]) {
 	inicializar_tablero(tablero);//Inicializamos tablero
 	imprimir_tablero(tablero);
 	printf("\n");
-	printf("Inicio del turno del jugador\n");
-	meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
-	imprimir_tablero(tablero);
+	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
+	{
+		printf("Inicio del turno del jugador 1\n");
+		meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
+		imprimir_tablero(tablero);
+		fin = conecta(tablero, fin);
+		if (fin != 1 && fin != 2) // la ficha del seundo jugador solo se puede introducir si no ha ganado el jugador 1
+		{
+		        printf("Inicio del turno de la CPU\n");
+		        IA(tablero, 2);
+		        imprimir_tablero(tablero);
+			fin = conecta(tablero, fin);
+		}
+	} while (fin != 1 && fin != 2);
+	printf("ha ganado el jugador %d\n", fin);  // la variable fin recoge que jugador ha conseguido la victoria y se imprime por pantalla
+}
 }
 
 void dos_jugadores(int tablero[][COLUMN]) {
@@ -177,6 +191,16 @@ void meter_ficha(int tablero[][COLUMN], int jugador)//Pone la ficha del jugador 
 			}
 		}
 	
+}
+void IA(int tablero[][COLUMN],int jugador) {
+	int fila, columna, exito = 0;
+	columna = rand() % COLUMN; //Hacemos que la IA elija una columna aleatoria
+	for (fila = FILAS - 1;fila >= 0 && exito == 0;fila--) {//Buscamos fila con un hueco en la columna
+		if (tablero[fila][columna] == 0) {//Si está vacía
+			tablero[fila][columna] = jugador;//Ponemos ficha del jugador
+			exito = 1;
+		}
+	}
 }
 
 // Menú con las opciones para gestionar usuarios
