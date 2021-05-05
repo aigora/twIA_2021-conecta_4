@@ -25,13 +25,13 @@ void monitorizar_aforo(Serial*);
 int main(void)
 {
 	Serial* Arduino;
-	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
-	int d1, d2;  // Opción del menú principal seleccionada
+	char puerto[] = "COM5"; //Puerto serie al que estÃ¡ conectado Arduino , cambiar en funciÃ³n del puerto utilizado
+	int d1, d2;  // OpciÃ³n del menÃº principal seleccionada
 	char pchar[]="HOLA";
 
-	// Tareas de configuración y carga
+	// Tareas de configuraciÃ³n y carga
 	
-	Arduino = new Serial((char*)puerto);  // Establece la conexión con Arduino
+	Arduino = new Serial((char*)puerto);  // Establece la conexiÃ³n con Arduino
 
 	while (1)
 	{
@@ -39,9 +39,12 @@ int main(void)
 		scanf_s("%d %d", &d1, &d2);
 
 		Send_and_Receive(Arduino, d1, d2, pchar);
+		
+		if (strcmp(pchar,"OK") == 0)
+			printf("Todo OK");
     }
 
-	// Tareas de desconexión y cierre 
+	// Tareas de desconexiÃ³n y cierre 
 	return 0;
 }
 
@@ -50,42 +53,42 @@ int menu_principal(void)
 	int opcion;
 	do
 	{
-		printf("1 - Título opción\n");
-		printf("2 - Titulo opción\n");
-		printf("3 - Titulo opción\n");
-		printf("4 - Titulo opción\n");
-		printf("5 - Titulo opción\n");
-		printf("6 - Cerrar Aplicación\n");
-		printf("Seleccione opción:");
+		printf("1 - TÃ­tulo opciÃ³n\n");
+		printf("2 - Titulo opciÃ³n\n");
+		printf("3 - Titulo opciÃ³n\n");
+		printf("4 - Titulo opciÃ³n\n");
+		printf("5 - Titulo opciÃ³n\n");
+		printf("6 - Cerrar AplicaciÃ³n\n");
+		printf("Seleccione opciÃ³n:");
 		scanf_s("%d", &opcion);
 		if (opcion < 1 || opcion>6)
-			printf("\nOpción inexistente.\n\n");
+			printf("\nOpciÃ³n inexistente.\n\n");
 	} while (opcion < 1 || opcion>6);
 	return opcion;
 }
 
 
 
-// Ejemplo de función de intercambio de datos con Arduino
+// Ejemplo de funciÃ³n de intercambio de datos con Arduino
 /*void Talk_with_Arduino(Serial* Arduino)
 {
 	//char BufferSalida[MAX_BUFFER];
 	char BufferEntrada[MAX_BUFFER];
 	int bytesReceive, numero_recibido;
 
-	if (Arduino->IsConnected()) // Si hay conexión con Arduino 
+	if (Arduino->IsConnected()) // Si hay conexiÃ³n con Arduino 
 	{
 
-		// Para enviar un mensaje y obtener una respuesta se utiliza la función Send_and_Receive
-		// El mensaje está formado por un texto y un entero
-		// El mensaje que se recibe está formado también por un texto y un entero.
-		// Parámetros de la función:
+		// Para enviar un mensaje y obtener una respuesta se utiliza la funciÃ³n Send_and_Receive
+		// El mensaje estÃ¡ formado por un texto y un entero
+		// El mensaje que se recibe estÃ¡ formado tambiÃ©n por un texto y un entero.
+		// ParÃ¡metros de la funciÃ³n:
 		// El primero es la referencia a Arduino
 		// El segundo es el mensaje que se desea enviar
 		// El tercero es un entero que complementa al mensaje que se desea enviar
 		// El cuarto es el vector de char donde se recibe la respuesta
 		// El quinto es la referencia donde se recibe el entero de la respuesta
-		// La función devuelve un entero con los bytes recibidos. Si es cero no se ha recibido nada.
+		// La funciÃ³n devuelve un entero con los bytes recibidos. Si es cero no se ha recibido nada.
 
 		bytesReceive = Send_and_Receive(Arduino, "GET_AFORO_MAX", -1, BufferEntrada, &numero_recibido);
 		if (bytesReceive == 0)
@@ -94,11 +97,11 @@ int menu_principal(void)
 			printf("Mensaje recibido %s %d\n", BufferEntrada, numero_recibido);
 	}
 	else
-		printf("La comunicación con la plataforma hardware no es posible en este momento\n"); // Req 3
+		printf("La comunicaciÃ³n con la plataforma hardware no es posible en este momento\n"); // Req 3
 }
 */
 // Protocolo de intercambio mensajes entre Pc y platforma hardware
-// Envío Mensaje valor
+// EnvÃ­o Mensaje valor
 // Recibe Mensaje valor
 // Retorna bytes de la respuesta (0 si no hay respuesta)
 int Send_and_Receive(Serial* Arduino, int msg_out, int valor_out, char* msg_in)
@@ -118,7 +121,7 @@ int Send_and_Receive(Serial* Arduino, int msg_out, int valor_out, char* msg_in)
 }
 
 
-// Envía un mensaje a la plataforma hardware
+// EnvÃ­a un mensaje a la plataforma hardware
 void Send_to_hw(Serial* Arduino, char* BufferSalida)
 {
 	Arduino->WriteData(BufferSalida, strlen(BufferSalida));
