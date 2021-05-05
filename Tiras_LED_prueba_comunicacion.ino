@@ -43,7 +43,7 @@ void procesar_mensaje(void)
      Serial.println("OK");
    
   if(n1==0)
-    pixels.setPixelColor(n2, apagado);   //Apaga el LED  pixels.clear?
+    pixels.clear();   //Apaga el LED  
   
   if(n1==1)
     pixels.setPixelColor(n2, azul); // Brillo moderado en azul
@@ -52,6 +52,5 @@ void procesar_mensaje(void)
     pixels.setPixelColor(n2, rojo); // Brillo moderado en rojo
      
   pixels.show();   // Mostramos y actualizamos el color del pixel de nuestra cinta led RGB 
-  
-  
+
 }
