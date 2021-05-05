@@ -43,7 +43,7 @@ void procesar_mensaje(void)
      Serial.println("OK");
    
   if(n1==0)
-    pixels.setPixelColor(n2, apagado);   //Apaga el LED
+    pixels.setPixelColor(n2, apagado);   //Apaga el LED  pixels.clear?
   
   if(n1==1)
     pixels.setPixelColor(n2, azul); // Brillo moderado en azul
