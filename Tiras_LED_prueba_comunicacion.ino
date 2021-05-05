@@ -39,6 +39,9 @@ void procesar_mensaje(void)
   n1 = jugador.toInt();  // Transforma valor a entero
   n2 = LED_posicion.toInt();
 
+  if (n1 >= 0 && n1 <= 2)
+     Serial.println("OK");
+   
   if(n1==0)
     pixels.setPixelColor(n2, apagado);   //Apaga el LED
   
