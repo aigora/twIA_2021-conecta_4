@@ -11,6 +11,7 @@ typedef struct
 {
 	char username[LONG_CAD];
 	char password[LONG_CAD];
+	
 } Usuario;
 
 // Función prototipo
@@ -28,6 +29,7 @@ int contar_vertical(int, int, int, int[][COLUMN]);
 int contar_horizontal(int, int, int, int[][COLUMN]);
 int contar_diagonal_ascendente(int, int, int, int[][COLUMN]);
 int contar_diagonal_descendente(int, int, int, int[][COLUMN]);
+int fichero_partida(int, int[][COLUMN]);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
@@ -71,6 +73,8 @@ int main(void)
 			break;
 		}
 	} while (opc != 5);
+	
+   fichero_partida(opc, tablero); // Traslada los movimientos de la partida a un fichero
 	
   // Tareas de desconexión y cierre
   escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
@@ -507,6 +511,49 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	else
 		printf("Se ha producido un error a la hora de grabar el fichero de usuarios\n");
 	
+	return err;
+}
+
+// Guardar los movimientos de la partida en un fichero
+int fichero_partida(int opcion, int tablero[][COLUMN])
+{
+	int i;
+	int jugador[2];
+	FILE* fichero;
+	errno_t err;
+
+	err = fopen_s(&fichero, "Partida.txt", "w");
+	if (err == 0)
+	{
+	    jugador[0] = *player;
+
+		switch (opcion)
+		{
+		case 1: break;
+		case 2:
+			* player = un_jugador(tablero);
+			fprintf (fichero, "%d", player);
+			break;
+		case 3:
+		{
+			for (i = 0; i < 2; i++)
+			{
+				jugador[i] = dos_jugadores(tablero);
+				fprintf (fichero, "%d", jugador[i]);
+			}
+			break;
+		}
+		case 4:
+			imprimir_tablero(tablero);
+			break;
+		case 5: break;
+		case 6: break;
+		}
+
+	}
+	else
+		printf("Se ha producido un error a la hora de grabar el fichero de partida\n");
+
 	return err;
 }
 
