@@ -68,12 +68,12 @@ int main(void)
 			usuarios = gestion_usuarios(usuarios, &num_usuarios);
 			break;	
 	case 2:
-			add_usuario (usuarios, &num_usuarios);
+			alta_usuario (usuarios, &num_usuarios);
 			un_jugador(tablero);
 			break;
 		case 3:
 			for (i = 0; i < 2; i++)
-				add_usuario (usuarios, &num_usuarios);
+				alta_usuario (usuarios, &num_usuarios);
 			dos_jugadores(tablero);
 			break;
 		case 4:
