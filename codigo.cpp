@@ -2,13 +2,19 @@
 #include <Windows.h>
 #include <locale.h>
 #include <malloc.h>
+#include <string.h>
 
+#define SI 1
+#define NO 0
+#define N 10
 #define FILAS 6
 #define COLUMN 7
-#define LONG_CAD 25
+#define LONG_CAD 50
 
 typedef struct
 {
+	char nombre[LONG_CAD];
+	char apellidos[LONG_CAD];
 	char username[LONG_CAD];
 	char password[LONG_CAD];
 	
@@ -36,7 +42,10 @@ Usuario* leer_fichero_usuarios(int*);
 int escribir_fichero_usuarios(Usuario*, int);
 Usuario* gestion_usuarios(Usuario*, int*);
 void listado_usuarios(Usuario*, int);
-Usuario* add_usuario (Usuario*, int*);
+Usuario* alta_usuario (Usuario*, int*);
+int baja_usuario(Usuario*, int*);
+int consulta_usuario(Usuario*, int);
+int posicion_usuario(Usuario*, int, char*);
 
 int main(void)
 {
@@ -374,25 +383,32 @@ Usuario* gestion_usuarios(Usuario* lista, int* num)
 	{
 		printf("Gestion de Usuarios\n");
 		printf("===================\n");
-		printf("1 - Add usuario\n");
-		printf("2 - Listado de los usuarios\n");
-		printf("3 - Volver al menu principal\n");
+		printf("1 - Alta de usuario\n");
+		printf("2 - Baja de usuario\n");
+		printf("3 - Consulta usuario\n");
+		printf("4 - Listado de los usuarios\n");
+		printf("5 - Volver al menu principal\n");
 		printf("Seleccione una opcion: ");
 		scanf_s("%d", &opcion);
 		       
 		switch (opcion)
 		{
 		case 1:
-			lista = add_usuario(lista, num);
+			lista = alta_usuario(lista, num);
 			break;
-		case 2: 
+		case 2:  
+			baja_usuario(lista, num);
+			break;
+		case 3:
+			consulta_usuario(lista, *num);
+		case 4: 
 			listado_usuarios(lista, *num);
 			break;
-		case 3: 
+		case 5: 
 			break;
 		default: printf("Opcion inexistente");
 		}
-	 } while (opcion != 3);
+	 } while (opcion != 5);
 		       
 	return lista;
 }
@@ -416,9 +432,44 @@ void listado_usuarios(Usuario *lista,int numero)
 	
 	printf("\n\n");
 }
+
+// Consulta los datos del usuario a pedir
+int consulta_usuario(Usuario* lista, int num)
+{
+	char username[LONG_CAD];
+	int posicion = -1;
+	int cod_error = 0;
+
+	printf("Introduzca username a buscar:");
+	gets_s(username, LONG_CAD);
+	posicion = posicion_usuario(lista, num, username);
+	if (posicion == -1)
+	{
+		printf("No existe ningun usuario con ese username\n");
+		cod_error = -1;
+	}
+	else
+	{
+		listado_usuarios(lista, num);
+
+	}
+	return cod_error;
+}
+
+// Determina la posición de un usuario 
+int posicion_usuario(Usuario* lista, int num, char* username)
+{
+	int i, posicion = -1;
+
+	for (i = 0; i < num && posicion == -1; i++)
+		if (strcmp(username, lista[i].username) == 0)
+			posicion = i;
+	return posicion;
+}
+
 		       
 // Añade un nuevo usuario
-Usuario* add_usuario(Usuario* lista, int* num)
+Usuario* alta_usuario(Usuario* lista, int* num)
 {
 	int numero = *num;
 	Usuario* lista_old;
@@ -437,15 +488,66 @@ Usuario* add_usuario(Usuario* lista, int* num)
 	}
 	else
 	{
-		printf("Nombre nuevo de usuario: ");
+		printf("Nombre nuevo usuario: ");
+		intro = getchar(); // Eliminamos el intro que estará en el buffer tras la selección del menú
+		gets_s((lista + numero)->nombre, LONG_CAD);
+		printf("Apellidos nuevo usuario: ");
+		gets_s((lista + numero)->apellidos, LONG_CAD);
+		printf("Username nuevo de usuario: ");
 		intro = getchar(); // Eliminamos el intro que estará en el buffer tras la selección del menú
 		gets_s((lista + numero)->username, LONG_CAD);
 		printf("Password nuevo usuario: ");
 		gets_s((lista + numero)->password, LONG_CAD);
-		*num = numero + 1;
+		*num = numero + 1;	
 	}
 	
+	escribir_fichero_usuarios(lista, numero);
+	
         return lista;
+}
+
+// Da de baja un usuario
+int baja_usuario(Usuario* lista, int* num)
+{
+	char username[LONG_CAD], respuesta[2];
+	int encontrado = NO;
+	int i, j;
+	int n = *num;
+	int cod_error = 0;
+
+	if (n == 0)
+	{
+		printf("La lista de usuarios esta vacia\n");
+		cod_error = -1;
+	}
+	else
+	{
+		printf("Introduzca usuario a eliminar:");
+		gets_s(username, LONG_CAD);
+		for (i = 0; i < n && encontrado == NO; i++)
+			if (strcmp(username, lista[i].username) == 0)
+			{
+				printf("Datos del usuario encontrado:\n");
+				listado_usuarios(lista, n);
+				printf("Desea borra este usuario (S/N): ");
+				gets_s(respuesta, 2);
+				if (strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)
+				{
+					encontrado = SI;
+					for (j = i; j < n - 1; j++)
+						lista[j] = lista[j + 1];
+					*num = n - 1;
+				}
+				else
+					cod_error = -1;
+			}
+		if (encontrado == NO)
+		{
+			printf("No se ha encontrado el usuario\n");
+			cod_error = -1;
+		}
+	}
+	return cod_error;
 }
 		       
 // Traslada los usuarios de un fichero a memoria
@@ -469,8 +571,15 @@ Usuario* leer_fichero_usuarios(int* num)
 			fgets(intro, 2, fichero); // Saltamos el intro que hay tras el número (Ascii 10 y 13)
 			for (i = 1; i < *num; i++) // Para cada usaurio del fichero
 			{
-				fgets((lista + i)->username, LONG_CAD, fichero); // Leemos el nombre
-				p = strchr((lista + i)->username, '\n'); // Localizamos el \n del nombre
+				
+			        fgets((lista + i)->nombre, LONG_CAD, fichero); // Leemos el nombre
+				p = strchr((lista + i)->nombre, '\n'); // Localizamos el \n del nombre
+				*p = '\0'; // Lo cambiamos por un \0
+				fgets((lista + i)->apellidos, LONG_CAD, fichero); // Leemos los apellidos
+				p = strchr((lista + i)->apellidos, '\n'); // Localizamos el \n de los apellidos
+				*p = '\0'; // Lo cambiamos por un \0
+				fgets((lista + i)->username, LONG_CAD, fichero); // Leemos el username
+				p = strchr((lista + i)->username, '\n'); // Localizamos el \n del username
 				*p = '\0'; // Lo cambiamos por un \0
 				fgets((lista + i)->password, LONG_CAD, fichero); // Leemos el password
 				p = strchr((lista + i)->password, '\n'); // Localizamos el \n del password
@@ -502,6 +611,8 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 		for (i = 0; i < numero; i++)
 		{
 			fprintf(fichero, "%d\n", i); // Se numeran los usuarios
+			fprintf(fichero, "%s\n", (lista + i)->nombre);
+			fprintf(fichero, "%s\n", (lista + i)->apellidos);
 			fprintf(fichero, "%s\n", (lista + i)->username);
 			fprintf(fichero, "%s\n", (lista + i)->password);
 		}
