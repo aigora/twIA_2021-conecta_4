@@ -19,9 +19,9 @@
 #define Boton_FUNCTION 0xFFE21D
 
 //Designamos nuestro pin de datos
-#define PIN 6
+int PIN=6;
 //Designamos cuantos pixeles tenemos en nuestra cinta led RGB
-#define NUMPIXELS      43
+int NUMPIXELS=43;
 
 //Definimos el número de pixeles de la cinta y el pin de datos
 //   Parámetro 1 = número de pixeles de la cinta
@@ -51,20 +51,19 @@ void loop() {
 
 if (irrecv.decode(&codigo)){
     Serial.println(codigo.value, HEX);
-    irrecv.resume();
-  }
-if (codigo.value== Boton_0){
+    if (codigo.value== Boton_0){
     pixels.clear(); //Apaga el LED
   }
   if (codigo.value== Boton_1){
-    pixels.setPixelColor(12, azul); // Brillo moderado en azul
+    pixels.setPixelColor(12,0,0,5); // Brillo moderado en azul
   }
   if (codigo.value== Boton_2){
-    pixels.setPixelColor(12, rojo);// Brillo moderado en rojo
+    pixels.setPixelColor(12,5,0,0);// Brillo moderado en rojo
   }
- 
-     
-  pixels.show();   // Mostramos y actualizamos el color del pixel de nuestra cinta led RGB 
+
+  pixels.show();
+  irrecv.resume();
+  delay(100);
+  }
 
 }
-
