@@ -27,9 +27,9 @@ int menu_principal(void);
 void inicializar_tablero(int[][COLUMN]);
 void imprimir_tablero(int[][COLUMN]);
 void un_jugador(int[][COLUMN]); 
-void dos_jugadores(int tablero[][COLUMN]);
+void dos_jugadores(int[][COLUMN]);
 void meter_ficha(int[][COLUMN], int, int*);
-void IA(int[][COLUMN], int);
+void IA(int[][COLUMN], int, int*);
 int conecta(int, int, int, int[][COLUMN]);
 int contar_vertical(int, int, int, int[][COLUMN]);
 int contar_horizontal(int, int, int, int[][COLUMN]);
@@ -61,7 +61,7 @@ int main(void)
  do
  {
 	opc = menu_principal();
-	int i, j, c, orden, columna;
+	int i, tablero[FILAS][COLUMN];
 	switch (opc)
 	{
 	case 1:
@@ -146,12 +146,12 @@ void un_jugador(int tablero[][COLUMN]) {
 	imprimir_tablero(tablero);
 	printf("\n");
 	do {
-		printf("\nTURNO %d", turno);
+		printf("\nTURNO %d", turno); //Indica cuantos turnos llevan
 		printf("\n");
 		printf("Inicio del turno del jugador\n");
-		meter_ficha(tablero, 1, &fin);
+		meter_ficha(tablero, 1, &fin); //El jugador mete ficha
 		imprimir_tablero(tablero);
-		if (fin == 0) {
+		if (fin == 0) { //El jugador 2 solo puede meter ficha si el jugador 1 no ha ganado
 			printf("Inicio del turno de la CPU\n");
 			IA(tablero, 2, &fin);
 			imprimir_tablero(tablero);
@@ -171,18 +171,15 @@ void dos_jugadores(int tablero[][COLUMN]) {
 	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
 	{
 		printf("Inicio del turno del jugador 1\n");
-		meter_ficha(tablero, 1);//El jugador elige dónde poner la ficha
+		meter_ficha(tablero, 1, &fin);//El jugador elige dónde poner la ficha
 		imprimir_tablero(tablero);
-		fin = conecta(tablero, fin);
-		if (fin != 1 && fin != 2) // la ficha del seundo jugador solo se puede introducir si no ha ganado el jugador 1
+		if (fin == 0) // la ficha del seundo jugador solo se puede introducir si no ha ganado el jugador 1
 		{
 			printf("Inicio del turno del jugador 2\n");
-			meter_ficha(tablero, 2);//El jugador elige dónde poner la ficha
+			meter_ficha(tablero, 2, &fin);//El jugador elige dónde poner la ficha
 			imprimir_tablero(tablero);
-			fin = conecta(tablero, fin);
 		}
-	} while (fin != 1 && fin != 2);
-	printf("ha ganado el jugador %d\n", fin);  // la variable fin recoge que jugador ha conseguido la victoria y se imprime por pantalla
+	} while (fin == 0);
 }
 
 void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha del jugador "jugador" em el tablero
@@ -194,7 +191,7 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha de
 		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
 		columna--; // ajustamos columna a un valor inferior para que las columnas sean del 1 al 7, más intuitivo para el usuario
 		if (columna < 0 || columna > (COLUMN - 1))
-			printf("Columna no valida-limites 0 a %d-\n", COLUMN - 1);
+			printf("Columna no valida-limites 1 a %d-\n", COLUMN - 1);
 		else
 		{
 			if (tablero[0][columna] != 0) {//Si la columna esta completa
@@ -207,15 +204,14 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha de
 			if (tablero[fila][columna] == 0) {//Si está vacía
 				tablero[fila][columna] = jugador;//Ponemos ficha del jugador
 				exito = 1;
+			        if (conecta(fila, columna, jugador, tablero) != 0) { //Comprueba si el jugador puede ganar
+				    printf("Ha ganado el jugador %d\n", jugador); //Indica quien es el jugador que ha ganado
+				    *fin = jugador;				
 			}
 		}
-	if (conecta(fila, columna, jugador, tablero) == 1) {
-		printf("Ha ganado el jugador %d\n", jugador);
-		*fin = jugador;
-	}	
 	
 }
-void IA(int tablero[][COLUMN], int jugador)
+void IA(int tablero[][COLUMN], int jugador, int *fin)
 {
 	int fila, columna, exito = 0;
 	do
@@ -228,6 +224,10 @@ void IA(int tablero[][COLUMN], int jugador)
 				{
 					tablero[FILAS - 4][columna] = jugador;//Ponemos ficha del jugador
 					exito = 1; // salimos del bucle while
+					if (conecta(FILAS - 4, columna, jugador, tablero) != 0) {
+						printf("Ha ganado el jugador %d\n", jugador);
+						*fin = jugador;
+					}
 					columna = COLUMN; // truco para cerrar el bucle for
 				}
 			}
@@ -240,6 +240,10 @@ void IA(int tablero[][COLUMN], int jugador)
 				{
 					tablero[FILAS - 3][columna] = jugador;//Ponemos ficha del jugador
 					exito = 1; // salimos del bucle while
+					if (conecta(FILAS - 3, columna, jugador, tablero) != 0) {
+						printf("Ha ganado el jugador %d\n", jugador);
+						*fin = jugador;
+					}
 					columna = COLUMN; // truco para cerrar el bucle for
 				}
 			}
@@ -252,6 +256,10 @@ void IA(int tablero[][COLUMN], int jugador)
 				{
 					tablero[FILAS - 2][columna] = jugador;//Ponemos ficha del jugador
 					exito = 1;// salimos del bucle while
+					if (conecta(FILAS - 2, columna, jugador, tablero) != 0) {
+						printf("Ha ganado el jugador %d\n", jugador);
+						*fin = jugador;
+					}
 					columna = COLUMN;// truco para cerrar el bucle for
 				}
 			}
@@ -264,116 +272,149 @@ void IA(int tablero[][COLUMN], int jugador)
 				{
 					tablero[FILAS - 1][columna] = jugador;//Ponemos ficha del jugador
 					exito = 1;// salimos del bucle while
+					if (conecta(FILAS - 1, columna, jugador, tablero) != 0) {
+						printf("Ha ganado el jugador %d\n", jugador);
+						*fin = jugador;
+					}
 					columna = COLUMN;// truco para cerrar el bucle for
 				}
 			}
 		}
-		if(exito == 0)
+		if (exito == 0)
 		{
 			columna = rand() % COLUMN; //Hacemos que la IA elija una columna aleatoria
 			for (fila = FILAS - 1; fila >= 0 && exito == 0; fila--)//Buscamos fila con un hueco en la columna
 			{
 				if (tablero[fila][columna] == 0) {//Si está vacía
-						tablero[fila][columna] = jugador;//Ponemos ficha del jugador
-						exito = 1;// salimos del bucle while
+					tablero[fila][columna] = jugador;//Ponemos ficha del jugador
+					exito = 1;// salimos del bucle while
+					if (conecta(fila, columna, jugador, tablero) != 0) {
+						printf("Ha ganado el jugador %d\n", jugador);
+						*fin = jugador;
+					}
 				}
 			}
 		}
 	} while (exito == 0);
 }
 int conecta(int fila, int columna, int jugador, int tablero[][COLUMN]) { //Comprueba si hay cuatro en raya
-	int a, b, c, d;
-	a = contar_vertical(fila, columna, jugador, tablero); //Cuenta en vertical
-	b = contar_horizontal(fila, columna, jugador, tablero); //Cuenta en horizontal
-	c = contar_diagonal_ascendente(fila, columna, jugador, tablero); //Cuenta en diagonal ascendente 
-	d = contar_diagonal_descendente(fila, columna, jugador, tablero); //Cuenta en diagonal descendente
-	if (a >= 4 || b >= 4 || c >= 4 || d >= 4) //Si se cumple alguna de las cuatro, hay cuatro en raya
+	if (contar_vertical(fila, columna, jugador, tablero) >= 4) //Si se cumple, hay cuatro fichas conectadas en vertical
 		return 1;
+	if (contar_horizontal(fila, columna, jugador, tablero) >= 4) //Si se cumple, hay cuatro fichas conectadas en horizontal
+		return 2;
+	if (contar_diagonal_ascendente(fila, columna, jugador, tablero) >= 4) //Si se cumple, hay cuatro fichas conectadas en diagonal ascendente
+		return 3;
+	if (contar_diagonal_descendente(fila, columna, jugador, tablero) >= 4) //Si se cumple, hay cuatro fichas conectadas en diagonal descendente
+		return 4;
 	else
 		return 0;
 }
-int contar_vertical(int fila, int columna, int jugador, int tablero[][COLUMN]) {
-	int cont = 0, aux;
-	aux = fila;
-	//Bucle para contar desde la ultima ficha metida hacia arriba
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		fila--;
-	} while (tablero[fila][columna] == jugador && fila >= 0);
-	fila = aux; //Volvemos a la posición inicial de la ficha
+
+int contar_vertical(int fila, int columna, int jugador, int tablero[][COLUMN])
+{
+	int contador = 0; // Contador de fichas
+	int f, c; // Variables auxiliares para filas y columnas
+
+	f = fila;
+	c = columna;
 	//Bucle para contar desde la ultima ficha metida hacia abajo
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		fila++;
-	} while (tablero[fila][columna] == jugador && fila < FILAS);
-	return cont;
+	do
+	{
+		if (tablero[f][c] == jugador)
+			contador++;
+		f++;
+	} while (f < FILAS && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
+
+	return contador; // Hay que restar uno al contador porque has contado dos veces la ficha
 }
 
-int contar_horizontal(int fila, int columna, int jugador, int tablero[][COLUMN]) {
-	int cont = 0, aux;
-	aux = columna;
+int contar_horizontal(int fila, int columna, int jugador, int tablero[][COLUMN])
+{
+	int contador = 0; // Contador de fichas
+	int f, c; // Variables auxiliares para filas y columnas
+
+	f = fila;
+	c = columna;
 	//Bucle para contar desde la ultima ficha metida hacia la izquierda
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		columna--;
-	} while (tablero[fila][columna] == jugador && columna >= 0);
-		columna = aux; //Volvemos a la posición inicial de la ficha
-		//Bucle para contar desde la ultima ficha metida hacia la derecha
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		columna++;
-	} while (tablero[fila][columna] == jugador && columna < (COLUMN - 1));
-	return cont;
+	do
+	{
+		if (tablero[f][c] == jugador)
+			contador++;
+		c--; // Decrementamos la columna
+	} while (c >= 0 && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
+
+	//Bucle para contar desde la ultima ficha metida hacia la derecha
+	f = fila;
+	c = columna;
+	do
+	{
+		if (tablero[f][c] == jugador)
+			contador++;
+		c++;
+	} while (c < COLUMN && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
+
+	return contador - 1; // Hay que restar uno al contador porque has contado dos veces la ficha
 }
-int contar_diagonal_ascendente(int fila, int columna, int jugador, int tablero[][COLUMN]) {
-	int cont = 0, aux1, aux2;
-	aux1 = fila;
-	aux2 = columna;
-	//Bucle para contar desde la ultima ficha metida hacia la izquierda y hacia abajo
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		columna--;
-		fila++;
-	} while (tablero[fila][columna] == jugador && columna >= 0 && fila < FILAS);
-	fila = aux1; //Volvemos a la posición inicial de la ficha
-	columna = aux2; //Volvemos a la posición inicial de la ficha
-	//Bucle para contar desde la ultima ficha metida hacia la derecha y hacia arriba
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		columna++;
-		fila--;
-	} while (tablero[fila][columna] == jugador && columna < (COLUMN - 1) && fila >= 0);
-	return cont;
+
+int contar_diagonal_ascendente(int fila, int columna, int jugador, int tablero[][COLUMN])
+{
+	int contador = 0; // Contador de fichas
+	int f, c; // Variables auxiliares para filas y columnas
+	// La diagonal ascendente tiene esta forma: /
+
+	f = fila;
+	c = columna;
+	//Bucle para contar desde la ultima ficha metida hacia la izquierda y abajo
+	do
+	{
+		if (tablero[f][c] == jugador)
+			contador++;
+		f++;
+		c--;
+	} while (f < FILAS && c >= 0 && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
+
+	//Bucle para contar desde la ultima ficha metida hacia la derecha y arriba
+	f = fila;
+	c = columna;
+	do
+	{
+		if (tablero[f][c] == jugador)
+			contador++;
+		f--;
+		c++;
+	} while (f >= 0 && c < COLUMN && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
+
+	return contador - 1; // Hay que restar uno al contador porque has contado dos veces la ficha
 }
 int contar_diagonal_descendente(int fila, int columna, int jugador, int tablero[][COLUMN]) {
-	int cont = 0, aux1, aux2;
-	aux1 = fila;
-	aux2 = columna;
-	//Bucle para contar desde la ultima ficha metida hacia la derecha y hacia abajo
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		columna++;
-		fila++;
-	} while (tablero[fila][columna] == jugador && columna < (COLUMN - 1) && fila < FILAS);
-	fila = aux1; //Volvemos a la posición inicial de la ficha
-	columna = aux2; //Volvemos a la posición inicial de la ficha
-	//Bucle para contar desde la ultima ficha metida hacia la izquierda y hacia arriba
-	do {
-		if (tablero[fila][columna] == jugador)
-			cont++;
-		columna--;
-		fila--;
-	} while (tablero[fila][columna] == jugador && columna >= 0 && fila >= 0);
-	return cont;
-}
+	int contador = 0; // Contador de fichas
+	int f, c; // Variables auxiliares para filas y columnas
+	// La diagonal descendiente tiene esta forma: \
 
+	f = fila;
+	c = columna;
+	//Bucle para contar desde la ultima ficha metida hacia la izquierda y arriba
+	do
+	{
+		if (tablero[f][c] == jugador)
+			contador++;
+		f--;
+		c--;
+	} while (f >= 0 && c >= 0 && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
+
+	//Bucle para contar desde la ultima ficha metida hacia la derecha y abajo
+	f = fila;
+	c = columna;
+	do
+	{
+		if (tablero[f][c] == jugador)
+			contador++;
+		f++;
+		c++;
+	} while (f < FILAS && c < COLUMN && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
+
+	return contador - 1; // Hay que restar uno al contador porque has contado dos veces la ficha
+}
 // Menú con las opciones para gestionar usuarios
 Usuario* gestion_usuarios(Usuario* lista, int* num)
 {
