@@ -53,34 +53,18 @@ if (irrecv.decode(&codigo)){
     Serial.println(codigo.value, HEX);
     irrecv.resume();
   }
-
-if (Serial.available() > 0){
-   procesar_mensaje();
-}
-}
-
-void procesar_mensaje(void)
-{
-
-  
-  int n1, n2;
-  String jugador = Serial.readStringUntil('\n'); // Lee mensaje
-  String LED_posicion = Serial.readStringUntil('\n');  // Lee valor
-  
-  n1 = jugador.toInt();  // Transforma valor a entero
-  n2 = LED_posicion.toInt();
-  
-  if (codigo.value== Boton_0){
+if (codigo.value== Boton_0){
     pixels.clear(); //Apaga el LED
   }
   if (codigo.value== Boton_1){
-    pixels.setPixelColor(n2, azul); // Brillo moderado en azul
+    pixels.setPixelColor(12, azul); // Brillo moderado en azul
   }
   if (codigo.value== Boton_2){
-    pixels.setPixelColor(n2, rojo);// Brillo moderado en rojo
+    pixels.setPixelColor(12, rojo);// Brillo moderado en rojo
   }
  
      
   pixels.show();   // Mostramos y actualizamos el color del pixel de nuestra cinta led RGB 
 
 }
+
