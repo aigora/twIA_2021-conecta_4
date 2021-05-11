@@ -63,50 +63,46 @@ void jugar (void){
 
   int i;
   int f_1=41, f_2=40, f_3=39, f_4=38, f_5=37, f_6=36, f_7=35;
-   
-  
-  for (i=0;i<6;i++){
+
+  while(f_1>6&&f_2>5&&f_3>4&&f_4>3&&f_5>2&&f_6>1&&f_7>0){
+ 
      if (codigo.value== Boton_1){
      pixels.setPixelColor(f_1,0,0,5);
      f_1= f_1-7;
     }
-  }
-  for (i=0;i<6;i++){
+  
     if (codigo.value== Boton_2){
      pixels.setPixelColor(f_2,0,0,5);
      f_2= f_2-7;
     }
-  }
-  for (i=0;i<6;i++){
+    
     if (codigo.value== Boton_3){
      pixels.setPixelColor(f_3,0,0,5);
      f_3= f_3-7;
     }
-  }
-  for (i=0;i<6;i++){
+    
     if (codigo.value== Boton_4){
      pixels.setPixelColor(f_4,0,0,5);
      f_4= f_4-7;
     }
-  }
-  for (i=0;i<6;i++){
+  
+ 
     if (codigo.value== Boton_5){
      pixels.setPixelColor(f_5,0,0,5);
      f_5= f_5-7;
     }
-  }
-  for (i=0;i<6;i++){
+  
+
     if (codigo.value== Boton_6){
      pixels.setPixelColor(f_6,0,0,5);
      f_6= f_6-7;
     }
-  }
-  for (i=0;i<6;i++){
+
     if (codigo.value== Boton_7){
      pixels.setPixelColor(f_7,0,0,5);
      f_7= f_7-7;
     }
+  
   }
-    
     
 }
