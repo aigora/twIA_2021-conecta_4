@@ -525,7 +525,7 @@ int baja_usuario(Usuario* lista, int* num)
 		printf("Introduzca usuario a eliminar:");
 		gets_s(username, LONG_CAD);
 		for (i = 0; i < n && encontrado == NO; i++)
-			if (strcmp(username, lista[i].username) == 0)
+			if (strcmp(username, lista[i]->username) == 0)
 			{
 				printf("Datos del usuario encontrado:\n");
 				listado_usuarios(lista, n);
