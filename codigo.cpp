@@ -423,11 +423,11 @@ void listado_usuarios(Usuario *lista,int numero)
 	else
 	{
 		printf("En este momento existen %d usuarios %c\n", numero - 1, (numero > 2) ? 's' : ' ');
-		printf("Username\t\tPassword\n");
-		printf("========\t\t========\n");
+		printf("Nombre\t\tApellidos\t\tUsername\t\tPassword\n");
+		printf("========\t\t========\t\t========\t\t========\n");
 		
 		for (i = 1; i < numero; i++)
-			printf("%s\t\t\t%s\n", (lista + i)->username, (lista + i)->password);
+			printf("%s\t\t\t%s\t\t\t%s\t\t\t%s\n",(lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
 	}
 	
 	printf("\n\n");
