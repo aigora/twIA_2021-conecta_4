@@ -70,41 +70,43 @@ void jugar (void){
      pixels.setPixelColor(f_1,0,0,5);
      f_1= f_1-7;
     }
+  }
+  for (i=0;i<6;i++){
     if (codigo.value== Boton_2){
      pixels.setPixelColor(f_2,0,0,5);
      f_2= f_2-7;
     }
+  }
+  for (i=0;i<6;i++){
     if (codigo.value== Boton_3){
      pixels.setPixelColor(f_3,0,0,5);
      f_3= f_3-7;
     }
+  }
+  for (i=0;i<6;i++){
     if (codigo.value== Boton_4){
      pixels.setPixelColor(f_4,0,0,5);
      f_4= f_4-7;
     }
+  }
+  for (i=0;i<6;i++){
     if (codigo.value== Boton_5){
      pixels.setPixelColor(f_5,0,0,5);
      f_5= f_5-7;
     }
+  }
+  for (i=0;i<6;i++){
     if (codigo.value== Boton_6){
      pixels.setPixelColor(f_6,0,0,5);
      f_6= f_6-7;
     }
+  }
+  for (i=0;i<6;i++){
     if (codigo.value== Boton_7){
      pixels.setPixelColor(f_7,0,0,5);
      f_7= f_7-7;
     }
-    }
+  }
+    
     
 }
-
-
-/* if (codigo.value== Boton_0){
-    pixels.clear(); //Apaga el LED
-  }
-  if (codigo.value== Boton_1){
-    pixels.setPixelColor(12,0,0,5); // Brillo moderado en azul
-  }
-  if (codigo.value== Boton_2){
-    pixels.setPixelColor(12,5,0,0);// Brillo moderado en rojo
-  }*/
