@@ -462,7 +462,7 @@ int posicion_usuario(Usuario* lista, int num, char* username)
 	int i, posicion = -1;
 
 	for (i = 0; i < num && posicion == -1; i++)
-		if (strcmp(username, lista[i].username) == 0)
+		if (strcmp(username, lista[i]->username) == 0)
 			posicion = i;
 	return posicion;
 }
