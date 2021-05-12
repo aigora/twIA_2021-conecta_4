@@ -40,6 +40,13 @@ int SENSOR = 11;
 IRrecv irrecv(SENSOR);
 decode_results codigo;
 
+
+
+int i;
+int f_1=0, f_2=1, f_3=2, f_4=3, f_5=4, f_6=5, f_7=6;
+
+
+
 void setup() {
 pixels.begin();
 pixels.show();
@@ -50,23 +57,40 @@ irrecv.enableIRIn();
 void loop() {
 
 if (irrecv.decode(&codigo)){
-    Serial.println(codigo.value, HEX);
-   
-  jugar();
+  Serial.println(codigo.value, HEX);
+ 
+  if(codigo.value==Boton_1){
+    pixels.setPixelColor(f_1,0,0,5);
+    f_1 = f_1+7;
+  }
+  else if(codigo.value==Boton_2){
+    pixels.setPixelColor(f_2,0,0,5);
+    f_2 = f_2+7;
+  }
+  else if(codigo.value==Boton_3){
+    pixels.setPixelColor(f_3,0,0,5);
+    f_3 = f_1+3;
+  }
+  else if(codigo.value==Boton_4){
+    pixels.setPixelColor(f_4,0,0,5);
+    f_4 = f_4+7;
+  }
+  else if(codigo.value==Boton_5){
+    pixels.setPixelColor(f_5,0,0,5);
+    f_5 = f_5+7;
+  }
+  else if(codigo.value==Boton_6){
+    pixels.setPixelColor(f_6,0,0,5);
+    f_6 = f_6+7;
+  }
+  else if(codigo.value==Boton_7){
+    pixels.setPixelColor(f_7,0,0,5);
+    f_7 = f_7+7;
+  }
+  
   pixels.show();
   irrecv.resume();
+  
+  }
   delay(100);
-  }
-
-}
-void jugar (void){
-
-  int i;
-  int f_1=41, f_2=40, f_3=39, f_4=38, f_5=37, f_6=36, f_7=35;
-
-  for(i=0;i<6i++){
-     pixels.setPixelColor(f_1,0,0,5);
-     f_1= f_1-7;
-     delay(100);
-  }
 }
