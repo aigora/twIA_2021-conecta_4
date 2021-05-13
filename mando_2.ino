@@ -1,7 +1,7 @@
-  
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
 #include <IRremote.h>
+#include <math.h>
 //Designamos los botones del mando
 #define Boton_1 0xFF30CF
 #define Boton_2 0xFF18E7
@@ -43,7 +43,7 @@ decode_results codigo;
 
 
 
-int i;
+int i=1;
 int f_1=0, f_2=1, f_3=2, f_4=3, f_5=4, f_6=5, f_7=6;
 
 
@@ -61,7 +61,7 @@ if (irrecv.decode(&codigo)){
   Serial.println(codigo.value, HEX);
  
   jugar1();
-  jugar2();
+ 
   
   pixels.show();
   irrecv.resume();
@@ -71,77 +71,78 @@ if (irrecv.decode(&codigo)){
 }
 
 void jugar1 (void){
-  if(codigo.value==Boton_1){
+  if(i%2==0){
+    if(codigo.value==Boton_1){
     pixels.setPixelColor(f_1,azul);
     f_1 = f_1+7;
-    jugar2();
+    i++;
   }
-  else if(codigo.value==Boton_2){
+   if(codigo.value==Boton_2){
     pixels.setPixelColor(f_2,azul);
     f_2 = f_2+7;
-    jugar2();
+    i++;
   }
-  else if(codigo.value==Boton_3){
+   if(codigo.value==Boton_3){
     pixels.setPixelColor(f_3,azul);
     f_3 = f_3+7;
-    jugar2();
+    i++;
   }
-  else if(codigo.value==Boton_4){
+   if(codigo.value==Boton_4){
     pixels.setPixelColor(f_4,azul);
     f_4 = f_4+7;
-    jugar2();
+    i++;
   }
-  else if(codigo.value==Boton_5){
+   if(codigo.value==Boton_5){
     pixels.setPixelColor(f_5,azul);
     f_5 = f_5+7;
-    jugar2();
+    i++;
   }
-  else if(codigo.value==Boton_6){
+   if(codigo.value==Boton_6){
     pixels.setPixelColor(f_6,azul);
     f_6 = f_6+7;
-    jugar2();
+    i++;
   }
-  else if(codigo.value==Boton_7){
+   if(codigo.value==Boton_7){
     pixels.setPixelColor(f_7,azul);
     f_7 = f_7+7;
-    jugar2();
+    i++;
   }
 }
-
-void jugar2 (void){
-  if(codigo.value==Boton_1){
+ else{
+    if(codigo.value==Boton_1){
     pixels.setPixelColor(f_1,rojo);
     f_1 = f_1+7;
-    jugar1();
+    i++;
   }
-  else if(codigo.value==Boton_2){
+  if(codigo.value==Boton_2){
     pixels.setPixelColor(f_2,rojo);
     f_2 = f_2+7;
-    jugar1();
+    i++;
   }
-  else if(codigo.value==Boton_3){
+   if(codigo.value==Boton_3){
     pixels.setPixelColor(f_3,rojo);
     f_3 = f_3+7;
-    jugar1();
+    i++;
   }
-  else if(codigo.value==Boton_4){
+   if(codigo.value==Boton_4){
     pixels.setPixelColor(f_4,rojo);
     f_4 = f_4+7;
-    jugar1();
+    i++;
   }
-  else if(codigo.value==Boton_5){
+   if(codigo.value==Boton_5){
     pixels.setPixelColor(f_5,rojo);
     f_5 = f_5+7;
-    jugar1();
+    i++;
   }
-  else if(codigo.value==Boton_6){
+   if(codigo.value==Boton_6){
     pixels.setPixelColor(f_6,rojo);
     f_6 = f_6+7;
-    jugar1();
+    i++;
   }
-  else if(codigo.value==Boton_7){
+   if(codigo.value==Boton_7){
     pixels.setPixelColor(f_7,rojo);
     f_7 = f_7+7;
-    jugar1();
+    i++;
   }
-}
+  }
+  }
