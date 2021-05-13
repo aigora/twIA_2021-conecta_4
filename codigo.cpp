@@ -666,48 +666,7 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	return err;
 }
 
-// Guardar los movimientos de la partida en un fichero
-int fichero_partida(int opcion, int tablero[][COLUMN])
-{
-	int i;
-	int jugador[2];
-	FILE* fichero;
-	errno_t err;
 
-	err = fopen_s(&fichero, "Partida.txt", "w");
-	if (err == 0)
-	{
-	    jugador[0] = *player;
-
-		switch (opcion)
-		{
-		case 1: break;
-		case 2:
-			* player = un_jugador(tablero);
-			fprintf (fichero, "%d", player);
-			break;
-		case 3:
-		{
-			for (i = 0; i < 2; i++)
-			{
-				jugador[i] = dos_jugadores(tablero);
-				fprintf (fichero, "%d", jugador[i]);
-			}
-			break;
-		}
-		case 4:
-			imprimir_tablero(tablero);
-			break;
-		case 5: break;
-		case 6: break;
-		}
-
-	}
-	else
-		printf("Se ha producido un error a la hora de grabar el fichero de partida\n");
-
-	return err;
-}
 
 
 			       
