@@ -71,7 +71,7 @@ if (irrecv.decode(&codigo)){
 
 void jugar1 (void){
   if(codigo.value==Boton_1){
-    pixels.setPixelColor(f_1,0,0,5);
+    pixels.setPixelColor(f_1,azul);
     f_1 = f_1+7;
     
   }
