@@ -69,7 +69,7 @@ if (irrecv.decode(&codigo)){
   }
   else if(codigo.value==Boton_3){
     pixels.setPixelColor(f_3,0,0,5);
-    f_3 = f_1+3;
+    f_3 = f_3+7;
   }
   else if(codigo.value==Boton_4){
     pixels.setPixelColor(f_4,0,0,5);
