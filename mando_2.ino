@@ -59,38 +59,87 @@ void loop() {
 if (irrecv.decode(&codigo)){
   Serial.println(codigo.value, HEX);
  
-  if(codigo.value==Boton_1){
-    pixels.setPixelColor(f_1,0,0,5);
-    f_1 = f_1+7;
-  }
-  else if(codigo.value==Boton_2){
-    pixels.setPixelColor(f_2,0,0,5);
-    f_2 = f_2+7;
-  }
-  else if(codigo.value==Boton_3){
-    pixels.setPixelColor(f_3,0,0,5);
-    f_3 = f_3+7;
-  }
-  else if(codigo.value==Boton_4){
-    pixels.setPixelColor(f_4,0,0,5);
-    f_4 = f_4+7;
-  }
-  else if(codigo.value==Boton_5){
-    pixels.setPixelColor(f_5,0,0,5);
-    f_5 = f_5+7;
-  }
-  else if(codigo.value==Boton_6){
-    pixels.setPixelColor(f_6,0,0,5);
-    f_6 = f_6+7;
-  }
-  else if(codigo.value==Boton_7){
-    pixels.setPixelColor(f_7,0,0,5);
-    f_7 = f_7+7;
-  }
+  jugar1();
   
   pixels.show();
   irrecv.resume();
   
   }
   delay(100);
+}
+
+void jugar1 (void){
+  if(codigo.value==Boton_1){
+    pixels.setPixelColor(f_1,azul);
+    f_1 = f_1+7;
+    jugar2();
+  }
+  else if(codigo.value==Boton_2){
+    pixels.setPixelColor(f_2,azul);
+    f_2 = f_2+7;
+    jugar2();
+  }
+  else if(codigo.value==Boton_3){
+    pixels.setPixelColor(f_3,azul);
+    f_3 = f_3+7;
+    jugar2();
+  }
+  else if(codigo.value==Boton_4){
+    pixels.setPixelColor(f_4,azul);
+    f_4 = f_4+7;
+    jugar2();
+  }
+  else if(codigo.value==Boton_5){
+    pixels.setPixelColor(f_5,azul);
+    f_5 = f_5+7;
+    jugar2();
+  }
+  else if(codigo.value==Boton_6){
+    pixels.setPixelColor(f_6,azul);
+    f_6 = f_6+7;
+    jugar2();
+  }
+  else if(codigo.value==Boton_7){
+    pixels.setPixelColor(f_7,azul);
+    f_7 = f_7+7;
+    jugar2();
+  }
+}
+
+void jugar2 (void){
+  if(codigo.value==Boton_1){
+    pixels.setPixelColor(f_1,rojo);
+    f_1 = f_1+7;
+    jugar1();
+  }
+  else if(codigo.value==Boton_2){
+    pixels.setPixelColor(f_2,rojo);
+    f_2 = f_2+7;
+    jugar1();
+  }
+  else if(codigo.value==Boton_3){
+    pixels.setPixelColor(f_3,rojo);
+    f_3 = f_3+7;
+    jugar1();
+  }
+  else if(codigo.value==Boton_4){
+    pixels.setPixelColor(f_4,rojo);
+    f_4 = f_4+7;
+    jugar1();
+  }
+  else if(codigo.value==Boton_5){
+    pixels.setPixelColor(f_5,rojo);
+    f_5 = f_5+7;
+    jugar1();
+  }
+  else if(codigo.value==Boton_6){
+    pixels.setPixelColor(f_6,rojo);
+    f_6 = f_6+7;
+    jugar1();
+  }
+  else if(codigo.value==Boton_7){
+    pixels.setPixelColor(f_7,rojo);
+    f_7 = f_7+7;
+    jugar1();
+  }
 }
