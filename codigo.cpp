@@ -211,6 +211,7 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha de
 		}
 	
 }
+	
 void IA(int tablero[][COLUMN], int jugador, int *fin)
 {
 	int fila, columna, exito = 0;
@@ -297,6 +298,7 @@ void IA(int tablero[][COLUMN], int jugador, int *fin)
 		}
 	} while (exito == 0);
 }
+	
 int conecta(int fila, int columna, int jugador, int tablero[][COLUMN]) { //Comprueba si hay cuatro en raya
 	if (contar_vertical(fila, columna, jugador, tablero) >= 4) //Si se cumple, hay cuatro fichas conectadas en vertical
 		return 1;
@@ -360,7 +362,7 @@ int contar_diagonal_ascendente(int fila, int columna, int jugador, int tablero[]
 {
 	int contador = 0; // Contador de fichas
 	int f, c; // Variables auxiliares para filas y columnas
-	// La diagonal ascendente tiene esta forma: /
+	// La diagonal ascendente tiene esta forma: '/'
 
 	f = fila;
 	c = columna;
@@ -386,10 +388,11 @@ int contar_diagonal_ascendente(int fila, int columna, int jugador, int tablero[]
 
 	return contador - 1; // Hay que restar uno al contador porque has contado dos veces la ficha
 }
+	
 int contar_diagonal_descendente(int fila, int columna, int jugador, int tablero[][COLUMN]) {
 	int contador = 0; // Contador de fichas
 	int f, c; // Variables auxiliares para filas y columnas
-	// La diagonal descendiente tiene esta forma: \
+	// La diagonal descendiente tiene esta forma: '\'
 
 	f = fila;
 	c = columna;
@@ -415,6 +418,7 @@ int contar_diagonal_descendente(int fila, int columna, int jugador, int tablero[
 
 	return contador - 1; // Hay que restar uno al contador porque has contado dos veces la ficha
 }
+	
 // Menú con las opciones para gestionar usuarios
 Usuario* gestion_usuarios(Usuario* lista, int* num)
 {
