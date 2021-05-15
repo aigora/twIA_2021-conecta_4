@@ -518,7 +518,7 @@ Usuario* alta_usuario(Usuario* lista, int* num)
 	
 	lista_old = lista; // Se guarda la dirección de la lista original por si falla realloc
 	if (*num == 1) // Si no hay usuarios aún (excepto la IA)
-		lista = (Usuario*)malloc(sizeof(Usuario));
+		lista = (Usuario*)malloc(sizeof(Usuario)); // Se guarda memoria del tamaño de Usuario
 	else
 		lista = (Usuario*)realloc(lista, sizeof(Usuario) * (numero + 1)); // Pide memoria nueva con copia de datos
 	
@@ -603,7 +603,7 @@ Usuario* leer_fichero_usuarios(int* num)
 	err = fopen_s(&fichero, "Usuarios.txt", "r"); // Apertura del fichero solo para lectura
 	if (err == 0) // Si no hay error
 	{
-		fscanf_s(fichero, "%d", num); // Leemos el número de usuarios que hay en el fichero
+		fscanf_s(fichero, "%d", &num); // Leemos el número de usuarios que hay en el fichero
 		lista = (Usuario*)malloc((*num) * sizeof(Usuario)); // Solicitamos memoria para los datos de los usuarios
 		if (lista == NULL) // Si no hay memoria suficiente
 			printf("Memoria insuficiente durante la lectura del fichero de usuarios\n");
