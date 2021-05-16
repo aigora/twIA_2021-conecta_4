@@ -26,3 +26,7 @@ Lucía Pardo Hermosa (lucia-phermosa)
 
 -Puntuaciones más altas y nombre de los jugadores:
 [PuntuaciónyClasificación.pdf](https://github.com/aigora/twIA_2021-conecta_4/files/6331154/PuntuacionyClasificacion.pdf)
+
+## FUNCIONAMIENTO IA
+
+-la IA en este programa primero va a analizar si se puede colocar una ficha encima de otras tres que haya colocado previamente, en caso de que esto no sea posible, va a analizar si se puede hacer encima de dos ,en caso de que esto no sea posible, encima de una, y en caso de que tampoco se pueda va ha analizar si existe libre algún hueco en la primera fila a ocupar. En caso de que no vea posible hacer ninguna de estas jugadas la IA colocará una ficha aleatoriamente.
