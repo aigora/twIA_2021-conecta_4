@@ -68,12 +68,12 @@ int main(void)
 			usuarios = gestion_usuarios(usuarios, &num_usuarios);
 			break;	
 	case 2:
-			alta_usuario (usuarios, &num_usuarios);
+			//alta_usuario (usuarios, &num_usuarios);
 			un_jugador(tablero);
 			break;
 		case 3:
-			for (i = 0; i < 2; i++)
-				alta_usuario (usuarios, &num_usuarios);
+			//for (i = 0; i < 2; i++)
+				//alta_usuario (usuarios, &num_usuarios);
 			dos_jugadores(tablero);
 			break;
 		case 4:
@@ -83,7 +83,7 @@ int main(void)
 		}
 	} while (opc != 5);
 	
-   fichero_partida(opc, tablero); // Traslada los movimientos de la partida a un fichero
+   //fichero_partida(opc, tablero); // Traslada los movimientos de la partida a un fichero
 	
   // Tareas de desconexión y cierre
   escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
