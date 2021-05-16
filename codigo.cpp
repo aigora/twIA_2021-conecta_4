@@ -662,7 +662,11 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 			fprintf(fichero, "%s\n", (lista + i)->password);
 		}
 		
-		fclose(fichero);
+		if(fclose(fichero)==NULL)
+			printf ("\nArchivo cerrado correctamente\n");
+		else
+			printf("\nError en el cierre del archivo\n");
+		  
 	}
 	else
 		printf("Se ha producido un error a la hora de grabar el fichero de usuarios\n");
