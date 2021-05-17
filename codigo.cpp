@@ -202,7 +202,8 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha de
 				exito = 1;
 			        if (conecta(fila, columna, jugador, tablero) != 0) { //Comprueba si el jugador puede ganar
 				    printf("Ha ganado el jugador %d\n", jugador); //Indica quien es el jugador que ha ganado
-				    *fin = jugador;				
+				    *fin = jugador;	
+				}
 			}
 		}
 	
@@ -503,7 +504,7 @@ int posicion_usuario(Usuario* lista, int num, char* username)
 	int i, posicion = -1;
 
 	for (i = 0; i < num && posicion == -1; i++)
-		if (strcmp(username, lista[i]->username) == 0)
+		if (strcmp(username, lista[i].username) == 0)
 			posicion = i;
 	return posicion;
 }
@@ -566,7 +567,7 @@ int baja_usuario(Usuario* lista, int* num)
 		printf("Introduzca usuario a eliminar:");
 		gets_s(username, LONG_CAD);
 		for (i = 0; i < n && encontrado == NO; i++)
-			if (strcmp(username, lista[i]->username) == 0)
+			if (strcmp(username, lista[i].username) == 0)
 			{
 				printf("Datos del usuario encontrado:\n");
 				listado_usuarios(lista, n);
