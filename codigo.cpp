@@ -35,7 +35,8 @@ int contar_vertical(int, int, int, int[][COLUMN]);
 int contar_horizontal(int, int, int, int[][COLUMN]);
 int contar_diagonal_ascendente(int, int, int, int[][COLUMN]);
 int contar_diagonal_descendente(int, int, int, int[][COLUMN]);
-
+void guarda_partida(int[][COLUMN]);
+void reaunudar_partida(int[][COLUMN]);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
@@ -44,8 +45,9 @@ Usuario* gestion_usuarios(Usuario*, int*);
 void listado_usuarios(Usuario*, int);
 Usuario* alta_usuario (Usuario*, int*);
 int baja_usuario(Usuario*, int*);
-int consulta_usuario(Usuario*, int);
-int posicion_usuario(Usuario*, int, char*);
+int consulta_usuario(Usuario*, int, char*, char*);
+int consulta_password(Usuario*, int, char*, char*);
+int posicion_usuario(Usuario*, int, char*, char*);
 
 int main(void)
 {
@@ -53,6 +55,7 @@ int main(void)
  int num_usuarios; // Cantidad de usuarios actual
  Usuario* usuarios; // Lista de usuarios actual
  int tablero[FILAS][COLUMN];
+ char usuario1[LONG_CAD], contrasena1[LONG_CAD], usuario2[LONG_CAD], contrasena2[LONG_CAD], username[LONG_CAD], password[LONG_CAD];
 	
  // Leer fichero con los usuarios
  usuarios = leer_fichero_usuarios(&num_usuarios); // Traslada los usuarios desde un fichero a memoria
@@ -67,13 +70,64 @@ int main(void)
 		usuarios = gestion_usuarios(usuarios, &num_usuarios);
 		break;	
 	case 2:
+	        do
+		{
+			printf("Username: ");
+			gets_s(usuario1, LONG_CAD);
+			getchar();
+			printf("Password: ");
+			gets_s(contrasena1, LONG_CAD);
+			getchar();
+
+			username[LONG_CAD] = consulta_usuario(usuarios, num_usuarios, usuario1, contrasena1);
+			password[LONG_CAD] = consulta_password(usuarios, num_usuarios, usuario1, contrasena1);
+
+			if ((strcmp(username, usuario1) != 0) || (strcmp(password, contrasena1) != 0))
+				printf("El usuario o la password son incorrectas\n");
+
+		} while ((strcmp(username, usuario1) != 0) || (strcmp(password, contrasena1) != 0));		
 		un_jugador(tablero);
 		break;
 	case 3:
+		do
+		{
+			printf("Username 1: ");
+			gets_s(usuario1, LONG_CAD);
+			getchar();
+			printf("Password 1: ");
+			gets_s(contrasena1, LONG_CAD);
+			getchar();
+
+			username[LONG_CAD] = consulta_usuario(usuarios, num_usuarios, usuario1, contrasena1);
+			password[LONG_CAD] = consulta_password(usuarios, num_usuarios, usuario1, contrasena1);
+
+			if ((strcmp(username, usuario1) != 0) || (strcmp(password, contrasena1) != 0))
+				printf("El usuario o la password son incorrectas\n");
+
+
+		} while ((strcmp(username, usuario1) != 0) || (strcmp(password, contrasena1) != 0));
+		do
+		{
+			printf("Username 2: ");
+			gets_s(usuario2, LONG_CAD);
+			getchar();
+			printf("Password 2: ");
+			gets_s(contrasena2, LONG_CAD);
+			getchar();
+
+			username[LONG_CAD] = consulta_usuario(usuarios, num_usuarios, usuario2, contrasena2);
+			password[LONG_CAD] = consulta_password(usuarios, num_usuarios, usuario2, contrasena2);
+
+			if ((strcmp(username, usuario2) != 0) || (strcmp(password, contrasena2) != 0))
+				printf("El usuario o la password son incorrectas\n");
+
+
+		} while ((strcmp(username, usuario2) != 0) || (strcmp(password, contrasena2) != 0));
 
 		dos_jugadores(tablero);
 		break;
 	case 4:
+		reaunudar_partida(tablero);
 		break;
 	case 5:
 		break;
@@ -426,9 +480,8 @@ Usuario* gestion_usuarios(Usuario* lista, int* num)
 		printf("===================\n");
 		printf("1 - Alta de usuario\n");
 		printf("2 - Baja de usuario\n");
-		printf("3 - Consulta usuario\n");
-		printf("4 - Listado de los usuarios\n");
-		printf("5 - Volver al menu principal\n");
+		printf("3 - Listado de los usuarios\n");
+		printf("4 - Volver al menu principal\n");
 		printf("Seleccione una opcion: ");
 		scanf_s("%d", &opcion);
 		       
@@ -440,16 +493,14 @@ Usuario* gestion_usuarios(Usuario* lista, int* num)
 		case 2:  
 			baja_usuario(lista, num);
 			break;
-		case 3:
-			consulta_usuario(lista, *num);
-		case 4: 
+		case 3: 
 			listado_usuarios(lista, *num);
 			break;
-		case 5: 
+		case 4: 
 			break;
 		default: printf("Opcion inexistente");
 		}
-	 } while (opcion != 5);
+	 } while (opcion != 4);
 		       
 	return lista;
 }
@@ -468,25 +519,42 @@ void listado_usuarios(Usuario *lista,int numero)
 		printf("========\t\t========\t\t========\t\t========\n");
 		
 		for (i = 1; i < numero; i++)
-			printf("%s\t\t\t%s\t\t\t%s\t\t\t%s\n",(lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
+			printf("%s\t\t%s\t\t%s\t\t%s\n",(lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
 	}
 	
 	printf("\n\n");
 }
 
-// Consulta los datos del usuario a pedir
-int consulta_usuario(Usuario* lista, int num)
+// Consulta el username del usuario pedido
+int consulta_usuario(Usuario* lista, int num, char* username, char* password)
 {
-	char username[LONG_CAD];
 	int posicion = -1;
 	int cod_error = 0;
 
-	printf("Introduzca username a buscar:");
-	gets_s(username, LONG_CAD);
-	posicion = posicion_usuario(lista, num, username);
+	posicion = posicion_usuario(lista, num, username, password);
 	if (posicion == -1)
 	{
 		printf("No existe ningun usuario con ese username\n");
+		cod_error = -1;
+	}
+	else
+	{
+		listado_usuarios(lista, num);
+
+	}
+	return cod_error;
+}
+
+// Consulta password del usuario pedido
+int consulta_password(Usuario* lista, int num, char* username, char* password)
+{
+	int posicion = -1;
+	int cod_error = 0;
+
+	posicion = posicion_usuario(lista, num, username, password);
+	if (posicion == -1)
+	{
+		printf("No existe ningun usuario con ese password\n");
 		cod_error = -1;
 	}
 	else
@@ -505,6 +573,7 @@ int posicion_usuario(Usuario* lista, int num, char* username)
 	for (i = 0; i < num && posicion == -1; i++)
 		if (strcmp(username, lista[i].username) == 0)
 			posicion = i;
+	
 	return posicion;
 }
 
@@ -647,21 +716,17 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
 		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
-		fprintf(fichero, "IA\n"); // Se guarda por defecto un usuario llamado IA
-		fprintf(fichero, "IA\n"); // El password por defecto será IA
 		for (i = 0; i < numero; i++)
 		{
-			fprintf(fichero, "%d\n", i); // Se numeran los usuarios
 			fprintf(fichero, "%s\n", (lista + i)->nombre);
 			fprintf(fichero, "%s\n", (lista + i)->apellidos);
 			fprintf(fichero, "%s\n", (lista + i)->username);
 			fprintf(fichero, "%s\n", (lista + i)->password);
 		}
 		
-		if(fclose(fichero)==NULL)
-			printf ("\nArchivo cerrado correctamente\n");
-		else
-			printf("\nError en el cierre del archivo\n");
+		if(fclose(fichero)!=NULL)
+			printf("Error en el cierre del archivo\n");
+
 		  
 	}
 	else
@@ -670,6 +735,39 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	return err;
 }
 
+void guarda_partida(int tablero[][COLUMN])
+{
+	FILE* fichero;
+	errno_t err;
+
+	err = fopen_s(&fichero, "Partida.txt", "w");
+	if (err == 0)
+	{
+		fprintf(fichero, "%d\n", tablero);
+
+		fclose(fichero);
+	}
+	else
+		printf("Error en la apertura del fichero\n");
+
+}
+
+void reaunudar_partida(int tablero[][COLUMN])
+{
+	FILE* fichero;
+	errno_t err;
+
+	err = fopen_s(&fichero, "Partida.txt", "r");
+	if (err == 0)
+	{
+		while (feof(fichero) == NULL)
+		{
+			fscanf_s(fichero, "%d", &tablero);
+			printf("%d", tablero);
+		}
+	}
+
+}
 
 
 
