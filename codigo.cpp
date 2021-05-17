@@ -35,7 +35,7 @@ int contar_vertical(int, int, int, int[][COLUMN]);
 int contar_horizontal(int, int, int, int[][COLUMN]);
 int contar_diagonal_ascendente(int, int, int, int[][COLUMN]);
 int contar_diagonal_descendente(int, int, int, int[][COLUMN]);
-int fichero_partida(int, int[][COLUMN]);
+
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
