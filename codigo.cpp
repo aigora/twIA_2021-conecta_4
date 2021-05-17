@@ -61,7 +61,6 @@ int main(void)
  do
  {
 	opc = menu_principal();
-	int i, tablero[FILAS][COLUMN];
 	switch (opc)
 	{
 	case 1:
