@@ -65,25 +65,21 @@ int main(void)
 	switch (opc)
 	{
 	case 1:
-			usuarios = gestion_usuarios(usuarios, &num_usuarios);
-			break;	
+		usuarios = gestion_usuarios(usuarios, &num_usuarios);
+		break;	
 	case 2:
-			//alta_usuario (usuarios, &num_usuarios);
-			un_jugador(tablero);
-			break;
-		case 3:
-			//for (i = 0; i < 2; i++)
-				//alta_usuario (usuarios, &num_usuarios);
-			dos_jugadores(tablero);
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		}
-	} while (opc != 5);
-	
-   //fichero_partida(opc, tablero); // Traslada los movimientos de la partida a un fichero
+		un_jugador(tablero);
+		break;
+	case 3:
+
+		dos_jugadores(tablero);
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	}
+} while (opc != 5);
 	
   // Tareas de desconexión y cierre
   escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
