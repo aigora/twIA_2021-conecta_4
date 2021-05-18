@@ -510,11 +510,11 @@ void listado_usuarios(Usuario *lista,int numero)
 {
 	int i;
 	
-	if (numero == 1)
-		printf("No hay usuarios actualmente (excepto la IA)\n");
+	if (numero == 0)
+		printf("No hay usuarios actualmente\n");
 	else
 	{
-		printf("En este momento existen %d usuarios %c\n", numero - 1, (numero > 2) ? 's' : ' ');
+		printf("En este momento existen %d usuarios %c\n", numero, (numero > 1) ? 's' : ' ');
 		printf("Nombre\t\tApellidos\t\tUsername\t\tPassword\n");
 		printf("========\t\t========\t\t========\t\t========\n");
 		
@@ -566,7 +566,7 @@ int consulta_password(Usuario* lista, int num, char* username, char* password)
 }
 
 // Determina la posición de un usuario 
-int posicion_usuario(Usuario* lista, int num, char* username)
+int posicion_usuario(Usuario* lista, int num, char* username, char* password)
 {
 	int i, posicion = -1;
 
@@ -586,7 +586,7 @@ Usuario* alta_usuario(Usuario* lista, int* num)
 	char intro;
 	
 	lista_old = lista; // Se guarda la dirección de la lista original por si falla realloc
-	if (*num == 1) // Si no hay usuarios aún (excepto la IA)
+	if (*num == 0) // Si no hay usuarios aún 
 		lista = (Usuario*)malloc(sizeof(Usuario)); // Se guarda memoria del tamaño de Usuario
 	else
 		lista = (Usuario*)realloc(lista, sizeof(Usuario) * (numero + 1)); // Pide memoria nueva con copia de datos
@@ -679,7 +679,7 @@ Usuario* leer_fichero_usuarios(int* num)
 		else // Si hay memoria suficiente
 		{
 			fgets(intro, 2, fichero); // Saltamos el intro que hay tras el número (Ascii 10 y 13)
-			for (i = 1; i < *num; i++) // Para cada usaurio del fichero
+			for (i = 0; i < *num; i++) // Para cada usaurio del fichero
 			{
 				
 			        fgets((lista + i)->nombre, LONG_CAD, fichero); // Leemos el nombre
@@ -700,7 +700,7 @@ Usuario* leer_fichero_usuarios(int* num)
 		}
 	}
 	else // Si se ha producido un error en la lectura del fichero de usuarios
-		*num = 1;
+		*num = 0;
 	
 	return lista;
 }
@@ -712,7 +712,7 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	FILE* fichero;
 	errno_t err;
 	
-	err = fopen_s(&fichero, "Usuarios.txt", "a"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
+	err = fopen_s(&fichero, "Usuarios.txt", "wt"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
 		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
