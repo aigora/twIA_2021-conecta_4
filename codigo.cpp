@@ -131,6 +131,8 @@ int main(void)
 		break;
 	case 5:
 		break;
+	case 6:
+		break;
 	}
 } while (opc != 5);
 	
@@ -712,7 +714,7 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	FILE* fichero;
 	errno_t err;
 	
-	err = fopen_s(&fichero, "Usuarios.txt", "wt"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
+	err = fopen_s(&fichero, "Usuarios.txt", "at"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
 		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
