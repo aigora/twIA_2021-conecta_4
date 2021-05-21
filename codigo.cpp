@@ -57,6 +57,7 @@ int main(void)
  Usuario* usuarios; // Lista de usuarios actual
  int tablero[FILAS][COLUMN];
  int username, password;
+ char intro;
  char usuario1[LONG_CAD], contrasena1[LONG_CAD], usuario2[LONG_CAD], contrasena2[LONG_CAD];
 	
  // Leer fichero con los usuarios
@@ -74,12 +75,12 @@ int main(void)
 	case 2:
 	        do
 		{
+			printf("==========\n");
 			printf("Username: ");
+			intro = getchar();
 			gets_s(usuario1, LONG_CAD);
-			getchar();
 			printf("Password: ");
 			gets_s(contrasena1, LONG_CAD);
-			getchar();
 
 			username = consulta_usuario(usuarios, num_usuarios, usuario1);
 			password = consulta_password(usuarios, num_usuarios, contrasena1);
@@ -90,12 +91,12 @@ int main(void)
 	case 3:
 		do
 		{
+			printf("==========\n");
 			printf("Username 1: ");
+			intro = getchar();
 			gets_s(usuario1, LONG_CAD);
-			getchar();
 			printf("Password 1: ");
 			gets_s(contrasena1, LONG_CAD);
-			getchar();
 
 		        username = consulta_usuario(usuarios, num_usuarios, usuario1);
 			password = consulta_password(usuarios, num_usuarios, contrasena1);
@@ -103,12 +104,12 @@ int main(void)
 		} while (username != 0 || password != 0);
 		do
 		{
+			printf("==========\n");
 			printf("Username 2: ");
+			intro = getchar();
 			gets_s(usuario2, LONG_CAD);
-			getchar();
 			printf("Password 2: ");
 			gets_s(contrasena2, LONG_CAD);
-			getchar();
 
 			username = consulta_usuario(usuarios, num_usuarios, usuario2);
 			password = consulta_password(usuarios, num_usuarios, contrasena2);
@@ -182,10 +183,9 @@ void un_jugador(int tablero[][COLUMN]) {
 	int turno = 1;
 	int fin=0;
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
-	printf("Ha seleccionado modo 1 jugador\n");
+	printf("\nHa seleccionado modo 1 jugador\n");
 	printf("Inicio de la partida:\n");
 	inicializar_tablero(tablero);//Inicializamos tablero
-	imprimir_tablero(tablero);
 	printf("\n");
 	do {
 		printf("\nTURNO %d", turno); //Indica cuantos turnos llevan
@@ -205,10 +205,9 @@ void un_jugador(int tablero[][COLUMN]) {
 void dos_jugadores(int tablero[][COLUMN]) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	int fin = 0;
-	printf("Ha seleccionado modo 2 jugadores\n");
+	printf("\nHa seleccionado modo 2 jugadores\n");
 	printf("Inicio de la partida:\n");
 	inicializar_tablero(tablero);//Inicializamos tablero
-	imprimir_tablero(tablero);
 	printf("\n");
 	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
 	{
@@ -227,32 +226,48 @@ void dos_jugadores(int tablero[][COLUMN]) {
 void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha del jugador "jugador" em el tablero
 {
 	int fila, columna, exito = 0; // declaramos las variables
-	do //repetimos la funcion hasta que el usuario introduzca una columna válida
+	char letra[2], intro;
+	
+	printf("Desea guardar la partida (S/N): ");
+	gets_s(letra, 2);
+
+	if (strcmp(letra,"S") == 0 || strcmp(letra,"s") == 0)
 	{
-		printf("Introduzca columna:\n");
-		scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
-		columna--; // ajustamos columna a un valor inferior para que las columnas sean del 1 al 7, más intuitivo para el usuario
-		if (columna < 0 || columna > (COLUMN - 1))
-			printf("Columna no valida-limites 1 a %d-\n", COLUMN - 1);
-		else
+		guarda_partida(tablero);
+
+		exit(0);
+	}
+	else
+	{
+		do //repetimos la funcion hasta que el usuario introduzca una columna válida
 		{
-			if (tablero[0][columna] != 0) {//Si la columna esta completa
-				printf("Columna no valida-esta completa-\n");
-				columna = -1;//Truco para forzar el nuevo bucle
+			printf("Introduzca columna:\n");
+			scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
+			intro = getchar();
+			columna--; // ajustamos columna a un valor inferior para que las columnas sean del 1 al 7, más intuitivo para el usuario
+			if (columna < 0 || columna >(COLUMN - 1))
+				printf("Columna no valida-limites 1 a %d-\n", COLUMN - 1);
+			else
+			{
+				if (tablero[0][columna] != 0) {//Si la columna esta completa
+					printf("Columna no valida-esta completa-\n");
+					columna = -1;//Truco para forzar el nuevo bucle
+				}
 			}
-		}
-	} while (columna < 0 || columna > (COLUMN - 1));
-		for (fila = FILAS - 1;fila >= 0 && exito == 0;fila--) {//Buscamos fila con un hueco en la columna
+		} while (columna < 0 || columna >(COLUMN - 1));
+		for (fila = FILAS - 1; fila >= 0 && exito == 0; fila--) {//Buscamos fila con un hueco en la columna
 			if (tablero[fila][columna] == 0) {//Si está vacía
 				tablero[fila][columna] = jugador;//Ponemos ficha del jugador
 				exito = 1;
-			        if (conecta(fila, columna, jugador, tablero) != 0) { //Comprueba si el jugador puede ganar
-				    printf("Ha ganado el jugador %d\n", jugador); //Indica quien es el jugador que ha ganado
-				    *fin = jugador;	
+				if (conecta(fila, columna, jugador, tablero) != 0) { //Comprueba si el jugador puede ganar
+					printf("Ha ganado el jugador %d\n", jugador); //Indica quien es el jugador que ha ganado
+					*fin = jugador;
 				}
 			}
 		}
-	
+		
+	}
+
 }
 	
 void IA(int tablero[][COLUMN], int jugador, int *fin)
@@ -507,12 +522,12 @@ void listado_usuarios(Usuario *lista,int numero)
 		printf("No hay usuarios actualmente\n");
 	else
 	{
-		printf("En este momento existen %d usuarios %c\n", numero, (numero > 1) ? 's' : ' ');
+		printf("En este momento existen %d usuarios\n", numero);
 		printf("Nombre\t\tApellidos\t\tUsername\t\tPassword\n");
 		printf("======\t\t=========\t\t========\t\t========\n");
 		
 		for (i = 1; i < numero; i++)
-			printf("%s\t\t%s\t\t%s\t\t%s\n",(lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
+			printf("%s\t\t%s\t\t\t%s\t\t\t%s\n",(lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
 	}
 	
 	printf("\n\n");
@@ -537,11 +552,7 @@ int consulta_usuario(Usuario* lista, int num, char* username)
 			}
 		}
 	}
-	else
-	{
-		listado_usuarios(lista, num);
 
-	}
 	return cod_error;
 }
 
@@ -564,11 +575,7 @@ int consulta_password(Usuario* lista, int num, char* username, char* password)
 			}
 		}
 	}
-	else
-	{
-		listado_usuarios(lista, num);
 
-	}
 	return cod_error;
 }
 
@@ -623,7 +630,6 @@ Usuario* alta_usuario(Usuario* lista, int* num)
 		printf("Apellidos nuevo usuario: ");
 		gets_s((lista + numero)->apellidos, LONG_CAD);
 		printf("Username nuevo de usuario: ");
-		intro = getchar(); // Eliminamos el intro que estará en el buffer tras la selección del menú
 		gets_s((lista + numero)->username, LONG_CAD);
 		printf("Password nuevo usuario: ");
 		gets_s((lista + numero)->password, LONG_CAD);
@@ -733,7 +739,7 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	FILE* fichero;
 	errno_t err;
 	
-	err = fopen_s(&fichero, "Usuarios.txt", "a"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
+	err = fopen_s(&fichero, "Usuarios.txt", "wt"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
 		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
@@ -759,13 +765,22 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 void guarda_partida(int tablero[][COLUMN])
 {
 	FILE* fichero;
+	int i, j;
 	errno_t err;
 
 	err = fopen_s(&fichero, "Partida.txt", "w");
 	if (err == 0)
 	{
-		fprintf(fichero, "%d\n", tablero);
+		for (i = 0; i < FILAS; i++)
+		{
+			for (j = 0; j < COLUMN; j++)
+			{
+				fprintf(fichero, "%d ", tablero[i][j]);
+			}
 
+			fprintf(fichero, "\n");
+		}
+		
 		fclose(fichero);
 	}
 	else
@@ -776,6 +791,7 @@ void guarda_partida(int tablero[][COLUMN])
 void reaunudar_partida(int tablero[][COLUMN])
 {
 	FILE* fichero;
+	int i, j;
 	errno_t err;
 
 	err = fopen_s(&fichero, "Partida.txt", "r");
@@ -783,8 +799,16 @@ void reaunudar_partida(int tablero[][COLUMN])
 	{
 		while (feof(fichero) == NULL)
 		{
-			fscanf_s(fichero, "%d", &tablero);
-			printf("%d", tablero);
+		        for (i = 0; i < FILAS; i++)
+			{
+				for (j = 0; j < COLUMN; j++)
+				{
+					fscanf_s(fichero, "%d\n", &tablero[i][j]);
+					printf("|%d ", tablero[i][j]);
+				}
+
+				printf("|\n");
+			}
 		}
 	}
 
