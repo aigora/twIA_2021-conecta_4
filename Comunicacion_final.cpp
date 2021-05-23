@@ -21,7 +21,9 @@ void Send_to_hw(Serial*, char*);
 int Receive_from_hw(Serial* Arduino, char* BufferEntrada);
 int Send_and_Receive(Serial* Arduino, int msg_out, int valor_out, char* msg_in);
 int Recibir_mando_ard(Serial* Arduino, char* msg_in, int* valor_in);
+int leer_boton(Serial*);
 
+Arduino = new Serial((char*)COM5);
 
 int main(void)
 {
@@ -29,7 +31,7 @@ int main(void)
 	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
 	int d1, d2;  // Opción del menú principal seleccionada
 	char pchar[MAX_BUFFER];
-	int x;
+	int x,columna;
 
 	// Tareas de configuración y carga
 	
@@ -44,6 +46,9 @@ int main(void)
 			printf("%s %d\n", pchar, x);
 		}
     }
+	
+	columna = leer_boton(Arduino);
+	printf("columna leida es %d",columna);
 
 	// Tareas de desconexión y cierre 
 	return 0;
@@ -68,6 +73,18 @@ int menu_principal(void)
 	return opcion;
 }
 
+int leer_boton(Serial* arduino)
+{
+	char Buffer[200];
+	int columna, bytes, recibidos;
+	bytes_recibidos = send_and recieve(Arduino, "DAME COLUMNA", -1, Buffer, &columna);
+	if (bytes_recibidos == 0)
+		boton = -1
+	else
+		boton = columna
+	return boton;
+
+}
 
 
 // Ejemplo de función de intercambio de datos con Arduino
