@@ -557,7 +557,7 @@ int consulta_usuario(Usuario* lista, int num, char* username)
 }
 
 // Consulta password del usuario pedido
-int consulta_password(Usuario* lista, int num, char* username, char* password)
+int consulta_password(Usuario* lista, int num, char* password)
 {
 	int posicion = -1;
 	int cod_error = 0;
