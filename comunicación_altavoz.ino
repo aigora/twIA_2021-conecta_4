@@ -1,4 +1,4 @@
-int altavoz=7;
+int altavoz=9;
 int i;
 char opcion;
 
