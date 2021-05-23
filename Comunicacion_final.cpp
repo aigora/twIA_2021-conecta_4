@@ -23,7 +23,6 @@ int Send_and_Receive(Serial* Arduino, int msg_out, int valor_out, char* msg_in);
 int Recibir_mando_ard(Serial* Arduino, char* msg_in, int* valor_in);
 int leer_boton(Serial*);
 
-Arduino = new Serial((char*)COM5);
 
 int main(void)
 {
