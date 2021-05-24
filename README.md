@@ -29,4 +29,4 @@ Lucía Pardo Hermosa (lucia-phermosa)
 
 ## FUNCIONAMIENTO IA
 
--la IA en este programa primero va a analizar si se puede colocar una ficha encima de otras tres que haya colocado previamente, en caso de que esto no sea posible, va a analizar si se puede hacer encima de dos ,en caso de que esto no sea posible, encima de una, y en caso de que tampoco se pueda va ha analizar si existe libre algún hueco en la primera fila a ocupar. En caso de que no vea posible hacer ninguna de estas jugadas la IA colocará una ficha aleatoriamente.
+-La IA en este programa primero va a analizar si se puede colocar una ficha encima de otras tres que haya colocado previamente, en caso de que esto no sea posible, comprobará si puede evitar una victoria vertical del jugador. En caso de que no sea posible, va a analizar si se puede hacer encima de dos ,en caso de que esto no sea posible, encima de una, y en caso de que tampoco se pueda va ha analizar si existe libre algún hueco en la primera fila a ocupar. En caso de que no vea posible hacer ninguna de estas jugadas la IA colocará una ficha aleatoriamente.
