@@ -295,6 +295,22 @@ void IA(int tablero[][COLUMN], int jugador, int *fin)
 		{
 			for (columna = 0; columna < COLUMN; columna++)
 			{
+				if (tablero[FILAS - 3][columna] == 1 && tablero[FILAS - 2][columna] == 1 && tablero[FILAS - 1][columna] == 1)// en caso de que hayamos ocupado las dos primeras filas, colocar una ficha encima de esta
+				{
+					tablero[FILAS - 4][columna] = jugador;//Ponemos ficha del jugador
+					exito = 1; // salimos del bucle while
+					if (conecta(FILAS - 4, columna, jugador, tablero) != 0) {
+						printf("Ha ganado el jugador %d\n", jugador);
+						*fin = jugador;
+					}
+					columna = COLUMN; // truco para cerrar el bucle for
+				}
+			}
+		}		
+		if (exito == 0)
+		{
+			for (columna = 0; columna < COLUMN; columna++)
+			{
 				if (tablero[FILAS - 3][columna] == 0 && tablero[FILAS - 2][columna] == jugador && tablero[FILAS - 1][columna] == jugador)// en caso de que hayamos ocupado las dos primeras filas, colocar una ficha encima de esta
 				{
 					tablero[FILAS - 3][columna] = jugador;//Ponemos ficha del jugador
