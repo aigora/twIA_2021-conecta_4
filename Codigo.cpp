@@ -142,7 +142,7 @@ int main(void)
 	case 6:
 		break;
 	}
-} while (opc != 6);
+} while (opc != 5);
 	
   // Tareas de desconexión y cierre
   escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
