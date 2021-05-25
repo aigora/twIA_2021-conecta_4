@@ -26,9 +26,9 @@ int menu_principal(void);
 // Funciones relacionadas con la partida
 void inicializar_tablero(int[][COLUMN]);
 void imprimir_tablero(int[][COLUMN]);
-void un_jugador(int[][COLUMN]); 
-void dos_jugadores(int[][COLUMN]);
-void meter_ficha(int[][COLUMN], int, int*);
+void un_jugador(int[][COLUMN], Usuario*); 
+void dos_jugadores(int[][COLUMN], Usuario*);
+void meter_ficha(int[][COLUMN], int, int*, Usuario*);
 void IA(int[][COLUMN], int, int*);
 int conecta(int, int, int, int[][COLUMN]);
 int contar_vertical(int, int, int, int[][COLUMN]);
@@ -49,6 +49,8 @@ int consulta_usuario(Usuario*, int, char*);
 int consulta_password(Usuario*, int, char*);
 int posicion_usuario(Usuario*, int, char*);
 int posicion_password(Usuario*, int, char*);
+int puntuaciones_jugador1(Usuario*, int, int[][COLUMN], int*);
+int puntuaciones_jugador2(Usuario*, int, int[][COLUMN], int*);
 
 int main(void)
 {
@@ -56,6 +58,8 @@ int main(void)
  int num_usuarios; // Cantidad de usuarios actual
  Usuario* usuarios; // Lista de usuarios actual
  int tablero[FILAS][COLUMN];
+ int* fin = 0;
+ int i;
  int username, password;
  char intro;
  char usuario1[LONG_CAD], contrasena1[LONG_CAD], usuario2[LONG_CAD], contrasena2[LONG_CAD];
@@ -86,7 +90,7 @@ int main(void)
 			password = consulta_password(usuarios, num_usuarios, contrasena1);
 
 		} while (username != 0 || password != 0);		
-		un_jugador(tablero);
+		un_jugador(tablero, usuarios);
 		break;
 	case 3:
 		do
@@ -116,17 +120,29 @@ int main(void)
 
 		} while (username != 0 || password != 0);
 
-		dos_jugadores(tablero);
+		dos_jugadores(tablero, usuarios);
 		break;
 	case 4:
 		reaunudar_partida(tablero);
 		break;
 	case 5:
+		if (opc == 2)
+		{
+			puntuaciones_jugador1(usuarios, num_usuarios, tablero, fin);
+		}
+		else
+		{
+			if (opc == 3)
+			{
+				puntuaciones_jugador1(usuarios, num_usuarios, tablero, fin);
+				puntuaciones_jugador2(usuarios, num_usuarios, tablero, fin);
+			}
+		}
 		break;
 	case 6:
 		break;
 	}
-} while (opc != 5);
+} while (opc != 6);
 	
   // Tareas de desconexión y cierre
   escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
@@ -179,7 +195,7 @@ void imprimir_tablero(int tablero[][COLUMN]) {
 	}
 }
 
-void un_jugador(int tablero[][COLUMN]) {
+void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 	int turno = 1;
 	int fin=0;
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
@@ -191,7 +207,7 @@ void un_jugador(int tablero[][COLUMN]) {
 		printf("\nTURNO %d", turno); //Indica cuantos turnos llevan
 		printf("\n");
 		printf("Inicio del turno del jugador\n");
-		meter_ficha(tablero, 1, &fin); //El jugador mete ficha
+		meter_ficha(tablero, 1, &fin, lista); //El jugador mete ficha
 		imprimir_tablero(tablero);
 		if (fin == 0) { //El jugador 2 solo puede meter ficha si el jugador 1 no ha ganado
 			printf("Inicio del turno de la CPU\n");
@@ -202,7 +218,7 @@ void un_jugador(int tablero[][COLUMN]) {
 	} while (fin == 0);
 }
 
-void dos_jugadores(int tablero[][COLUMN]) {
+void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	int fin = 0;
 	printf("\nHa seleccionado modo 2 jugadores\n");
@@ -212,18 +228,18 @@ void dos_jugadores(int tablero[][COLUMN]) {
 	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
 	{
 		printf("Inicio del turno del jugador 1\n");
-		meter_ficha(tablero, 1, &fin);//El jugador elige dónde poner la ficha
+		meter_ficha(tablero, 1, &fin, lista);//El jugador elige dónde poner la ficha
 		imprimir_tablero(tablero);
 		if (fin == 0) // la ficha del seundo jugador solo se puede introducir si no ha ganado el jugador 1
 		{
 			printf("Inicio del turno del jugador 2\n");
-			meter_ficha(tablero, 2, &fin);//El jugador elige dónde poner la ficha
+			meter_ficha(tablero, 2, &fin, lista);//El jugador elige dónde poner la ficha
 			imprimir_tablero(tablero);
 		}
 	} while (fin == 0);
 }
 
-void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha del jugador "jugador" em el tablero
+void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//Pone la ficha del jugador "jugador" em el tablero
 {
 	int fila, columna, exito = 0; // declaramos las variables
 	char letra[2], intro;
@@ -267,6 +283,9 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin)//Pone la ficha de
 		}
 		
 	}
+	
+	puntuaciones_jugador1(lista, jugador, tablero, fin);
+	puntuaciones_jugador2(lista, jugador, tablero, fin);
 
 }
 	
@@ -829,6 +848,121 @@ void reaunudar_partida(int tablero[][COLUMN])
 	}
 
 }
+
+int puntuaciones_jugador1(Usuario* lista, int num, int tablero[][COLUMN], int* fin)
+{
+	FILE* fichero;
+	errno_t err;
+	int score = 0;
+
+	if (*fin == 0)
+	{
+		score += 10;
+	}
+	else
+	{
+		if (*fin == 1)
+		{
+			score += 25;
+		}
+		else
+		{
+			if (*fin == 2)
+			{
+				score -= 10;
+			}
+		}
+
+	}
+
+	err = fopen_s(&fichero, "Puntuaciones.txt", "wt+");
+
+	if (err == 0)
+	{
+		fscanf_s(fichero, "%s\n", &lista->username);
+		fscanf_s(fichero, "%d\n", &score);
+
+		if (fichero == NULL)
+		{
+			fprintf(fichero, "%s\n", lista->username);
+			fprintf(fichero, "%d\n", score);
+		}
+		else
+		{
+			score += score;
+
+			fprintf(fichero, "%s\n", lista->username);
+			fprintf(fichero, "%d\n", score);
+
+		}
+
+		if (fclose(fichero) != NULL)
+			printf("Error en el cierre del archivo\n");
+	}
+	else
+		printf("Error en la apertura del fichero\n");
+
+
+	return err;
+
+}
+
+int puntuaciones_jugador2(Usuario* lista, int jugador, int tablero[][COLUMN], int* fin)
+{
+	FILE* fichero;
+	errno_t err;
+	int score = 0;
+
+	if (fin == 0)
+	{
+		score += 10;
+	}
+	else
+	{
+		if (*fin == 1)
+		{
+			score -= 10;
+		}
+		else
+		{
+			if (*fin == 2)
+			{
+				score += 25;
+			}
+		}
+
+	}
+
+	err = fopen_s(&fichero, "Puntuaciones.txt", "wt+");
+
+	if (err == 0)
+	{
+		fscanf_s(fichero, "%s\n", &lista->username);
+		fscanf_s(fichero, "%d\n", &score);
+
+		if (fichero == NULL)
+		{
+			fprintf(fichero, "%s\n", lista->username);
+			fprintf(fichero, "%d\n", score);
+		}
+		else
+		{
+			score += score;
+
+			fprintf(fichero, "%s\n", lista->username);
+			fprintf(fichero, "%d\n", score);
+
+		}
+
+		if (fclose(fichero) != NULL)
+			printf("Error en el cierre del archivo\n");
+	}
+	else
+		printf("Error en la apertura del fichero\n");
+
+	return err;
+}
+
 
 
 
