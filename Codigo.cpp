@@ -3,6 +3,7 @@
 #include <locale.h>
 #include <malloc.h>
 #include <string.h>
+#include "SerialClass/SerialClass.h"
 
 #define SI 1
 #define NO 0
@@ -54,6 +55,13 @@ int puntuaciones_jugador2(Usuario*, int, int[][COLUMN], int*);
 
 int main(void)
 {
+	// comunicacion arduino
+ Serial* Arduino;
+ char puerto[] = "COM5"; // depende del puerto
+ int cancion = 0;
+ char secuencia[2];
+ Arduino = new Serial((char*)puerto);
+	
  int opc; // Opción del menú principal
  int num_usuarios; // Cantidad de usuarios actual
  Usuario* usuarios; // Lista de usuarios actual
@@ -201,6 +209,16 @@ void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	printf("\nHa seleccionado modo 1 jugador\n");
 	printf("Inicio de la partida:\n");
+	if (Arduino->IsConnected())
+    {
+
+        cancion = 1;
+
+        sprintf_s(secuencia, "%d", cancion);
+
+        Arduino->WriteData(secuencia, strlen(secuencia));
+        Sleep(2000);
+    }
 	inicializar_tablero(tablero);//Inicializamos tablero
 	printf("\n");
 	do {
@@ -223,6 +241,16 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 	int fin = 0;
 	printf("\nHa seleccionado modo 2 jugadores\n");
 	printf("Inicio de la partida:\n");
+	    if (Arduino->IsConnected())
+    {
+
+        cancion = 1;
+
+        sprintf_s(secuencia, "%d", cancion);
+
+        Arduino->WriteData(secuencia, strlen(secuencia));
+        Sleep(2000);
+    }
 	inicializar_tablero(tablero);//Inicializamos tablero
 	printf("\n");
 	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
@@ -237,6 +265,17 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 			imprimir_tablero(tablero);
 		}
 	} while (fin == 0);
+	   if (Arduino->IsConnected())
+    {
+
+        cancion = 2;
+
+        sprintf_s(secuencia, "%d", cancion);
+
+        Arduino->WriteData(secuencia, strlen(secuencia));
+        Sleep(2000);
+
+    }
 }
 
 void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//Pone la ficha del jugador "jugador" em el tablero
