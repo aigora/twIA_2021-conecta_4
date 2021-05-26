@@ -293,6 +293,7 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 
 void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//Pone la ficha del jugador "jugador" em el tablero
 {
+	Serial* Arduino;
 	int fila, columna = 0 , exito = 0,x; // declaramos las variables
 	char letra[2], intro;
 	char pchar[MAX_BUFFER];
