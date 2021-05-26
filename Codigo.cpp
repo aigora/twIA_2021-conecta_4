@@ -3,7 +3,6 @@
 #include <locale.h>
 #include <malloc.h>
 #include <string.h>
-#include "SerialClass/SerialClass.h"
 #include "SerialClass.h"
 
 #define MAX_BUFFER 200
