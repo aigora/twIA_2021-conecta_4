@@ -15,7 +15,7 @@ int main()
     if (Arduino->IsConnected())
     {
 
-        cancion = 1; 
+        cancion = 1; //INICIO
 
         sprintf_s(secuencia, "%d", cancion);
 
@@ -27,7 +27,7 @@ int main()
     if (Arduino->IsConnected())
     {
 
-        cancion = 2; 
+        cancion = 2; //VICTORIA
 
         sprintf_s(secuencia, "%d", cancion);
 
