@@ -38,6 +38,11 @@ int contar_diagonal_ascendente(int, int, int, int[][COLUMN]);
 int contar_diagonal_descendente(int, int, int, int[][COLUMN]);
 void guarda_partida(int[][COLUMN]);
 void reaunudar_partida(int[][COLUMN]);
+void Send_to_hw(Serial*, char*);
+int Receive_from_hw(Serial* Arduino, char* BufferEntrada);
+int Send_and_Receive(Serial* Arduino, int msg_out, int valor_out, char* msg_in);
+int Recibir_mando_ard(Serial* Arduino, char* msg_in, int* valor_in);
+int leer_boton(int);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
@@ -57,7 +62,9 @@ int main(void)
 {
 	// comunicacion arduino
  Serial* Arduino;
- char puerto[] = "COM5"; // depende del puerto
+ char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
+ char pchar[MAX_BUFFER];
+ int x, columna;
  int cancion = 0;
  char secuencia[2];
  Arduino = new Serial((char*)puerto);
@@ -1001,6 +1008,113 @@ int puntuaciones_jugador2(Usuario* lista, int jugador, int tablero[][COLUMN], in
 
 	return err;
 }
+
+int Send_and_Receive(Serial* Arduino, int msg_out, int valor_out, char* msg_in)
+{
+	char BufferSalida[MAX_BUFFER];
+	char BufferEntrada[MAX_BUFFER];
+
+	int bytesReceive;
+
+	sprintf_s(BufferSalida, "%d\n%d\n", msg_out, valor_out);
+	Send_to_hw(Arduino, BufferSalida);
+	bytesReceive = Receive_from_hw(Arduino, BufferEntrada);
+	if (bytesReceive != 0)
+		strcpy_s(msg_in, MAX_BUFFER, BufferEntrada);
+
+	return bytesReceive;
+}
+
+
+// Envía un mensaje a la plataforma hardware
+void Send_to_hw(Serial* Arduino, char* BufferSalida)
+{
+	Arduino->WriteData(BufferSalida, strlen(BufferSalida));
+}
+//Recibe (si existe) un mensaje de la plataforma hardware
+//Realiza MAX_INTENTOS_READ para evitar mensajes recortados
+int Receive_from_hw(Serial* Arduino, char* BufferEntrada)
+{
+	int bytesRecibidos, bytesTotales = 0;
+	int intentos_lectura = 0;
+	char cadena[MAX_BUFFER];
+
+	BufferEntrada[0] = '\0';
+	while (intentos_lectura < MAX_INTENTOS_READ)
+	{
+		cadena[0] = '\0';
+		bytesRecibidos = Arduino->ReadData(cadena, sizeof(char) * (MAX_BUFFER - 1));
+		if (bytesRecibidos != -1)
+		{
+			cadena[bytesRecibidos] = '\0';
+			strcat_s(BufferEntrada, MAX_BUFFER, cadena);
+			bytesTotales += bytesRecibidos;
+		}
+		intentos_lectura++;
+		Sleep(MS_ENTRE_INTENTOS);
+	}
+	return bytesTotales;
+}
+int leer_boton(int x)
+{
+	int c;
+
+	switch (x)
+	{
+	case 12:
+		c = 1;
+		break;
+	case 24:
+		c = 2;
+		break;
+	case 94:
+		c = 3;
+		break;
+	case 8:
+		c = 4;
+		break;
+	case 28:
+		c = 5;
+		break;
+	case 90:
+		c = 6;
+		break;
+	case 66:
+		c = 7;
+		break;
+	default:
+		c = -1;
+	}
+
+	return c;
+
+}
+
+int Recibir_mando_ard(Serial* Arduino, char* msg_in, int* valor_in)
+{
+	char BufferSalida[MAX_BUFFER];
+	char BufferEntrada[MAX_BUFFER];
+	char* ptr;
+	int bytesReceive;
+
+
+
+	bytesReceive = Receive_from_hw(Arduino, BufferEntrada);
+	if (bytesReceive != 0)
+	{
+		ptr = strpbrk(BufferEntrada, " ");
+		if (ptr == NULL)
+			*valor_in = -1;
+		else
+		{
+			*valor_in = atoi(ptr);
+			*ptr = '\0';
+		}
+		strcpy_s(msg_in, MAX_BUFFER, BufferEntrada);
+	}
+	return bytesReceive;
+}
+
 
 
 
