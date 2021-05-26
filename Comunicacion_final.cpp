@@ -21,14 +21,13 @@ void Send_to_hw(Serial*, char*);
 int Receive_from_hw(Serial* Arduino, char* BufferEntrada);
 int Send_and_Receive(Serial* Arduino, int msg_out, int valor_out, char* msg_in);
 int Recibir_mando_ard(Serial* Arduino, char* msg_in, int* valor_in);
-int leer_boton(Serial*);
+int leer_boton(int);
 
 
 int main(void)
 {
 	Serial* Arduino;
 	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
-	int d1, d2;  // Opción del menú principal seleccionada
 	char pchar[MAX_BUFFER];
 	int x,columna;
 
@@ -39,15 +38,18 @@ int main(void)
 	while (1)
 	{
 		
-
-		if (Recibir_mando_ard(Arduino, pchar, &x) != 0)    
-		{
+         if (Recibir_mando_ard(Arduino, pchar, &x) != 0)
+	 {
 			printf("%s %d\n", pchar, x);
-		}
+			
+			columna = leer_boton(x);
+
+			if (columna >= 1 && columna <= 7)
+				printf("\nColumna leida es %d\n\n", columna);
+	 }
     }
 	
-	columna = leer_boton(Arduino);
-	printf("columna leida es %d",columna);
+	
 
 	// Tareas de desconexión y cierre 
 	return 0;
@@ -72,16 +74,38 @@ int menu_principal(void)
 	return opcion;
 }
 
-int leer_boton(Serial* arduino)
+int leer_boton(int x)
 {
-	char Buffer[200];
-	int columna, bytes, recibidos;
-	bytes_recibidos = send_and recieve(Arduino, "DAME COLUMNA", -1, Buffer, &columna);
-	if (bytes_recibidos == 0)
-		boton = -1
-	else
-		boton = columna
-	return boton;
+	int c;
+
+	switch (x)
+	{
+	case 12:
+		c = 1;
+		break;
+	case 24:
+		c = 2;
+		break;
+	case 94:
+		c = 3;
+		break;
+	case 8:
+		c = 4;
+		break;
+	case 28:
+		c = 5;
+		break;
+	case 90:
+		c = 6;
+		break;
+	case 66:
+		c = 7;
+		break;
+	default:
+		c = -1;
+	}
+
+    return c;
 
 }
 
