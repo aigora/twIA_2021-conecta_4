@@ -67,8 +67,6 @@ int main(void)
  Serial* Arduino;
  char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
  char pchar[MAX_BUFFER];
- int cancion = 0;
- char secuencia[2];
  Arduino = new Serial((char*)puerto);
 	
  int opc; // Opción del menú principal
@@ -215,6 +213,8 @@ void imprimir_tablero(int tablero[][COLUMN]) {
 void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 	int turno = 1;
 	int fin=0;
+        int cancion = 0;
+        char secuencia[2];
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	printf("\nHa seleccionado modo 1 jugador\n");
 	printf("Inicio de la partida:\n");
@@ -248,6 +248,8 @@ void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	int fin = 0;
+        int cancion = 0;
+        char secuencia[2];
 	printf("\nHa seleccionado modo 2 jugadores\n");
 	printf("Inicio de la partida:\n");
 	    if (Arduino->IsConnected())
