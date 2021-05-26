@@ -221,6 +221,7 @@ void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
 	char pchar[MAX_BUFFER];
 	Arduino = new Serial((char*)puerto);
+
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	printf("\nHa seleccionado modo 1 jugador\n");
 	printf("Inicio de la partida:\n");
@@ -260,6 +261,7 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
 	char pchar[MAX_BUFFER];
 	Arduino = new Serial((char*)puerto);
+
 	printf("\nHa seleccionado modo 2 jugadores\n");
 	printf("Inicio de la partida:\n");
 	if (Arduino->IsConnected())
@@ -307,7 +309,6 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int* fin, Usuario* lista)//
 	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
 	char pchar[MAX_BUFFER];
 	Arduino = new Serial((char*)puerto);
-
 	printf("Desea guardar la partida (S/N): ");
 	gets_s(letra, 2);
 
@@ -1141,10 +1142,3 @@ int Recibir_mando_ard(Serial* Arduino, char* msg_in, int* valor_in)
 	return bytesReceive;
 }
 
-
-
-			       
-			       
-			       
-		      
-		       
