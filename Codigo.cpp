@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <Windows.h>
 #include <locale.h>
 #include <malloc.h>
 #include <string.h>
+#include <conio.h>
 #include "SerialClass.h"
 
 #define MAX_BUFFER 200
