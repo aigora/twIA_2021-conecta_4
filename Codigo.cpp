@@ -290,7 +290,7 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 
 void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//Pone la ficha del jugador "jugador" em el tablero
 {
-	int fila, columna, exito = 0; // declaramos las variables
+	int fila, columna = 0 , exito = 0,x; // declaramos las variables
 	char letra[2], intro;
 	
 	printf("Desea guardar la partida (S/N): ");
@@ -307,7 +307,15 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//
 		do //repetimos la funcion hasta que el usuario introduzca una columna válida
 		{
 			printf("Introduzca columna:\n");
-			scanf_s("%d", &columna); // guardamos la columna en la que el usuario desea introducir la ficha
+				while (columna == 0)
+	{
+
+		if (Recibir_mando_ard(Arduino, pchar, &x) != 0)
+		{
+			printf("%s %d\n", pchar, x);
+			columna = leer_boton(x);
+		}
+	}
 			intro = getchar();
 			columna--; // ajustamos columna a un valor inferior para que las columnas sean del 1 al 7, más intuitivo para el usuario
 			if (columna < 0 || columna >(COLUMN - 1))
