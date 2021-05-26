@@ -67,7 +67,6 @@ int main(void)
  Serial* Arduino;
  char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
  char pchar[MAX_BUFFER];
- int x, columna;
  int cancion = 0;
  char secuencia[2];
  Arduino = new Serial((char*)puerto);
