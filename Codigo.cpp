@@ -23,7 +23,7 @@ typedef struct
 	char apellidos[LONG_CAD];
 	char username[LONG_CAD];
 	char password[LONG_CAD];
-	
+
 } Usuario;
 
 // Función prototipo
@@ -32,7 +32,7 @@ int menu_principal(void);
 // Funciones relacionadas con la partida
 void inicializar_tablero(int[][COLUMN]);
 void imprimir_tablero(int[][COLUMN]);
-void un_jugador(int[][COLUMN], Usuario*); 
+void un_jugador(int[][COLUMN], Usuario*);
 void dos_jugadores(int[][COLUMN], Usuario*);
 void meter_ficha(int[][COLUMN], int, int*, Usuario*);
 void IA(int[][COLUMN], int, int*);
@@ -54,7 +54,7 @@ Usuario* leer_fichero_usuarios(int*);
 int escribir_fichero_usuarios(Usuario*, int);
 Usuario* gestion_usuarios(Usuario*, int*);
 void listado_usuarios(Usuario*, int);
-Usuario* alta_usuario (Usuario*, int*);
+Usuario* alta_usuario(Usuario*, int*);
 int baja_usuario(Usuario*, int*);
 int consulta_usuario(Usuario*, int, char*);
 int consulta_password(Usuario*, int, char*);
@@ -66,127 +66,127 @@ int puntuaciones_jugador2(Usuario*, int, int[][COLUMN], int*);
 int main(void)
 {
 	// comunicacion arduino
- Serial* Arduino;
- char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
- char pchar[MAX_BUFFER];
- Arduino = new Serial((char*)puerto);
-	
- int opc; // Opción del menú principal
- int num_usuarios; // Cantidad de usuarios actual
- Usuario* usuarios; // Lista de usuarios actual
- int tablero[FILAS][COLUMN];
- int* fin = 0;
- int i;
- int username, password;
- char intro;
- char usuario1[LONG_CAD], contrasena1[LONG_CAD], usuario2[LONG_CAD], contrasena2[LONG_CAD];
-	
- // Leer fichero con los usuarios
- usuarios = leer_fichero_usuarios(&num_usuarios); // Traslada los usuarios desde un fichero a memoria
- 
- // Bucle principal de la aplicación
- do
- {
-	opc = menu_principal();
-	switch (opc)
+	Serial* Arduino;
+	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
+	char pchar[MAX_BUFFER];
+	Arduino = new Serial((char*)puerto);
+
+	int opc; // Opción del menú principal
+	int num_usuarios; // Cantidad de usuarios actual
+	Usuario* usuarios; // Lista de usuarios actual
+	int tablero[FILAS][COLUMN];
+	int* fin = 0;
+	int i;
+	int username, password;
+	char intro;
+	char usuario1[LONG_CAD], contrasena1[LONG_CAD], usuario2[LONG_CAD], contrasena2[LONG_CAD];
+
+	// Leer fichero con los usuarios
+	usuarios = leer_fichero_usuarios(&num_usuarios); // Traslada los usuarios desde un fichero a memoria
+
+	// Bucle principal de la aplicación
+	do
 	{
-	case 1:
-		usuarios = gestion_usuarios(usuarios, &num_usuarios);
-		break;	
-	case 2:
-	        do
+		opc = menu_principal();
+		switch (opc)
 		{
-			printf("==========\n");
-			printf("Username: ");
-			intro = getchar();
-			gets_s(usuario1, LONG_CAD);
-			printf("Password: ");
-			gets_s(contrasena1, LONG_CAD);
+		case 1:
+			usuarios = gestion_usuarios(usuarios, &num_usuarios);
+			break;
+		case 2:
+			do
+			{
+				printf("==========\n");
+				printf("Username: ");
+				intro = getchar();
+				gets_s(usuario1, LONG_CAD);
+				printf("Password: ");
+				gets_s(contrasena1, LONG_CAD);
 
-			username = consulta_usuario(usuarios, num_usuarios, usuario1);
-			password = consulta_password(usuarios, num_usuarios, contrasena1);
+				username = consulta_usuario(usuarios, num_usuarios, usuario1);
+				password = consulta_password(usuarios, num_usuarios, contrasena1);
 
-		} while (username != 0 || password != 0);		
-		un_jugador(tablero, usuarios);
-		break;
-	case 3:
-		do
-		{
-			printf("==========\n");
-			printf("Username 1: ");
-			intro = getchar();
-			gets_s(usuario1, LONG_CAD);
-			printf("Password 1: ");
-			gets_s(contrasena1, LONG_CAD);
+			} while (username != 0 || password != 0);
+			un_jugador(tablero, usuarios);
+			break;
+		case 3:
+			do
+			{
+				printf("==========\n");
+				printf("Username 1: ");
+				intro = getchar();
+				gets_s(usuario1, LONG_CAD);
+				printf("Password 1: ");
+				gets_s(contrasena1, LONG_CAD);
 
-		        username = consulta_usuario(usuarios, num_usuarios, usuario1);
-			password = consulta_password(usuarios, num_usuarios, contrasena1);
+				username = consulta_usuario(usuarios, num_usuarios, usuario1);
+				password = consulta_password(usuarios, num_usuarios, contrasena1);
 
-		} while (username != 0 || password != 0);
-		do
-		{
-			printf("==========\n");
-			printf("Username 2: ");
-			intro = getchar();
-			gets_s(usuario2, LONG_CAD);
-			printf("Password 2: ");
-			gets_s(contrasena2, LONG_CAD);
+			} while (username != 0 || password != 0);
+			do
+			{
+				printf("==========\n");
+				printf("Username 2: ");
+				intro = getchar();
+				gets_s(usuario2, LONG_CAD);
+				printf("Password 2: ");
+				gets_s(contrasena2, LONG_CAD);
 
-			username = consulta_usuario(usuarios, num_usuarios, usuario2);
-			password = consulta_password(usuarios, num_usuarios, contrasena2);
+				username = consulta_usuario(usuarios, num_usuarios, usuario2);
+				password = consulta_password(usuarios, num_usuarios, contrasena2);
 
-		} while (username != 0 || password != 0);
+			} while (username != 0 || password != 0);
 
-		dos_jugadores(tablero, usuarios);
-		break;
-	case 4:
-		reaunudar_partida(tablero);
-		break;
-	case 5:
-		if (opc == 2)
-		{
-			puntuaciones_jugador1(usuarios, num_usuarios, tablero, fin);
-		}
-		else
-		{
-			if (opc == 3)
+			dos_jugadores(tablero, usuarios);
+			break;
+		case 4:
+			reaunudar_partida(tablero);
+			break;
+		case 5:
+			if (opc == 2)
 			{
 				puntuaciones_jugador1(usuarios, num_usuarios, tablero, fin);
-				puntuaciones_jugador2(usuarios, num_usuarios, tablero, fin);
 			}
+			else
+			{
+				if (opc == 3)
+				{
+					puntuaciones_jugador1(usuarios, num_usuarios, tablero, fin);
+					puntuaciones_jugador2(usuarios, num_usuarios, tablero, fin);
+				}
+			}
+			break;
+		case 6:
+			break;
 		}
-		break;
-	case 6:
-		break;
-	}
-} while (opc != 5);
-	
-  // Tareas de desconexión y cierre
-  escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
+	} while (opc != 5);
+
+	// Tareas de desconexión y cierre
+	escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
 }
 
 int menu_principal(void)
 {
- int opcion;
- 
- do
- {
-    printf("Menu principal Conecta-4\n");
-    printf ("========================\n");
-    printf("1 - Gestion de usuarios\n");
-    printf("2 - 1 Jugador\n");
-    printf("3 - 2 Jugadores\n"); 
-    printf("4 - Reaunudar partida\n");
-    printf("5 - Ver puntuaciones\n");
-    printf("6 - Salir\n");
-    printf ("Seleccione una opcion: ");
-    scanf_s("%d", &opcion);
-   
-    if (opcion < 1 || opcion>6)
-        printf("\nOpcion inexistente.\n\n");
- } while (opcion < 1 || opcion>6);
- 
- return opcion;
+	int opcion;
+
+	do
+	{
+		printf("Menu principal Conecta-4\n");
+		printf("========================\n");
+		printf("1 - Gestion de usuarios\n");
+		printf("2 - 1 Jugador\n");
+		printf("3 - 2 Jugadores\n");
+		printf("4 - Reaunudar partida\n");
+		printf("5 - Ver puntuaciones\n");
+		printf("6 - Salir\n");
+		printf("Seleccione una opcion: ");
+		scanf_s("%d", &opcion);
+
+		if (opcion < 1 || opcion>6)
+			printf("\nOpcion inexistente.\n\n");
+	} while (opcion < 1 || opcion>6);
+
+	return opcion;
 }
 
 void inicializar_tablero(int tablero[][COLUMN]) {
@@ -214,22 +214,26 @@ void imprimir_tablero(int tablero[][COLUMN]) {
 
 void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 	int turno = 1;
-	int fin=0;
-        int cancion = 0;
-        char secuencia[2];
+	int fin = 0;
+	int cancion = 0;
+	char secuencia[2];
+	Serial* Arduino;
+	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
+	char pchar[MAX_BUFFER];
+	Arduino = new Serial((char*)puerto);
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	printf("\nHa seleccionado modo 1 jugador\n");
 	printf("Inicio de la partida:\n");
 	if (Arduino->IsConnected())
-    {
+	{
 
-        cancion = 1;
+		cancion = 1;
 
-        sprintf_s(secuencia, "%d", cancion);
+		sprintf_s(secuencia, "%d", cancion);
 
-        Arduino->WriteData(secuencia, strlen(secuencia));
-        Sleep(2000);
-    }
+		Arduino->WriteData(secuencia, strlen(secuencia));
+		Sleep(2000);
+	}
 	inicializar_tablero(tablero);//Inicializamos tablero
 	printf("\n");
 	do {
@@ -250,20 +254,24 @@ void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
 	int fin = 0;
-        int cancion = 0;
-        char secuencia[2];
+	int cancion = 0;
+	char secuencia[2];
+	Serial* Arduino;
+	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
+	char pchar[MAX_BUFFER];
+	Arduino = new Serial((char*)puerto);
 	printf("\nHa seleccionado modo 2 jugadores\n");
 	printf("Inicio de la partida:\n");
-	    if (Arduino->IsConnected())
-    {
+	if (Arduino->IsConnected())
+	{
 
-        cancion = 1;
+		cancion = 1;
 
-        sprintf_s(secuencia, "%d", cancion);
+		sprintf_s(secuencia, "%d", cancion);
 
-        Arduino->WriteData(secuencia, strlen(secuencia));
-        Sleep(2000);
-    }
+		Arduino->WriteData(secuencia, strlen(secuencia));
+		Sleep(2000);
+	}
 	inicializar_tablero(tablero);//Inicializamos tablero
 	printf("\n");
 	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
@@ -278,28 +286,32 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 			imprimir_tablero(tablero);
 		}
 	} while (fin == 0);
-	   if (Arduino->IsConnected())
-    {
+	if (Arduino->IsConnected())
+	{
 
-        cancion = 2;
+		cancion = 2;
 
-        sprintf_s(secuencia, "%d", cancion);
+		sprintf_s(secuencia, "%d", cancion);
 
-        Arduino->WriteData(secuencia, strlen(secuencia));
-        Sleep(2000);
+		Arduino->WriteData(secuencia, strlen(secuencia));
+		Sleep(2000);
 
-    }
+	}
 }
 
-void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//Pone la ficha del jugador "jugador" em el tablero
+void meter_ficha(int tablero[][COLUMN], int jugador, int* fin, Usuario* lista)//Pone la ficha del jugador "jugador" em el tablero
 {
-	int fila, columna = 0 , exito = 0,x; // declaramos las variables
+	int fila, columna = 0, exito = 0, x; // declaramos las variables
 	char letra[2], intro;
+	Serial* Arduino;
+	char puerto[] = "COM5"; //Puerto serie al que está conectado Arduino , cambiar en función del puerto utilizado
 	char pchar[MAX_BUFFER];
+	Arduino = new Serial((char*)puerto);
+
 	printf("Desea guardar la partida (S/N): ");
 	gets_s(letra, 2);
 
-	if (strcmp(letra,"S") == 0 || strcmp(letra,"s") == 0)
+	if (strcmp(letra, "S") == 0 || strcmp(letra, "s") == 0)
 	{
 		guarda_partida(tablero);
 
@@ -310,15 +322,15 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//
 		do //repetimos la funcion hasta que el usuario introduzca una columna válida
 		{
 			printf("Introduzca columna:\n");
-				while (columna == 0)
-	{
+			while (columna == 0)
+			{
 
-		if (Recibir_mando_ard(Arduino, pchar, &x) != 0)
-		{
-			printf("%s %d\n", pchar, x);
-			columna = leer_boton(x);
-		}
-	}
+				if (Recibir_mando_ard(Arduino, pchar, &x) != 0)
+				{
+					printf("%s %d\n", pchar, x);
+					columna = leer_boton(x);
+				}
+			}
 			intro = getchar();
 			columna--; // ajustamos columna a un valor inferior para que las columnas sean del 1 al 7, más intuitivo para el usuario
 			if (columna < 0 || columna >(COLUMN - 1))
@@ -341,15 +353,15 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//
 				}
 			}
 		}
-		
+
 	}
-	
+
 	puntuaciones_jugador1(lista, jugador, tablero, fin);
 	puntuaciones_jugador2(lista, jugador, tablero, fin);
 
 }
-	
-void IA(int tablero[][COLUMN], int jugador, int *fin)
+
+void IA(int tablero[][COLUMN], int jugador, int* fin)
 {
 	int fila, columna, exito = 0;
 	do
@@ -385,7 +397,7 @@ void IA(int tablero[][COLUMN], int jugador, int *fin)
 					columna = COLUMN; // truco para cerrar el bucle for
 				}
 			}
-		}		
+		}
 		if (exito == 0)
 		{
 			for (columna = 0; columna < COLUMN; columna++)
@@ -451,7 +463,7 @@ void IA(int tablero[][COLUMN], int jugador, int *fin)
 		}
 	} while (exito == 0);
 }
-	
+
 int conecta(int fila, int columna, int jugador, int tablero[][COLUMN]) { //Comprueba si hay cuatro en raya
 	if (contar_vertical(fila, columna, jugador, tablero) >= 4) //Si se cumple, hay cuatro fichas conectadas en vertical
 		return 1;
@@ -541,7 +553,7 @@ int contar_diagonal_ascendente(int fila, int columna, int jugador, int tablero[]
 
 	return contador - 1; // Hay que restar uno al contador porque has contado dos veces la ficha
 }
-	
+
 int contar_diagonal_descendente(int fila, int columna, int jugador, int tablero[][COLUMN]) {
 	int contador = 0; // Contador de fichas
 	int f, c; // Variables auxiliares para filas y columnas
@@ -571,12 +583,12 @@ int contar_diagonal_descendente(int fila, int columna, int jugador, int tablero[
 
 	return contador - 1; // Hay que restar uno al contador porque has contado dos veces la ficha
 }
-	
+
 // Menú con las opciones para gestionar usuarios
 Usuario* gestion_usuarios(Usuario* lista, int* num)
 {
 	int opcion;
-	
+
 	do
 	{
 		printf("Gestion de Usuarios\n");
@@ -587,32 +599,32 @@ Usuario* gestion_usuarios(Usuario* lista, int* num)
 		printf("4 - Volver al menu principal\n");
 		printf("Seleccione una opcion: ");
 		scanf_s("%d", &opcion);
-		       
+
 		switch (opcion)
 		{
 		case 1:
 			lista = alta_usuario(lista, num);
 			break;
-		case 2:  
+		case 2:
 			baja_usuario(lista, num);
 			break;
-		case 3: 
+		case 3:
 			listado_usuarios(lista, *num);
 			break;
-		case 4: 
+		case 4:
 			break;
 		default: printf("Opcion inexistente");
 		}
-	 } while (opcion != 4);
-		       
+	} while (opcion != 4);
+
 	return lista;
 }
 
 // Muestra la lista de usuarios
-void listado_usuarios(Usuario *lista,int numero)
+void listado_usuarios(Usuario* lista, int numero)
 {
 	int i;
-	
+
 	if (numero == 0)
 		printf("No hay usuarios actualmente\n");
 	else
@@ -620,11 +632,11 @@ void listado_usuarios(Usuario *lista,int numero)
 		printf("En este momento existen %d usuarios\n", numero);
 		printf("Nombre\t\tApellidos\t\tUsername\t\tPassword\n");
 		printf("======\t\t=========\t\t========\t\t========\n");
-		
+
 		for (i = 1; i < numero; i++)
-			printf("%s\t\t%s\t\t\t%s\t\t\t%s\n",(lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
+			printf("%s\t\t%s\t\t\t%s\t\t\t%s\n", (lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
 	}
-	
+
 	printf("\n\n");
 }
 
@@ -682,7 +694,7 @@ int posicion_usuario(Usuario* lista, int num, char* username)
 	for (i = 0; i < num && posicion == -1; i++)
 		if (strcmp(username, lista[i].username) == 0)
 			posicion = i;
-	
+
 	return posicion;
 }
 
@@ -697,20 +709,20 @@ int posicion_password(Usuario* lista, int num, char* password)
 
 	return posicion;
 }
-		       
+
 // Añade un nuevo usuario
 Usuario* alta_usuario(Usuario* lista, int* num)
 {
 	int numero = *num;
 	Usuario* lista_old;
 	char intro;
-	
+
 	lista_old = lista; // Se guarda la dirección de la lista original por si falla realloc
 	if (*num == 0) // Si no hay usuarios aún 
 		lista = (Usuario*)malloc(sizeof(Usuario)); // Se guarda memoria del tamaño de Usuario
 	else
 		lista = (Usuario*)realloc(lista, sizeof(Usuario) * (numero + 1)); // Pide memoria nueva con copia de datos
-	
+
 	if (lista == NULL)
 	{
 		lista = lista_old;
@@ -731,10 +743,10 @@ Usuario* alta_usuario(Usuario* lista, int* num)
 		*num = numero + 1;
 		printf("=====================\n");
 	}
-	
+
 	escribir_fichero_usuarios(lista, numero);
-	
-        return lista;
+
+	return lista;
 }
 
 // Da de baja un usuario
@@ -781,7 +793,7 @@ int baja_usuario(Usuario* lista, int* num)
 	}
 	return cod_error;
 }
-		       
+
 // Traslada los usuarios de un fichero a memoria
 Usuario* leer_fichero_usuarios(int* num)
 {
@@ -789,8 +801,8 @@ Usuario* leer_fichero_usuarios(int* num)
 	FILE* fichero; // Descriptor del fichero
 	errno_t err; // Código de error del proceso de apertura del fichero
 	int i;
-	char intro[2], *p; // Para procesar
-	
+	char intro[2], * p; // Para procesar
+
 	err = fopen_s(&fichero, "Usuarios.txt", "r"); // Apertura del fichero solo para lectura
 	if (err == 0) // Si no hay error
 	{
@@ -803,8 +815,8 @@ Usuario* leer_fichero_usuarios(int* num)
 			fgets(intro, 2, fichero); // Saltamos el intro que hay tras el número (Ascii 10 y 13)
 			for (i = 0; i < *num; i++) // Para cada usaurio del fichero
 			{
-				
-			        fgets((lista + i)->nombre, LONG_CAD, fichero); // Leemos el nombre
+
+				fgets((lista + i)->nombre, LONG_CAD, fichero); // Leemos el nombre
 				p = strchr((lista + i)->nombre, '\n'); // Localizamos el \n del nombre
 				*p = '\0'; // Lo cambiamos por un \0
 				fgets((lista + i)->apellidos, LONG_CAD, fichero); // Leemos los apellidos
@@ -817,23 +829,23 @@ Usuario* leer_fichero_usuarios(int* num)
 				p = strchr((lista + i)->password, '\n'); // Localizamos el \n del password
 				*p = '\0'; // Lo cambiamos por un \0
 			}
-			
+
 			fclose(fichero);
 		}
 	}
 	else // Si se ha producido un error en la lectura del fichero de usuarios
 		*num = 0;
-	
+
 	return lista;
 }
-		       
+
 // Traslada los usuarios de memoria a fichero
 int escribir_fichero_usuarios(Usuario* lista, int numero)
 {
 	int i;
 	FILE* fichero;
 	errno_t err;
-	
+
 	err = fopen_s(&fichero, "Usuarios.txt", "wt"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
@@ -845,15 +857,15 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 			fprintf(fichero, "%s\n", (lista + i)->username);
 			fprintf(fichero, "%s\n", (lista + i)->password);
 		}
-		
-		if(fclose(fichero)!=NULL)
+
+		if (fclose(fichero) != NULL)
 			printf("Error en el cierre del archivo\n");
 
-		  
+
 	}
 	else
 		printf("Se ha producido un error a la hora de grabar el fichero de usuarios\n");
-	
+
 	return err;
 }
 
@@ -875,7 +887,7 @@ void guarda_partida(int tablero[][COLUMN])
 
 			fprintf(fichero, "\n");
 		}
-		
+
 		fclose(fichero);
 	}
 	else
@@ -894,7 +906,7 @@ void reaunudar_partida(int tablero[][COLUMN])
 	{
 		while (feof(fichero) == NULL)
 		{
-		        for (i = 0; i < FILAS; i++)
+			for (i = 0; i < FILAS; i++)
 			{
 				for (j = 0; j < COLUMN; j++)
 				{
@@ -1128,8 +1140,6 @@ int Recibir_mando_ard(Serial* Arduino, char* msg_in, int* valor_in)
 	}
 	return bytesReceive;
 }
-
-
 
 
 
