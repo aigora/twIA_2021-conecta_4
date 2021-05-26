@@ -6,7 +6,7 @@ int main()
 {
     Serial* Arduino; 
 
-    char puerto[]="COM3"; // depende del puerto
+    char puerto[]="COM5"; // depende del puerto
     int cancion = 0;
     char secuencia[2];
 
