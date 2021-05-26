@@ -5,6 +5,9 @@
 #include <string.h>
 #include "SerialClass/SerialClass.h"
 
+#define MAX_BUFFER 200
+#define MAX_INTENTOS_READ 4
+#define MS_ENTRE_INTENTOS 250
 #define SI 1
 #define NO 0
 #define N 10
