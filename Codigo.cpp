@@ -4,6 +4,7 @@
 #include <malloc.h>
 #include <string.h>
 #include "SerialClass/SerialClass.h"
+#include "SerialClass.h"
 
 #define MAX_BUFFER 200
 #define MAX_INTENTOS_READ 4
