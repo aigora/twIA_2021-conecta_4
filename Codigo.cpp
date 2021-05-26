@@ -292,7 +292,7 @@ void meter_ficha(int tablero[][COLUMN], int jugador, int *fin, Usuario* lista)//
 {
 	int fila, columna = 0 , exito = 0,x; // declaramos las variables
 	char letra[2], intro;
-	
+	char pchar[MAX_BUFFER];
 	printf("Desea guardar la partida (S/N): ");
 	gets_s(letra, 2);
 
