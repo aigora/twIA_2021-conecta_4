@@ -51,7 +51,7 @@ int leer_boton(int);
 
 // Funciones de gestión de usuarios
 Usuario* leer_fichero_usuarios(int*);
-int escribir_fichero_usuarios(Usuario*, int);
+int escribir_fichero_usuarios(Usuario*, int*);
 Usuario* gestion_usuarios(Usuario*, int*);
 void listado_usuarios(Usuario*, int);
 Usuario* alta_usuario(Usuario*, int*);
@@ -162,7 +162,7 @@ int main(void)
 	} while (opc != 5);
 
 	// Tareas de desconexión y cierre
-	escribir_fichero_usuarios(usuarios, num_usuarios); // Traslada los usuarios desde memoria a un fichero
+	escribir_fichero_usuarios(usuarios, &num_usuarios); // Traslada los usuarios desde memoria a un fichero
 }
 
 int menu_principal(void)
@@ -845,7 +845,7 @@ Usuario* leer_fichero_usuarios(int* num)
 }
 
 // Traslada los usuarios de memoria a fichero
-int escribir_fichero_usuarios(Usuario* lista, int numero)
+int escribir_fichero_usuarios(Usuario* lista, int* num)
 {
 	int i;
 	FILE* fichero;
@@ -854,8 +854,8 @@ int escribir_fichero_usuarios(Usuario* lista, int numero)
 	err = fopen_s(&fichero, "Usuarios.txt", "wt"); // Apertura del fichero para escritura (añade datos sin borrar los que ya existían)
 	if (err == 0) // Si el fichero se ha podido crear
 	{
-		fprintf(fichero, "%d\n", numero); // Se graba en el fichero el número de usuarios
-		for (i = 0; i < numero; i++)
+		fprintf(fichero, "%d\n", *num); // Se graba en el fichero el número de usuarios
+		for (i = 0; i < *num; i++)
 		{
 			fprintf(fichero, "%s\n", (lista + i)->nombre);
 			fprintf(fichero, "%s\n", (lista + i)->apellidos);
