@@ -625,6 +625,90 @@ Usuario* gestion_usuarios(Usuario* lista, int* num)
 	return lista;
 }
 
+// Añade un nuevo usuario
+Usuario* alta_usuario(Usuario* lista, int* num)
+{
+	int numero = *num;
+	Usuario* lista_old;
+	char intro;
+
+	lista_old = lista; // Se guarda la dirección de la lista original por si falla realloc
+	if (*num == 0) // Si no hay usuarios aún 
+		lista = (Usuario*)malloc(sizeof(Usuario)); // Se guarda memoria del tamaño de Usuario
+	else
+		lista = (Usuario*)realloc(lista, sizeof(Usuario) * (numero + 1)); // Pide memoria nueva con copia de datos
+
+	if (lista == NULL)
+	{
+		lista = lista_old;
+		printf("Memoria insuficiente para añadir un nuevo usuario\n");
+	}
+	else
+	{
+		printf("=====================\n");
+		printf("Nombre nuevo usuario: ");
+		intro = getchar(); // Eliminamos el intro que estará en el buffer tras la selección del menú
+		gets_s((lista + numero)->nombre, LONG_CAD);
+		printf("Apellidos nuevo usuario: ");
+		gets_s((lista + numero)->apellidos, LONG_CAD);
+		printf("Username nuevo de usuario: ");
+		gets_s((lista + numero)->username, LONG_CAD);
+		printf("Password nuevo usuario: ");
+		gets_s((lista + numero)->password, LONG_CAD);
+		*num = numero + 1;
+		printf("=====================\n");
+	}
+
+	escribir_fichero_usuarios(lista, num);
+
+	return lista;
+}
+
+// Da de baja un usuario
+int baja_usuario(Usuario* lista, int* num)
+{
+	char username[LONG_CAD], respuesta[2], intro;
+	int encontrado = NO;
+	int i, j;
+	int n = *num;
+	int cod_error = 0;
+
+	if (n == 0)
+	{
+		printf("La lista de usuarios esta vacia\n");
+		cod_error = -1;
+	}
+	else
+	{
+		printf("Introduzca usuario a eliminar:");
+		intro = getchar();
+		gets_s(username, LONG_CAD);
+		for (i = 0; i < n && encontrado == NO; i++)
+			if (strcmp(username, lista[i].username) == 0)
+			{
+				printf("Datos del usuario encontrado:\n");
+				listado_usuarios(lista, n);
+				printf("Desea borra este usuario (S/N): ");
+				gets_s(respuesta, 2);
+				if (strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)
+				{
+					encontrado = SI;
+					for (j = i; j < n - 1; j++)
+						lista[j] = lista[j + 1];
+					*num = n - 1;
+				}
+				else
+					cod_error = -1;
+			}
+		if (encontrado == NO)
+		{
+			printf("No se ha encontrado el usuario\n");
+			cod_error = -1;
+		}
+	}
+	return cod_error;
+}
+
 // Muestra la lista de usuarios
 void listado_usuarios(Usuario* lista, int numero)
 {
@@ -713,90 +797,6 @@ int posicion_password(Usuario* lista, int num, char* password)
 			posicion = i;
 
 	return posicion;
-}
-
-// Añade un nuevo usuario
-Usuario* alta_usuario(Usuario* lista, int* num)
-{
-	int numero = *num;
-	Usuario* lista_old;
-	char intro;
-
-	lista_old = lista; // Se guarda la dirección de la lista original por si falla realloc
-	if (*num == 0) // Si no hay usuarios aún 
-		lista = (Usuario*)malloc(sizeof(Usuario)); // Se guarda memoria del tamaño de Usuario
-	else
-		lista = (Usuario*)realloc(lista, sizeof(Usuario) * (numero + 1)); // Pide memoria nueva con copia de datos
-
-	if (lista == NULL)
-	{
-		lista = lista_old;
-		printf("Memoria insuficiente para añadir un nuevo usuario\n");
-	}
-	else
-	{
-		printf("=====================\n");
-		printf("Nombre nuevo usuario: ");
-		intro = getchar(); // Eliminamos el intro que estará en el buffer tras la selección del menú
-		gets_s((lista + numero)->nombre, LONG_CAD);
-		printf("Apellidos nuevo usuario: ");
-		gets_s((lista + numero)->apellidos, LONG_CAD);
-		printf("Username nuevo de usuario: ");
-		gets_s((lista + numero)->username, LONG_CAD);
-		printf("Password nuevo usuario: ");
-		gets_s((lista + numero)->password, LONG_CAD);
-		*num = numero + 1;
-		printf("=====================\n");
-	}
-
-	escribir_fichero_usuarios(lista, num);
-
-	return lista;
-}
-
-// Da de baja un usuario
-int baja_usuario(Usuario* lista, int* num)
-{
-	char username[LONG_CAD], respuesta[2], intro;
-	int encontrado = NO;
-	int i, j;
-	int n = *num;
-	int cod_error = 0;
-
-	if (n == 0)
-	{
-		printf("La lista de usuarios esta vacia\n");
-		cod_error = -1;
-	}
-	else
-	{
-		printf("Introduzca usuario a eliminar:");
-		intro = getchar();
-		gets_s(username, LONG_CAD);
-		for (i = 0; i < n && encontrado == NO; i++)
-			if (strcmp(username, lista[i].username) == 0)
-			{
-				printf("Datos del usuario encontrado:\n");
-				listado_usuarios(lista, n);
-				printf("Desea borra este usuario (S/N): ");
-				gets_s(respuesta, 2);
-				if (strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)
-				{
-					encontrado = SI;
-					for (j = i; j < n - 1; j++)
-						lista[j] = lista[j + 1];
-					*num = n - 1;
-				}
-				else
-					cod_error = -1;
-			}
-		if (encontrado == NO)
-		{
-			printf("No se ha encontrado el usuario\n");
-			cod_error = -1;
-		}
-	}
-	return cod_error;
 }
 
 // Traslada los usuarios de un fichero a memoria
