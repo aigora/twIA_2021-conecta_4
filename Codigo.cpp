@@ -749,7 +749,7 @@ Usuario* alta_usuario(Usuario* lista, int* num)
 		printf("=====================\n");
 	}
 
-	escribir_fichero_usuarios(lista, numero);
+	escribir_fichero_usuarios(lista, num);
 
 	return lista;
 }
