@@ -254,6 +254,7 @@ void un_jugador(int tablero[][COLUMN], Usuario* lista) {
 
 void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 	// las casillas con 0 representan casilla vacía, casilla con 1 representa ocupada por ficha del jugador 1 y 2 ocupada por el segundo jugador
+	int turno = 1;
 	int fin = 0;
 	int cancion = 0;
 	char secuencia[2];
@@ -278,6 +279,8 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 	printf("\n");
 	do  // el bucle de turnos continúa hasta que se detecte alguna jugada como victoria para un jugador
 	{
+		printf("\nTURNO %d", turno); //Indica cuantos turnos llevan
+		printf("\n");
 		printf("Inicio del turno del jugador 1\n");
 		meter_ficha(tablero, 1, &fin, lista);//El jugador elige dónde poner la ficha
 		imprimir_tablero(tablero);
@@ -286,6 +289,7 @@ void dos_jugadores(int tablero[][COLUMN], Usuario* lista) {
 			printf("Inicio del turno del jugador 2\n");
 			meter_ficha(tablero, 2, &fin, lista);//El jugador elige dónde poner la ficha
 			imprimir_tablero(tablero);
+			turno++;
 		}
 	} while (fin == 0);
 	if (Arduino->IsConnected())
