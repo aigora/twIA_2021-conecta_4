@@ -497,7 +497,7 @@ int contar_vertical(int fila, int columna, int jugador, int tablero[][COLUMN])
 		f++;
 	} while (f < FILAS && tablero[f][c] == jugador); // Verifica las filas y columnas antes de mirar tablero (cortocircuito)
 
-	return contador; // Hay que restar uno al contador porque has contado dos veces la ficha
+	return contador; 
 }
 
 int contar_horizontal(int fila, int columna, int jugador, int tablero[][COLUMN])
