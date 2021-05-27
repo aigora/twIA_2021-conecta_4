@@ -709,26 +709,6 @@ int baja_usuario(Usuario* lista, int* num)
 	return cod_error;
 }
 
-// Muestra la lista de usuarios
-void listado_usuarios(Usuario* lista, int numero)
-{
-	int i;
-
-	if (numero == 0)
-		printf("No hay usuarios actualmente\n");
-	else
-	{
-		printf("En este momento existen %d usuarios\n", numero);
-		printf("Nombre\t\tApellidos\t\tUsername\t\tPassword\n");
-		printf("======\t\t=========\t\t========\t\t========\n");
-
-		for (i = 0; i < numero; i++)
-			printf("%s\t\t%s\t\t\t%s\t\t\t%s\n", (lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
-	}
-
-	printf("\n\n");
-}
-
 // Consulta el username del usuario pedido
 int consulta_usuario(Usuario* lista, int num, char* username)
 {
@@ -797,6 +777,27 @@ int posicion_password(Usuario* lista, int num, char* password)
 			posicion = i;
 
 	return posicion;
+}
+
+
+// Muestra la lista de usuarios
+void listado_usuarios(Usuario* lista, int numero)
+{
+	int i;
+
+	if (numero == 0)
+		printf("No hay usuarios actualmente\n");
+	else
+	{
+		printf("En este momento existen %d usuarios\n", numero);
+		printf("Nombre\t\tApellidos\t\tUsername\t\tPassword\n");
+		printf("======\t\t=========\t\t========\t\t========\n");
+
+		for (i = 0; i < numero; i++)
+			printf("%s\t\t%s\t\t\t%s\t\t\t%s\n", (lista + i)->nombre, (lista + i)->apellidos, (lista + i)->username, (lista + i)->password);
+	}
+
+	printf("\n\n");
 }
 
 // Traslada los usuarios de un fichero a memoria
