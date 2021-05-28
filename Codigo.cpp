@@ -732,6 +732,18 @@ int consulta_usuario(Usuario* lista, int num, char* username)
 	return cod_error;
 }
 
+// Determina la posición de un usuario 
+int posicion_usuario(Usuario* lista, int num, char* username)
+{
+	int i, posicion = -1;
+
+	for (i = 0; i < num && posicion == -1; i++)
+		if (strcmp(username, lista[i].username) == 0)
+			posicion = i;
+
+	return posicion;
+}
+
 // Consulta password del usuario pedido
 int consulta_password(Usuario* lista, int num, char* password)
 {
@@ -753,18 +765,6 @@ int consulta_password(Usuario* lista, int num, char* password)
 	}
 
 	return cod_error;
-}
-
-// Determina la posición de un usuario 
-int posicion_usuario(Usuario* lista, int num, char* username)
-{
-	int i, posicion = -1;
-
-	for (i = 0; i < num && posicion == -1; i++)
-		if (strcmp(username, lista[i].username) == 0)
-			posicion = i;
-
-	return posicion;
 }
 
 // Determina la posición del password 
